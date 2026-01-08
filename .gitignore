@@ -1,0 +1,19 @@
+# Environment variables
+.env
+
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# Virtual environment
+venv/
+
+# Flask sessions
+.flask_session/
+
+# IDE / OS
+.vscode/
+.idea/
+.DS_Store
