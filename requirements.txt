@@ -3,6 +3,7 @@
 # =========================
 Flask==3.0.0
 Werkzeug==3.0.1
+Flask-Session==0.4.0
 
 # =========================
 # Environment Variables
@@ -19,12 +20,23 @@ beautifulsoup4==4.12.3
 # =========================
 # Data Processing
 # =========================
-pandas
+pandas==2.3.3
+numpy==2.4.0
 
 # =========================
 # Google Gemini AI
 # =========================
 google-generativeai==0.4.1
+google-ai-generativelanguage==0.4.0
+google-api-core==2.29.0
+google-auth==2.47.0
+googleapis-common-protos==1.72.0
+grpcio==1.76.0
+grpcio-status==1.62.3
+proto-plus==1.27.0
+protobuf==4.25.8
+pydantic==2.12.5
+pydantic-core==2.41.5
 
 # =========================
 # JSON & Utilities
@@ -35,6 +47,7 @@ simplejson==3.19.2
 # Security & Validation
 # =========================
 email-validator==2.1.1
+rsa==4.9.1
 
 # =========================
 # Optional (Stability & Debugging)
