@@ -37,3 +37,5 @@ rsa==4.9.1
 
 # Optional (Stability & Debugging)
 gunicorn==21.2.0
+google-generativeai==0.4.1
+google-ai-generativelanguage==0.4.0
