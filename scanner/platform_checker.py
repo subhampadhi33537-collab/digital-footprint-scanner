@@ -47,7 +47,8 @@ PLATFORM_URL_PATTERNS = {
     "medium": "https://medium.com/@{}",
     "stackoverflow": "https://stackoverflow.com/users/{}",
     "devto": "https://dev.to/{}",
-    "pinterest": "https://www.pinterest.com/{}"
+    "pinterest": "https://www.pinterest.com/{}",
+    "Xhamster": "https://xhamster.com/users/{}"
 }
 
 # -------------------------------
