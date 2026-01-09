@@ -14,6 +14,7 @@ from flask import Flask  # type: ignore
 from flask_session import Session  # type: ignore
 from dotenv import load_dotenv  # type: ignore
 
+
 from config import config
 
 # ==================================================
