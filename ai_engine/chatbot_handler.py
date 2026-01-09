@@ -9,9 +9,7 @@ AI Chatbot Handler for Digital Footprint Scanner
 
 import os
 import logging
-import google.generativeai as genai # type: ignore
-from google import genai
-import google.generativeai as genai # type: ignore
+import google.generativeai as genai # type: ignore #
 
 
 # -------------------------------
