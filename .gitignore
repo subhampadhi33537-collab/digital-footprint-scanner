@@ -1,5 +1,10 @@
-# Ignore Flask session files
+# Flask session files
 .flask_session/
-venv/
+
+# Environment variables
+.env
+
+# Python
 __pycache__/
 *.pyc
+venv/
