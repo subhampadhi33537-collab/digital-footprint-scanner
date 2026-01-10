@@ -9,7 +9,8 @@ AI Chatbot Handler for Digital Footprint Scanner
 
 import os
 import logging
-import google.generativeai as genai # type: ignore #
+from google import genai
+
 
 
 # -------------------------------
@@ -87,3 +88,5 @@ class AIChatbot:
 def get_ai_response(analysis_result: dict, user_query: str, session_id='default') -> str:
     chatbot = AIChatbot(session_id=session_id)
     return chatbot.generate_response(analysis_result, user_query)
+
+

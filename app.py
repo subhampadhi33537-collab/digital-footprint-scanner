@@ -9,11 +9,10 @@ Responsibilities:
 - Handle sessions and debugging
 - Serve as central backbone for scanner, analysis, and AI
 """
-
+import os
 from flask import Flask  # type: ignore
 from flask_session import Session  # type: ignore
 from dotenv import load_dotenv  # type: ignore
-
 
 from config import config
 
@@ -26,7 +25,7 @@ load_dotenv()
 # CREATE FLASK APP
 # ==================================================
 app = Flask(__name__)
-
+print("GENAI_API_KEY =", os.getenv("GEMINI_API_KEY"))
 # ==================================================
 # FLASK CORE CONFIG
 # ==================================================
@@ -78,5 +77,11 @@ def internal_error(e):
 # MAIN ENTRY POINT
 # ==================================================
 if __name__ == "__main__":
-    import os
-    app.run(host="0.0.0.0", port=int(os.environ.get("PORT", 5000)))
+    print("🚀 Starting AI-Powered Digital Footprint Scanner...")
+    print(f"🔹 Flask ENV: {config.FLASK_ENV}")
+    print(f"🔹 Debug Mode: {config.FLASK_DEBUG}")
+    app.run(host="0.0.0.0", port=5000)
+
+
+
+
