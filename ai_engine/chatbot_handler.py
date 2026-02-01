@@ -1,14 +1,14 @@
 """
 AI Chatbot Handler for Digital Footprint Scanner
 ------------------------------------------------
-- Uses google.generativeai (Render-safe)
+- Uses Groq API (OpenAI-compatible format)
 - Maintains chat sessions
-- No ImportError on Render
+- Efficient and reliable
 """
 
 import os
 import logging
-import google.generativeai as genai
+from ai_engine.groq_client import GroqClient, get_groq_client
 
 # -------------------------------------------------
 # Logging
@@ -19,23 +19,22 @@ logging.basicConfig(
 )
 
 # -------------------------------------------------
-# API KEY
+# API KEY CHECK
 # -------------------------------------------------
-GEMINI_API_KEY = os.getenv("GEMINI_API_KEY")
+GROQ_API_KEY = os.getenv("GROQ_API_KEY")
 
-if not GEMINI_API_KEY:
-    logging.error("❌ GEMINI_API_KEY not set")
+if not GROQ_API_KEY:
+    logging.error("❌ GROQ_API_KEY not set")
 
 # -------------------------------------------------
-# Gemini Configuration (IMPORTANT)
+# Initialize Groq Client
 # -------------------------------------------------
 try:
-    genai.configure(api_key=GEMINI_API_KEY)
-    model = genai.GenerativeModel("gemini-2.5-flash")
-    logging.info("✅ Gemini configured successfully")
+    groq_client = get_groq_client()
+    logging.info("✅ Groq client initialized successfully")
 except Exception as e:
-    logging.error(f"❌ Gemini init failed: {e}")
-    model = None
+    logging.error(f"❌ Groq client init failed: {e}")
+    groq_client = None
 
 # -------------------------------------------------
 # Chat Sessions
@@ -48,41 +47,55 @@ chat_sessions = {}
 class AIChatbot:
     def __init__(self, session_id="default"):
         self.session_id = session_id
-        self.chat = None
-
-        if not model:
-            return
+        self.chat_history = []
 
         if session_id not in chat_sessions:
-            try:
-                chat_sessions[session_id] = model.start_chat(history=[])
-                logging.info(f"🧠 Chat session created: {session_id}")
-            except Exception as e:
-                logging.error(f"❌ Chat creation failed: {e}")
-                return
+            chat_sessions[session_id] = {
+                "history": [],
+                "client": groq_client
+            }
+            logging.info(f"🧠 Chat session created: {session_id}")
 
-        self.chat = chat_sessions.get(session_id)
+        self.chat_data = chat_sessions.get(session_id)
 
     def generate_response(self, analysis_result: dict, user_query: str) -> str:
-        if not self.chat:
+        if not groq_client:
             return "AI service unavailable. Please try again later."
 
         risk = analysis_result.get("risk_results", {}).get("risk_level", "LOW")
         platforms = analysis_result.get("scan_results", {}).get("platforms_found", [])
         accounts = ", ".join(platforms) if platforms else "None"
 
+        # Concise, fast-response prompt
         prompt = (
             f"Risk Level: {risk}\n"
-            f"Accounts Found: {accounts}\n\n"
-            f"User Question: {user_query}\n"
-            f"Give privacy and safety advice."
+            f"Accounts Found: {accounts}\n"
+            f"User Question: {user_query}\n\n"
+            "Provide a SHORT, ACTIONABLE response (3-5 sentences max):\n"
+            "• Use bullet points for key items\n"
+            "• Bold important terms: **term**\n"
+            "• Add relevant emojis (🔒 🛡️ ✅ ⚠️)\n"
+            "Focus on immediate privacy recommendations."
         )
 
+        # Build messages with chat history
+        messages = self.chat_data["history"].copy()
+        messages.append({"role": "user", "content": prompt})
+
         try:
-            response = self.chat.send_message(prompt)
-            return response.text
+            response_text = groq_client.chat(messages)
+            
+            # Store in history for context
+            self.chat_data["history"].append({"role": "user", "content": prompt})
+            self.chat_data["history"].append({"role": "assistant", "content": response_text})
+            
+            # Keep history manageable (last 10 exchanges)
+            if len(self.chat_data["history"]) > 20:
+                self.chat_data["history"] = self.chat_data["history"][-20:]
+            
+            return response_text
         except Exception as e:
-            logging.error(f"❌ Gemini error: {e}")
+            logging.error(f"❌ Groq error: {e}")
             return "AI service unavailable."
 
 # -------------------------------------------------

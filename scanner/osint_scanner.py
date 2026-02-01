@@ -3,14 +3,17 @@ OSINT Scanner Orchestrator for AI-Powered Digital Footprint Scanner
 -------------------------------------------------------------------
 Responsibilities:
 - Orchestrates email and username scanning
-- Limits scanning to ethical parameters
-- Normalizes results for risk analysis and AI
-- Fully integrated with routes.py, dashboard, and AI
+- Respects ethical OSINT limits
+- Uses public data only (no private account access)
+- Normalizes results for dashboard and AI analysis
+- OAuth is used ONLY for user authentication (not data access)
 """
 
 import time
 import logging
 from config import config
+
+# Real scanning modules
 from scanner.email_scanner import scan_email
 from scanner.username_scanner import check_username_presence
 from scanner.platform_checker import SUPPORTED_PLATFORMS
@@ -33,11 +36,11 @@ def run_full_scan(user_input: str, max_platforms: int = None, timeout: int = Non
 
     Args:
         user_input (str): Email or username to scan
-        max_platforms (int): Max number of platforms to scan
-        timeout (int): Timeout per request
+        max_platforms (int): Maximum number of platforms to scan
+        timeout (int): HTTP request timeout per platform
 
     Returns:
-        dict: Normalized structured scan result
+        dict: Normalized scan results
     """
 
     max_platforms = max_platforms or config.MAX_PLATFORMS
@@ -54,21 +57,22 @@ def run_full_scan(user_input: str, max_platforms: int = None, timeout: int = Non
     }
 
     # ---------------------------
-    # Email Scan
+    # EMAIL SCAN (PUBLIC OSINT)
     # ---------------------------
     if "@" in user_input:
-        logging.info(f"Detected email input. Scanning for exposure: {user_input}")
+        logging.info(f"Detected email input. Running email OSINT checks.")
         try:
+            # scan_email internally uses API keys from config
             scan_data["email_exposure"] = scan_email(user_input)
         except Exception as e:
             logging.error(f"Email scan failed: {e}")
             scan_data["email_exposure"] = []
 
     # ---------------------------
-    # Username Scan
+    # USERNAME SCAN
     # ---------------------------
     username = user_input.split("@")[0] if "@" in user_input else user_input
-    logging.info(f"Scanning username across supported platforms: {username}")
+    logging.info(f"Scanning username across platforms: {username}")
 
     try:
         username_results = check_username_presence(
@@ -84,15 +88,16 @@ def run_full_scan(user_input: str, max_platforms: int = None, timeout: int = Non
     scan_data["username_exposure"] = username_results
 
     # ---------------------------
-    # Track checked platforms
+    # Platforms Checked
     # ---------------------------
-    platforms_checked = [entry["platform"] for entry in scan_data["username_exposure"]]
-    scan_data["platforms_checked"] = platforms_checked
+    scan_data["platforms_checked"] = [
+        entry.get("platform") for entry in username_results if isinstance(entry, dict)
+    ]
 
     # ---------------------------
     # Normalize Data
     # ---------------------------
-    logging.info("Normalizing scan data for analysis and AI")
+    logging.info("Normalizing scan data for dashboard and AI")
     try:
         normalized_data = normalize_scan_data(scan_data)
     except Exception as e:

@@ -1,9 +1,11 @@
 # =========================
-# Web Framework
+# Web Framework & Server
 # =========================
 Flask==2.2.5
 Werkzeug==2.2.3
 Flask-Session==0.4.1
+gunicorn==21.2.0
+
 # =========================
 # Environment Variables
 # =========================
@@ -19,13 +21,14 @@ beautifulsoup4==4.12.3
 # =========================
 # Data Processing
 # =========================
-pandas
+pandas==2.3.3
 
 # =========================
-# Google Gemini AI
+# Google OAuth
 # =========================
-
-google-generativeai==0.4.1
+google-auth-oauthlib==1.1.0
+google-auth-httplib2==0.2.0
+google-api-python-client==2.95.0
 
 # =========================
 # JSON & Utilities
@@ -37,8 +40,4 @@ simplejson==3.19.2
 # =========================
 email-validator==2.1.1
 
-# =========================
-# Optional (Stability & Debugging)
-# =========================
-gunicorn==21.2.0
 

@@ -68,6 +68,10 @@
     return email.toLowerCase().endsWith("@gmail.com");
   }
 
+  function _isAnyEmail(email) {
+    return _isValidEmail(email);
+  }
+
   function _isValidUsername(username) {
     if (_isEmpty(username)) return false;
     // 3-30 chars, letters numbers . _ -
@@ -80,10 +84,10 @@
     if (_isEmpty(cleanInput)) {
       return { valid: false, error: "Input cannot be empty" };
     }
-    // Email case
+    // Email case — allow any valid email for real OSINT scanning
     if (cleanInput.includes("@")) {
-      if (!_isGmailAddress(cleanInput)) {
-        return { valid: false, error: "Only valid Gmail IDs are allowed" };
+      if (!_isAnyEmail(cleanInput)) {
+        return { valid: false, error: "Please enter a valid email address." };
       }
       return { valid: true, type: "email", value: cleanInput };
     }
@@ -173,6 +177,78 @@
       .replace(/>/g, "&gt;")
       .replace(/"/g, "&quot;")
       .replace(/'/g, "&#039;");
+  }
+
+  /**
+   * Format AI reply: markdown-like (### ** - 1. 2.) → styled HTML.
+   * Escapes first, then applies safe tags. Use innerHTML for AI bubbles.
+   */
+  function _formatAiReply(text) {
+    if (typeof text !== "string" || !text.trim()) return "";
+    let s = _escapeHtml(text);
+
+    // **bold** → <strong>
+    s = s.replace(/\*\*([^*]+)\*\*/g, "<strong class=\"font-semibold\">$1</strong>");
+
+    // ### Header (at line start) → styled div
+    s = s.replace(/^(###)\s+(.+)$/gm, "<div class=\"font-semibold text-indigo-700 mt-3 mb-1\">$2</div>");
+    s = s.replace(/^(##)\s+(.+)$/gm, "<div class=\"font-bold text-gray-900 mt-3 mb-1 text-base\">$2</div>");
+
+    // Numbered list: consecutive "1. " "2. " lines → <ol><li>...
+    const lines = s.split("\n");
+    const out = [];
+    let i = 0;
+    const olRegex = /^(\d+)\.\s+(.+)$/;
+    const ulRegex = /^[-*]\s+(.+)$/;
+    const letterRegex = /^([a-zA-Z])\)\s+(.+)$/;
+
+    while (i < lines.length) {
+      const line = lines[i];
+      const olMatch = line.match(olRegex);
+      const ulMatch = line.match(ulRegex);
+      const letterMatch = line.match(letterRegex);
+
+      if (olMatch) {
+        const list = [];
+        while (i < lines.length && lines[i].match(olRegex)) {
+          const m = lines[i].match(olRegex);
+          list.push("<li class=\"ml-2 mb-1\">" + m[2] + "</li>");
+          i++;
+        }
+        out.push("<ol class=\"list-decimal list-inside space-y-1 mb-2 ml-1\">" + list.join("") + "</ol>");
+        continue;
+      }
+      if (letterMatch) {
+        const list = [];
+        while (i < lines.length && lines[i].match(letterRegex)) {
+          const m = lines[i].match(letterRegex);
+          list.push("<li class=\"ml-2 mb-1\">" + m[2] + "</li>");
+          i++;
+        }
+        out.push("<ol class=\"ai-letter-list list-inside space-y-1 mb-2 ml-1\">" + list.join("") + "</ol>");
+        continue;
+      }
+      if (ulMatch) {
+        const list = [];
+        while (i < lines.length && lines[i].match(ulRegex)) {
+          const m = lines[i].match(ulRegex);
+          list.push("<li class=\"ml-2 mb-1\">" + (m[1] || m[0]) + "</li>");
+          i++;
+        }
+        out.push("<ul class=\"list-disc list-inside space-y-1 mb-2 ml-1\">" + list.join("") + "</ul>");
+        continue;
+      }
+
+      if (line.trim() === "") {
+        out.push("<br>");
+      } else {
+        out.push(line + "<br>");
+      }
+      i++;
+    }
+
+    s = out.join("");
+    return "<div class=\"ai-reply-formatted text-left space-y-0\">" + s + "</div>";
   }
 
   function _createEl(tag, options = {}) {
@@ -407,6 +483,12 @@
 
     // Render everything
     function renderAll(data) {
+      const scannedEl = _id("scanned-input");
+      if (scannedEl) {
+        const ui = (data.user_input || "").trim();
+        scannedEl.textContent = ui ? "Scanned: " + ui : "";
+        scannedEl.style.display = ui ? "block" : "none";
+      }
       renderPlatforms(data.platforms || []);
       renderExposures(data.exposures || {});
       renderRisk(data.risk_level || "UNKNOWN");
@@ -423,17 +505,24 @@
       platforms.forEach(p => {
         const name = p.name || p.platform || "Unknown";
         const found = !!p.found;
+        const status = (p.status || (found ? "found" : "not_found"));
+        const statusLabel = status === "found" ? "Found" : status === "timeout" ? "Timeout" : status === "error" ? "Error" : "Not Found";
         const card = _createEl("div", { className: "bg-white p-4 rounded-xl shadow hover:shadow-xl transition mb-3" });
+        const safeUrl = (p.url || "").replace(/"/g, "&quot;").replace(/'/g, "&#39;");
+        const linkPart = (p.url && (status === "found" || String(p.url).startsWith("http")))
+          ? `<a href="${safeUrl}" target="_blank" rel="noopener" class="text-indigo-600 hover:underline text-sm">View profile →</a>`
+          : "";
         card.innerHTML = `
         <div class="flex items-start justify-between gap-4">
           <div class="flex-1">
             <h4 class="font-semibold text-indigo-600">${_escapeHtml(name)}</h4>
             ${p.summary ? `<p class="text-sm text-gray-600">${_escapeHtml(p.summary)}</p>` : ""}
+            ${linkPart ? `<p class="mt-1">${linkPart}</p>` : ""}
             ${p.details ? `<p class="text-xs text-gray-500 mt-2">${_escapeHtml(p.details)}</p>` : ""}
           </div>
           <div class="flex-shrink-0">
-            <span class="px-3 py-1 text-sm rounded-full ${found ? 'bg-green-100 text-green-800' : 'bg-gray-100 text-gray-700'}">
-              ${found ? 'Found' : 'Not Found'}
+            <span class="px-3 py-1 text-sm rounded-full ${found ? "bg-green-100 text-green-800" : status === "error" || status === "timeout" ? "bg-red-100 text-red-800" : "bg-gray-100 text-gray-700"}">
+              ${statusLabel}
             </span>
           </div>
         </div>
@@ -539,7 +628,7 @@ function initChatbotModule() {
         const wrapper = _createEl("div", { className: "mb-2 flex" });
 
         let label = "";
-        let bubbleClasses = "text-sm whitespace-pre-wrap p-2 rounded-lg max-w-[70%]";
+        let bubbleClasses = "text-sm p-3 rounded-lg max-w-[85%]";
 
         if (sender === "You") {
             label = "😎 You";
@@ -548,13 +637,18 @@ function initChatbotModule() {
         } else {
             label = "🤖 AI";
             wrapper.classList.add("justify-start");
-            bubbleClasses += " bg-gray-200 text-gray-900";
+            bubbleClasses += " bg-gray-100 text-gray-900 border border-gray-200";
         }
 
         const who = _createEl("div", { className: "font-semibold text-sm mb-1", text: label });
-        const content = _createEl("div", { className: bubbleClasses, text: text });
+        let content;
+        if (sender === "AI" && typeof _formatAiReply === "function") {
+            const formatted = _formatAiReply(text);
+            content = _createEl("div", { className: bubbleClasses + " ai-bubble", html: formatted });
+        } else {
+            content = _createEl("div", { className: bubbleClasses + " whitespace-pre-wrap", text: text });
+        }
 
-        // User on right, AI on left
         wrapper.appendChild(content);
         wrapper.appendChild(who);
         chatBox.appendChild(wrapper);

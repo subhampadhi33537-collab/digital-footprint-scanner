@@ -2,17 +2,18 @@
 AI-Powered Digital Footprint Scanner
 Main Flask Application Entry Point
 
-Responsibilities:
-- Initialize Flask app
-- Load and validate configuration
-- Register API & web routes
-- Handle sessions and debugging
-- Serve as central backbone for scanner, analysis, and AI
+Production Responsibilities:
+- Load environment & configuration
+- Validate critical settings
+- Initialize Flask + sessions
+- Register routes (API, OAuth, UI)
+- Handle real OSINT scanning requests
 """
+
 import os
-from flask import Flask  # type: ignore
-from flask_session import Session  # type: ignore
-from dotenv import load_dotenv  # type: ignore
+from flask import Flask
+from flask_session import Session
+from dotenv import load_dotenv
 
 from config import config
 
@@ -25,33 +26,41 @@ load_dotenv()
 # CREATE FLASK APP
 # ==================================================
 app = Flask(__name__)
-print("GENAI_API_KEY =", os.getenv("GEMINI_API_KEY"))
-# ==================================================
-# FLASK CORE CONFIG
-# ==================================================
-app.config["SECRET_KEY"] = config.SECRET_KEY
-app.config["DEBUG"] = config.FLASK_DEBUG
-app.config["ENV"] = config.FLASK_ENV
 
 # ==================================================
-# SERVER-SIDE SESSION CONFIGURATION (CRITICAL FIX)
+# FLASK + SESSION CONFIGURATION
 # ==================================================
-app.config["SESSION_TYPE"] = "filesystem"
-app.config["SESSION_FILE_DIR"] = "./.flask_session"
-app.config["SESSION_PERMANENT"] = False
-app.config["SESSION_USE_SIGNER"] = True
-app.config["SESSION_KEY_PREFIX"] = "dfs_"
+# Use filesystem for development, but allow override for production
+session_type = os.getenv("SESSION_TYPE", "filesystem")
+session_dir = os.getenv("SESSION_FILE_DIR", os.path.join(os.getcwd(), ".flask_session"))
+
+app.config.from_mapping(
+    SECRET_KEY=config.SECRET_KEY,
+    DEBUG=config.FLASK_DEBUG,
+    ENV=config.FLASK_ENV,
+
+    # Server-side sessions
+    SESSION_TYPE=session_type,
+    SESSION_FILE_DIR=session_dir if session_type == "filesystem" else None,
+    SESSION_PERMANENT=False,
+    SESSION_USE_SIGNER=True,
+    SESSION_KEY_PREFIX="dfs_",
+    PERMANENT_SESSION_LIFETIME=3600,  # 1 hour for production
+)
 
 Session(app)
 
 # ==================================================
-# VALIDATE CONFIGURATION
+# VALIDATE CONFIGURATION (FAIL FAST)
 # ==================================================
 try:
     config.validate()
 except Exception as e:
-    print("❌ Configuration validation failed:", e)
+    print("[ERROR] CONFIGURATION ERROR")
+    print(str(e))
     raise SystemExit(1)
+
+print("[OK] Environment & configuration validated")
 
 # ==================================================
 # REGISTER ROUTES
@@ -64,24 +73,37 @@ register_routes(app)
 # ERROR HANDLERS
 # ==================================================
 @app.errorhandler(404)
-def page_not_found(e):
-    return "<h1>404 - Page Not Found</h1>", 404
+def not_found(e):
+    return {"error": "Endpoint not found"}, 404
 
 
 @app.errorhandler(500)
 def internal_error(e):
-    return "<h1>500 - Internal Server Error</h1>", 500
+    return {"error": "Internal server error"}, 500
+
+
+# ==================================================
+# HEALTH CHECK (FOR RENDER / PROD)
+# ==================================================
+@app.route("/health", methods=["GET"])
+def health_check():
+    return {
+        "status": "ok",
+        "environment": config.FLASK_ENV,
+        "scanner_ready": True
+    }, 200
 
 
 # ==================================================
 # MAIN ENTRY POINT
 # ==================================================
 if __name__ == "__main__":
-    print("🚀 Starting AI-Powered Digital Footprint Scanner...")
-    print(f"🔹 Flask ENV: {config.FLASK_ENV}")
-    print(f"🔹 Debug Mode: {config.FLASK_DEBUG}")
-    app.run(host="0.0.0.0", port=5000)
+    port = int(os.environ.get("PORT", 5000))
 
+    print("[INFO] Starting AI-Powered Digital Footprint Scanner")
+    print(f">> Environment : {config.FLASK_ENV}")
+    print(f">> Debug Mode  : {config.FLASK_DEBUG}")
+    print(f">> Port        : {port}")
+    print("[INFO] OAuth & scanning systems initialized")
 
-
-
+    app.run(host="0.0.0.0", port=port)

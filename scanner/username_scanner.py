@@ -28,31 +28,49 @@ logging.basicConfig(
 # HTTP Headers
 # -------------------------------
 HEADERS = {
-    "User-Agent": "Mozilla/5.0 (compatible; DigitalFootprintScanner/1.0; +https://github.com/yourrepo)"
+    "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36",
+    "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8",
+    "Accept-Language": "en-US,en;q=0.9",
 }
 
 # -------------------------------
-# Platform-specific NOT FOUND fingerprints
+# STATUS-ONLY PLATFORMS
+# Facebook, LinkedIn, Instagram, GitHub (and similar) often return 200 with login
+# walls or generic pages that contain "page not found" / "content not available"
+# in footers/UI. HTML fingerprinting causes FALSE NEGATIVES (existing accounts
+# marked "not found"). For these, we use ONLY HTTP status: 200 = found, 404 = not_found.
+# -------------------------------
+STATUS_ONLY_PLATFORMS = frozenset({
+    "facebook",
+    "linkedin",
+    "instagram",
+    "github",
+})
+
+# -------------------------------
+# Platform-specific NOT FOUND fingerprints (used only when NOT status-only)
+# Must be specific to avoid false positives. Generic phrases in footers excluded.
 # -------------------------------
 NOT_FOUND_PATTERNS = {
-    "github": ["not found", "404"],
-    "twitter": ["this account doesn’t exist", "account suspended"],
-    "instagram": ["sorry, this page isn't available"],
-    "facebook": ["content isn't available", "page isn't available"],
-    "reddit": ["page not found", "nobody on reddit goes by that name"],
-    "linkedin": ["profile not found", "this page doesn’t exist"],
-    "medium": ["page not found", "whoops"],
+    "twitter": ["this account doesn't exist", "account suspended", "we couldn't find that account"],
+    "reddit": ["nobody on reddit goes by that name", "sorry, nobody on reddit goes by that name"],
+    "medium": ["whoops", "this page doesn't exist"],
     "stackoverflow": ["user does not exist"],
-    "devto": ["page not found"],
-    "pinterest": ["sorry! we couldn't find that page"]
+    "devto": ["the page you were looking for doesn't exist"],
+    "pinterest": ["sorry! we couldn't find that page"],
+    "youtube": ["this channel doesn't exist", "sorry, we can't find that page", "404"],  # ✅ FIXED: Better YouTube detection
+    "tiktok": ["couldn't find this account", "user not found"],
+    "twitch": ["channel does not exist", "sorry. unless you've got a time machine"],
+    "imgur": ["oops we couldn't find that page"],
+    "spotify": ["couldn't find that user"],
 }
 
 # -------------------------------
 # Default scanning settings
 # -------------------------------
-DEFAULT_TIMEOUT = 10        # seconds
+DEFAULT_TIMEOUT = 5         # seconds (optimized for speed - reduced from 8)
 DEFAULT_MAX_PLATFORMS = len(SUPPORTED_PLATFORMS)
-DEFAULT_REQUEST_DELAY = 0.6 # seconds
+DEFAULT_REQUEST_DELAY = 0.1 # seconds (reduced from 0.3 for much faster scanning)
 
 
 # -------------------------------
@@ -103,18 +121,37 @@ def scan_username(
 
         try:
             response = requests.get(profile_url, headers=HEADERS, timeout=timeout, allow_redirects=True)
-            html = response.text.lower()
-            not_found_signals = NOT_FOUND_PATTERNS.get(platform, [])
+            status_code = response.status_code
 
-            if any(signal.lower() in html for signal in not_found_signals):
-                status = "not_found"
-                logging.info(f"[{platform}] Username '{username}' NOT FOUND")
-            elif response.status_code == 200:
-                status = "found"
-                logging.info(f"[{platform}] Username '{username}' FOUND")
+            # Status-only platforms: login walls / generic 200 pages often contain
+            # "not found" phrases. Use ONLY HTTP status to avoid false "not found".
+            if platform.lower() in STATUS_ONLY_PLATFORMS:
+                if status_code == 200:
+                    status = "found"
+                    logging.info(f"[{platform}] Username '{username}' FOUND (200)")
+                elif status_code == 404:
+                    status = "not_found"
+                    logging.info(f"[{platform}] Username '{username}' NOT FOUND (404)")
+                else:
+                    status = f"unknown_status_{status_code}"
+                    logging.warning(f"[{platform}] Status {status_code} for '{username}'")
             else:
-                status = f"unknown_status_{response.status_code}"
-                logging.warning(f"[{platform}] Unknown response status {response.status_code}")
+                # Use HTML fingerprinting only for platforms that return distinct pages
+                html = response.text.lower()
+                not_found_signals = NOT_FOUND_PATTERNS.get(platform, [])
+
+                if status_code == 404:
+                    status = "not_found"
+                    logging.info(f"[{platform}] Username '{username}' NOT FOUND (404)")
+                elif not_found_signals and any(s in html for s in not_found_signals):
+                    status = "not_found"
+                    logging.info(f"[{platform}] Username '{username}' NOT FOUND (fingerprint)")
+                elif status_code == 200:
+                    status = "found"
+                    logging.info(f"[{platform}] Username '{username}' FOUND")
+                else:
+                    status = f"unknown_status_{status_code}"
+                    logging.warning(f"[{platform}] Status {status_code} for '{username}'")
 
         except requests.exceptions.Timeout:
             status = "timeout"

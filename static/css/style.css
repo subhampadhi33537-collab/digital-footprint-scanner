@@ -348,3 +348,36 @@ footer {
 .ai-message:hover {
     background-color: #e5e7eb; /* Slightly darker gray */
 }
+
+/* =====================================================
+   AI CHAT BUBBLE – FORMATTED REPLIES (steps, bold, lists, emojis)
+===================================================== */
+.ai-bubble .ai-reply-formatted {
+    line-height: 1.5;
+    word-wrap: break-word;
+}
+.ai-bubble .ai-reply-formatted strong {
+    font-weight: 600;
+    color: #4338ca;
+}
+.ai-bubble .ai-reply-formatted ol,
+.ai-bubble .ai-reply-formatted ul {
+    margin: 0.5em 0;
+    padding-left: 1.25em;
+}
+.ai-bubble .ai-reply-formatted ol.ai-letter-list {
+    list-style-type: lower-alpha;
+}
+.ai-bubble .ai-reply-formatted div[class*="font-semibold"] {
+    margin-top: 0.75em;
+}
+.ai-bubble .ai-reply-formatted div[class*="font-semibold"]:first-child {
+    margin-top: 0;
+}
+.ai-bubble a {
+    color: var(--primary);
+    text-decoration: underline;
+}
+.ai-bubble a:hover {
+    color: var(--accent);
+}

@@ -2,40 +2,51 @@
 Scanner Package Initialization
 ---------------------------------------------------
 Responsibilities:
-- Expose unified interface to run OSINT scans
-- Import all scanner modules for easy access
-- Connect configuration and ethical scanning defaults
-- Ready for routes.py, analysis, dashboard, and AI assistant
+- Expose a unified interface to run OSINT scans
+- Safely import scanner modules
+- Avoid circular imports
+- Provide a clean public API for routes, dashboard, and AI layer
 """
 
 # ===============================
-# IMPORT CONFIGURATION
+# STANDARD LIB IMPORTS
 # ===============================
-from config import config
 import logging
 import time
 
 # ===============================
-# IMPORT SCANNER MODULES
+# CONFIG IMPORT
 # ===============================
-from .osint_scanner import run_full_scan
-from .email_scanner import scan_email
+from config import config
+
+# ===============================
+# LOGGING SETUP (safe for packages)
+# ===============================
+logger = logging.getLogger("scanner")
+if not logger.handlers:
+    logging.basicConfig(
+        level=logging.INFO,
+        format="%(asctime)s [SCANNER] %(levelname)s: %(message)s"
+    )
+
+# ===============================
+# IMPORT SCANNER MODULES
+# (keep order to avoid circular imports)
+# ===============================
+from .platform_checker import (
+    SUPPORTED_PLATFORMS,
+    generate_profile_url,
+    is_platform_available,
+)
+
 from .username_scanner import check_username_presence
-from .platform_checker import SUPPORTED_PLATFORMS, generate_profile_url, is_platform_available
+from .email_scanner import scan_email
+from .osint_scanner import run_full_scan
 from .data_normalizer import normalize_scan_data
 
 # ===============================
-# LOGGING SETUP
+# PUBLIC PACKAGE INTERFACE
 # ===============================
-logging.basicConfig(
-    level=logging.INFO,
-    format="%(asctime)s [SCANNER INIT] %(levelname)s: %(message)s"
-)
-
-# ===============================
-# PACKAGE LEVEL INTERFACE
-# ===============================
-# Other modules can import these directly
 __all__ = [
     "run_full_scan",
     "scan_email",
@@ -44,7 +55,7 @@ __all__ = [
     "generate_profile_url",
     "is_platform_available",
     "normalize_scan_data",
-    "scan_user"
+    "scan_user",
 ]
 
 # ===============================
@@ -53,25 +64,30 @@ __all__ = [
 def scan_user(user_input: str) -> dict:
     """
     Unified interface to scan a user input (email or username)
-    
+
     Args:
-        user_input (str): Email or username
-    
+        user_input (str): Email address or username
+
     Returns:
-        dict: Normalized structured scan results ready for analysis, dashboard, and AI
+        dict: Normalized scan results
     """
-    logging.info(f"Starting unified scan for: {user_input}")
+    logger.info(f"Starting unified scan for: {user_input}")
+
     start_time = time.time()
-    scan_result = run_full_scan(
+
+    result = run_full_scan(
         user_input=user_input,
         max_platforms=getattr(config, "MAX_PLATFORMS", 10),
-        timeout=getattr(config, "SCAN_TIMEOUT", 10)
+        timeout=getattr(config, "SCAN_TIMEOUT", 10),
     )
+
     duration = time.time() - start_time
-    logging.info(f"Scan completed in {duration:.2f} seconds for: {user_input}")
-    return scan_result
+    logger.info(f"Scan completed in {duration:.2f}s for: {user_input}")
+
+    return result
+
 
 # ===============================
-# OPTIONAL: PACKAGE READY MESSAGE
+# PACKAGE READY CONFIRMATION
 # ===============================
-logging.info("✅ Scanner package initialized. All modules loaded and ready.")
+logger.info("✅ Scanner package initialized successfully.")

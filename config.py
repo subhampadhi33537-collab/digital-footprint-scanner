@@ -2,7 +2,6 @@ import os
 from dotenv import load_dotenv  # type: ignore
 from pathlib import Path
 
-
 # ==================================================
 # LOAD .env FILE
 # ==================================================
@@ -18,13 +17,11 @@ load_dotenv(dotenv_path=ENV_PATH)
 # ==================================================
 # CONFIGURATION CLASS
 # ==================================================
-
 class Config:
     """
     Central configuration class for the
     AI-Powered Digital Footprint Scanner.
-
-    All modules must import configuration from here.
+    All modules import configuration from here.
     """
 
     # --------------------------------------------------
@@ -35,16 +32,19 @@ class Config:
     SECRET_KEY = os.getenv("SECRET_KEY", "default-secret-key")
 
     # --------------------------------------------------
-    # GOOGLE GEMINI AI SETTINGS
+    # GROQ AI SETTINGS
     # --------------------------------------------------
-    GEMINI_API_KEY = os.getenv("GEMINI_API_KEY")
-    GEMINI_MAX_TOKENS = int(os.getenv("GEMINI_MAX_TOKENS", 1024))
-    GEMINI_TEMPERATURE = float(os.getenv("GEMINI_TEMPERATURE", 0.6))
+    GROQ_API_KEY = os.getenv("GROQ_API_KEY")
+    GROQ_API_URL = os.getenv("GROQ_API_URL", "https://api.groq.com/openai/v1/chat/completions")
+    GROQ_MODEL = os.getenv("GROQ_MODEL", "llama-3.1-8b-instant")
+    GROQ_MAX_TOKENS = int(os.getenv("GROQ_MAX_TOKENS", 512))  # Reduced for speed
+    GROQ_TEMPERATURE = float(os.getenv("GROQ_TEMPERATURE", 0.3))  # Lower for consistency
 
     # --------------------------------------------------
     # FREE EMAIL OSINT / VALIDATION API
     # --------------------------------------------------
     ABSTRACT_API_KEY = os.getenv("ABSTRACT_API_KEY")
+    ABSTRACT_EMAIL_API_KEY = os.getenv("ABSTRACT_EMAIL_API_KEY") or os.getenv("ABSTRACT_API_KEY")
     ABSTRACT_API_URL = "https://emailvalidation.abstractapi.com/v1/"
 
     # --------------------------------------------------
@@ -79,13 +79,25 @@ class Config:
     ]
 
     # --------------------------------------------------
-    # RISK SCORING THRESHOLDS
+    # RISK SCORING THRESHOLDS (exposure counts)
     # --------------------------------------------------
     RISK_THRESHOLDS = {
-        "LOW": 0,
-        "MEDIUM": 40,
-        "HIGH": 70
+        "LOW": 2,
+        "MEDIUM": 5,
+        "HIGH": 10
     }
+
+    # --------------------------------------------------
+    # GOOGLE OAUTH SETTINGS
+    # --------------------------------------------------
+    GOOGLE_CLIENT_SECRETS_FILE = BASE_DIR / "client_secret.json"
+    GOOGLE_SCOPES = [
+        "https://www.googleapis.com/auth/userinfo.email",
+        "https://www.googleapis.com/auth/gmail.readonly"
+    ]
+    GOOGLE_REDIRECT_URI = os.getenv(
+        "GOOGLE_REDIRECT_URI", "http://127.0.0.1:5000/callback"
+    )
 
     # --------------------------------------------------
     # VALIDATION ON STARTUP
@@ -100,38 +112,38 @@ class Config:
         errors = []
 
         # Mandatory keys
-        if not cls.GEMINI_API_KEY:
-            errors.append("❌ GEMINI_API_KEY is missing in .env")
+        if not cls.GROQ_API_KEY:
+            errors.append("[ERROR] GROQ_API_KEY is missing in .env")
 
         # Logical validation
         if cls.SCAN_TIMEOUT <= 0:
-            errors.append("❌ SCAN_TIMEOUT must be greater than 0")
+            errors.append("[ERROR] SCAN_TIMEOUT must be greater than 0")
 
         if cls.MAX_PLATFORMS <= 0:
-            errors.append("❌ MAX_PLATFORMS must be greater than 0")
+            errors.append("[ERROR] MAX_PLATFORMS must be greater than 0")
 
         # Optional API warning (NOT fatal)
-        if not cls.ABSTRACT_API_KEY:
-            print("⚠️ ABSTRACT_API_KEY not set — email API scan will be limited")
+        if not cls.ABSTRACT_EMAIL_API_KEY and not cls.ABSTRACT_API_KEY:
+            print("[WARNING] ABSTRACT_EMAIL_API_KEY / ABSTRACT_API_KEY not set — email API scan will be limited")
+
+        if not cls.GOOGLE_CLIENT_SECRETS_FILE.exists():
+            errors.append(f"[ERROR] Google client_secrets file not found at {cls.GOOGLE_CLIENT_SECRETS_FILE}")
 
         # Stop app only if fatal errors exist
         if errors:
             for error in errors:
                 print(error)
-            raise EnvironmentError(
-                "Configuration validation failed. Fix the .env file."
-            )
+            raise EnvironmentError("Configuration validation failed. Fix the .env file or missing files.")
 
         # Ensure required directories exist
         cls.DATA_DIR.mkdir(exist_ok=True)
         cls.SCAN_DIR.mkdir(exist_ok=True)
         cls.TEMP_DIR.mkdir(exist_ok=True)
 
-        print("✅ Configuration loaded and validated successfully")
+        print("[OK] Configuration loaded and validated successfully")
 
 
 # ==================================================
 # EXPORT SINGLE CONFIG OBJECT
 # ==================================================
-
 config = Config

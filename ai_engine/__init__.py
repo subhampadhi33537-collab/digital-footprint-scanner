@@ -3,7 +3,7 @@ AI Engine Package Initialization
 ---------------------------------------------------
 Responsibilities:
 - Initialize AI engine for Digital Footprint Scanner
-- Expose chatbot interface, AI explainer, and Gemini client
+- Expose chatbot interface, AI explainer, and Groq client
 - Connect scanner and analysis outputs to AI assistant
 - Ready for routes.py, dashboard, and hackathon demo
 """
@@ -12,7 +12,7 @@ Responsibilities:
 # IMPORT MODULES
 # ===============================
 from .chatbot_handler import AIChatbot, get_ai_response
-from .gemini_client import GeminiClient
+from .groq_client import GroqClient
 from .ai_explainer import explain_analysis, get_explanation_for_user
 
 import logging
@@ -31,7 +31,7 @@ logging.basicConfig(
 __all__ = [
     "AIChatbot",
     "get_ai_response",
-    "GeminiClient",
+    "GroqClient",
     "explain_analysis",
     "get_explanation_for_user"
 ]

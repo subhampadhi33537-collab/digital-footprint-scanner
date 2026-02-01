@@ -8,3 +8,9 @@
 __pycache__/
 *.pyc
 venv/
+# Secrets
+client_secret.json
+.env
+
+# Runtime / generated data
+static/data/results.json
