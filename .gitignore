@@ -1,8 +1,12 @@
 # Flask session files
 .flask_session/
 
-# Streamlit cache
+# Streamlit cache (deprecated)
 .streamlit/
+streamlit_app.py
+
+# Render config (deprecated)
+render.yaml
 
 # Environment variables
 .env
@@ -11,9 +15,15 @@
 __pycache__/
 *.pyc
 venv/
+.venv/
+
 # Secrets
 client_secret.json
 .env
 
 # Runtime / generated data
 static/data/results.json
+
+# Vercel
+.vercel
+

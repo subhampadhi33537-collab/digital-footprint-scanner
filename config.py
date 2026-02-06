@@ -29,9 +29,9 @@ class Config:
     # --------------------------------------------------
     FLASK_ENV = os.getenv("FLASK_ENV", "production")
     FLASK_DEBUG = os.getenv("FLASK_DEBUG", "False").lower() == "true"
-    SECRET_KEY = os.getenv("SECRET_KEY", "default-secret-key")
-    # In production (Render), allow missing config by default
-    ALLOW_MISSING_CONFIG = os.getenv("ALLOW_MISSING_CONFIG", "True" if os.getenv("FLASK_ENV") == "production" else "False").lower() == "true"
+    SECRET_KEY = os.getenv("SECRET_KEY", "default-secret-key-change-in-production")
+    # In production (Vercel/Cloud), allow missing config by default
+    ALLOW_MISSING_CONFIG = os.getenv("ALLOW_MISSING_CONFIG", "True").lower() == "true"
 
     # --------------------------------------------------
     # GROQ AI SETTINGS

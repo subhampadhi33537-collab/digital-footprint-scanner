@@ -66,41 +66,138 @@ def apply_custom_theme():
     """Apply custom CSS styling"""
     st.markdown("""
     <style>
+    @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&family=Inter:wght@400;500;600&display=swap');
+    
+    .stApp {
+        background: linear-gradient(135deg, #0f172a 0%, #1e293b 50%, #0f172a 100%);
+    }
+    
     .main-header {
-        font-size: 2.5rem;
-        font-weight: bold;
-        color: #1f77b4;
+        font-size: 3.5rem;
+        font-weight: 800;
+        background: linear-gradient(135deg, #4f46e5 0%, #7c3aed 50%, #ec4899 100%);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
         text-align: center;
         margin-bottom: 1rem;
+        animation: fadeInDown 1s;
     }
+    
+    .hero-subtitle {
+        font-size: 1.5rem;
+        color: #94a3b8;
+        text-align: center;
+        margin-bottom: 2rem;
+    }
+    
     .subheader {
         font-size: 1.3rem;
-        color: #555;
-        margin-bottom: 0.5rem;
+        color: #e2e8f0;
+        margin-bottom: 1rem;
+        font-weight: 600;
     }
+    
+    .feature-card {
+        background: linear-gradient(135deg, rgba(30, 41, 59, 0.8), rgba(51, 65, 85, 0.6));
+        border: 1px solid rgba(148, 163, 184, 0.2);
+        border-radius: 16px;
+        padding: 2rem;
+        backdrop-filter: blur(10px);
+        transition: all 0.3s ease;
+        margin: 1rem 0;
+    }
+    
+    .feature-card:hover {
+        border-color: rgba(148, 163, 184, 0.4);
+        transform: translateY(-5px);
+        box-shadow: 0 20px 60px rgba(79, 70, 229, 0.2);
+    }
+    
+    .feature-icon {
+        font-size: 2.5rem;
+        margin-bottom: 1rem;
+    }
+    
+    .stat-box {
+        background: linear-gradient(135deg, rgba(79, 70, 229, 0.2), rgba(124, 58, 237, 0.2));
+        border: 1px solid rgba(79, 70, 229, 0.3);
+        border-radius: 12px;
+        padding: 1.5rem;
+        text-align: center;
+    }
+    
+    .stat-number {
+        font-size: 2.5rem;
+        font-weight: 800;
+        background: linear-gradient(135deg, #4f46e5, #7c3aed);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+    }
+    
+    .stat-label {
+        color: #94a3b8;
+        font-size: 0.9rem;
+        margin-top: 0.5rem;
+    }
+    
     .risk-high {
-        color: #d62728;
+        color: #ef4444;
         font-weight: bold;
     }
     .risk-medium {
-        color: #ff7f0e;
+        color: #f59e0b;
         font-weight: bold;
     }
     .risk-low {
-        color: #2ca02c;
+        color: #10b981;
         font-weight: bold;
     }
     .platform-found {
-        background-color: #d4edda;
+        background-color: rgba(16, 185, 129, 0.1);
         padding: 0.5rem;
-        border-radius: 0.25rem;
-        margin: 0.25rem 0;
+        border-radius: 0.5rem;
+        border-left: 3px solid #10b981;
+        margin: 0.5rem 0;
     }
     .platform-not-found {
-        background-color: #f8f9fa;
+        background-color: rgba(148, 163, 184, 0.05);
         padding: 0.5rem;
-        border-radius: 0.25rem;
-        margin: 0.25rem 0;
+        border-radius: 0.5rem;
+        margin: 0.5rem 0;
+    }
+    
+    @keyframes fadeInDown {
+        from {
+            opacity: 0;
+            transform: translateY(-20px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+    
+    .stButton>button {
+        background: linear-gradient(135deg, #4f46e5, #7c3aed);
+        color: white;
+        border: none;
+        border-radius: 10px;
+        padding: 0.75rem 2rem;
+        font-weight: 600;
+        transition: all 0.3s ease;
+    }
+    
+    .stButton>button:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 20px 40px rgba(79, 70, 229, 0.3);
+    }
+    
+    .highlight-box {
+        background: linear-gradient(135deg, rgba(79, 70, 229, 0.1), rgba(124, 58, 237, 0.1));
+        border-left: 4px solid #4f46e5;
+        border-radius: 8px;
+        padding: 1.5rem;
+        margin: 1rem 0;
     }
     </style>
     """, unsafe_allow_html=True)
@@ -137,42 +234,211 @@ This tool helps you discover and analyze your digital footprint across multiple 
 # ==================================================
 def page_home():
     st.markdown('<h1 class="main-header">🔍 Digital Footprint Scanner</h1>', unsafe_allow_html=True)
-    
-    col1, col2 = st.columns([2, 1])
-    
-    with col1:
-        st.markdown("""
-        ### Welcome to Your Privacy Analyzer
-        
-        Discover what information is publicly available about you online. This tool performs comprehensive 
-        **Open Source Intelligence (OSINT)** scans to identify your digital footprint across multiple platforms.
-        
-        #### What Can This Tool Do?
-        - 🔎 **Scan** your username/email across 50+ platforms
-        - ⚠️ **Assess** exposure risk levels
-        - 🤖 **Analyze** patterns with machine learning
-        - 💬 **Discuss** results with AI
-        - 📊 **Track** your digital footprint over time
-        """)
-    
-    with col2:
-        st.info("""
-        **Quick Start:**
-        1. Go to "Quick Scan"
-        2. Enter your username/email
-        3. Click "Start Scan"
-        4. View results & recommendations
-        """)
+    st.markdown('<p class="hero-subtitle">AI-Powered OSINT Tool for Privacy Analysis</p>', unsafe_allow_html=True)
     
     st.markdown("---")
     
-    col1, col2, col3 = st.columns(3)
-    with col1:
-        st.metric("Platforms Checked", "50+", "Real-time")
+    # Hero Section
+    col1, col2, col3 = st.columns([1, 2, 1])
     with col2:
-        st.metric("Scan Speed", "<2 min", "Average")
+        st.markdown("""
+        <div style="text-align: center; padding: 2rem;">
+            <h2 style="color: #e2e8f0; font-size: 1.8rem; margin-bottom: 1rem;">
+                Discover Your Digital Footprint
+            </h2>
+            <p style="color: #94a3b8; font-size: 1.1rem; line-height: 1.8;">
+                Scan 50+ platforms in real-time to understand what information about you is publicly available online. 
+                Get AI-powered risk analysis and actionable privacy recommendations.
+            </p>
+        </div>
+        """, unsafe_allow_html=True)
+    
+    st.markdown("---")
+    
+    # Quick Stats
+    st.markdown("### 📊 Platform Overview")
+    col1, col2, col3, col4 = st.columns(4)
+    
+    with col1:
+        st.markdown("""
+        <div class="stat-box">
+            <div class="stat-number">50+</div>
+            <div class="stat-label">Platforms Scanned</div>
+        </div>
+        """, unsafe_allow_html=True)
+    
+    with col2:
+        st.markdown("""
+        <div class="stat-box">
+            <div class="stat-number">&lt;2min</div>
+            <div class="stat-label">Average Scan Time</div>
+        </div>
+        """, unsafe_allow_html=True)
+    
     with col3:
-        st.metric("Accuracy", "95%+", "OSINT based")
+        st.markdown("""
+        <div class="stat-box">
+            <div class="stat-number">95%</div>
+            <div class="stat-label">Accuracy Rate</div>
+        </div>
+        """, unsafe_allow_html=True)
+    
+    with col4:
+        st.markdown("""
+        <div class="stat-box">
+            <div class="stat-number">AI</div>
+            <div class="stat-label">Powered Analysis</div>
+        </div>
+        """, unsafe_allow_html=True)
+    
+    st.markdown("<br>", unsafe_allow_html=True)
+    
+    # Features Section
+    st.markdown("### ✨ Key Features")
+    
+    col1, col2 = st.columns(2)
+    
+    with col1:
+        st.markdown("""
+        <div class="feature-card">
+            <div class="feature-icon">🔍</div>
+            <h3 style="color: #e2e8f0; margin-bottom: 0.5rem;">Real-Time OSINT Scanning</h3>
+            <p style="color: #94a3b8;">
+                Checks your username or email across 50+ social media platforms, forums, and websites 
+                to find publicly available accounts and information.
+            </p>
+        </div>
+        """, unsafe_allow_html=True)
+        
+        st.markdown("""
+        <div class="feature-card">
+            <div class="feature-icon">🤖</div>
+            <h3 style="color: #e2e8f0; margin-bottom: 0.5rem;">ML-Powered Risk Analysis</h3>
+            <p style="color: #94a3b8;">
+                Advanced machine learning algorithms analyze your exposure patterns and provide 
+                intelligent risk scores with detailed breakdowns.
+            </p>
+        </div>
+        """, unsafe_allow_html=True)
+        
+        st.markdown("""
+        <div class="feature-card">
+            <div class="feature-icon">💬</div>
+            <h3 style="color: #e2e8f0; margin-bottom: 0.5rem;">AI Assistant</h3>
+            <p style="color: #94a3b8;">
+                Ask questions about your scan results and get personalized privacy recommendations 
+                from our intelligent chatbot powered by Groq AI.
+            </p>
+        </div>
+        """, unsafe_allow_html=True)
+    
+    with col2:
+        st.markdown("""
+        <div class="feature-card">
+            <div class="feature-icon">⚠️</div>
+            <h3 style="color: #e2e8f0; margin-bottom: 0.5rem;">Exposure Risk Assessment</h3>
+            <p style="color: #94a3b8;">
+                Get comprehensive risk analysis with severity levels, vulnerability indicators, 
+                and specific recommendations to reduce your digital footprint.
+            </p>
+        </div>
+        """, unsafe_allow_html=True)
+        
+        st.markdown("""
+        <div class="feature-card">
+            <div class="feature-icon">🎯</div>
+            <h3 style="color: #e2e8f0; margin-bottom: 0.5rem;">Threat Intelligence</h3>
+            <p style="color: #94a3b8;">
+                Detect anomalies, identify unusual patterns, and receive alerts about potential 
+                security threats across your discovered accounts.
+            </p>
+        </div>
+        """, unsafe_allow_html=True)
+        
+        st.markdown("""
+        <div class="feature-card">
+            <div class="feature-icon">📈</div>
+            <h3 style="color: #e2e8f0; margin-bottom: 0.5rem;">Detailed Analytics</h3>
+            <p style="color: #94a3b8;">
+                Visual dashboards, platform breakdowns, and comprehensive reports to track and 
+                understand your complete digital presence.
+            </p>
+        </div>
+        """, unsafe_allow_html=True)
+    
+    st.markdown("<br>", unsafe_allow_html=True)
+    
+    # How It Works Section
+    st.markdown("### 🚀 How It Works")
+    
+    col1, col2, col3, col4 = st.columns(4)
+    
+    with col1:
+        st.markdown("""
+        <div style="text-align: center; padding: 1rem;">
+            <div style="font-size: 3rem; margin-bottom: 0.5rem;">1️⃣</div>
+            <h4 style="color: #e2e8f0; margin-bottom: 0.5rem;">Enter Info</h4>
+            <p style="color: #94a3b8; font-size: 0.9rem;">
+                Provide your username or email address
+            </p>
+        </div>
+        """, unsafe_allow_html=True)
+    
+    with col2:
+        st.markdown("""
+        <div style="text-align: center; padding: 1rem;">
+            <div style="font-size: 3rem; margin-bottom: 0.5rem;">2️⃣</div>
+            <h4 style="color: #e2e8f0; margin-bottom: 0.5rem;">Scan Platforms</h4>
+            <p style="color: #94a3b8; font-size: 0.9rem;">
+                We check 50+ platforms in real-time
+            </p>
+        </div>
+        """, unsafe_allow_html=True)
+    
+    with col3:
+        st.markdown("""
+        <div style="text-align: center; padding: 1rem;">
+            <div style="font-size: 3rem; margin-bottom: 0.5rem;">3️⃣</div>
+            <h4 style="color: #e2e8f0; margin-bottom: 0.5rem;">Analyze Results</h4>
+            <p style="color: #94a3b8; font-size: 0.9rem;">
+                AI analyzes exposure and risk levels
+            </p>
+        </div>
+        """, unsafe_allow_html=True)
+    
+    with col4:
+        st.markdown("""
+        <div style="text-align: center; padding: 1rem;">
+            <div style="font-size: 3rem; margin-bottom: 0.5rem;">4️⃣</div>
+            <h4 style="color: #e2e8f0; margin-bottom: 0.5rem;">Get Insights</h4>
+            <p style="color: #94a3b8; font-size: 0.9rem;">
+                Review detailed report and recommendations
+            </p>
+        </div>
+        """, unsafe_allow_html=True)
+    
+    st.markdown("<br>", unsafe_allow_html=True)
+    
+    # Call to Action
+    col1, col2, col3 = st.columns([1, 2, 1])
+    with col2:
+        st.markdown("""
+        <div class="highlight-box" style="text-align: center;">
+            <h3 style="color: #e2e8f0; margin-bottom: 1rem;">Ready to Get Started?</h3>
+            <p style="color: #94a3b8; margin-bottom: 1.5rem;">
+                Navigate to "Quick Scan" in the sidebar to begin your digital footprint analysis.
+            </p>
+        </div>
+        """, unsafe_allow_html=True)
+        
+        if st.button("🚀 Start Your Scan Now", use_container_width=True, type="primary"):
+            st.session_state.page = "🔎 Quick Scan"
+            st.rerun()
+    
+    st.markdown("<br><br>", unsafe_allow_html=True)
+    
+    # Privacy Notice
+    st.info("🔐 **Privacy First:** No data is stored permanently. All scans are performed in real-time and results are cleared when you close your browser session.")
 
 # ==================================================
 # PAGE 2: QUICK SCAN
@@ -425,7 +691,6 @@ def page_analytics():
             st.metric("Errors/Timeouts", errors)
         
         # Chart
-        import streamlit_analytics if st else None
         try:
             chart_data = {
                 "Found": found,

@@ -8,11 +8,15 @@ Production Responsibilities:
 - Initialize Flask + sessions
 - Register routes (API, OAuth, UI)
 - Handle real OSINT scanning requests
+
+Deployment: Vercel Serverless
+Local Testing: python app.py
 """
 
 import os
 from flask import Flask
 from flask_session import Session
+from flask_cors import CORS
 from dotenv import load_dotenv
 
 from config import config
@@ -26,6 +30,17 @@ load_dotenv()
 # CREATE FLASK APP
 # ==================================================
 app = Flask(__name__)
+
+# ==================================================
+# CORS CONFIGURATION (for API access)
+# ==================================================
+CORS(app, resources={
+    r"/api/*": {
+        "origins": "*",
+        "methods": ["GET", "POST", "OPTIONS"],
+        "allow_headers": ["Content-Type"]
+    }
+})
 
 # ==================================================
 # FLASK + SESSION CONFIGURATION

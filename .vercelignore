@@ -1,0 +1,58 @@
+# Virtual environment
+.venv/
+venv/
+env/
+
+# Python cache
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.Python
+
+# Environment variables
+.env
+.env.local
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+
+# Flask
+instance/
+.flask_session/
+
+# Streamlit (not used)
+.streamlit/
+streamlit_app.py
+
+# Render (not used)
+render.yaml
+
+# Data files
+data/scans/*.json
+data/temp/*
+static/data/results.json
+
+# ML Models (will retrain)
+models/*.pkl
+
+# Secrets
+client_secret.json
+
+# Testing
+.pytest_cache/
+.coverage
+htmlcov/
+
+# Vercel
+.vercel
