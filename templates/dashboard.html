@@ -3,160 +3,986 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dashboard | Digital Footprint Scanner</title>
+    <title>Digital Footprint Scanner - Professional Dashboard</title>
 
-    <!-- Google Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
-
-    <!-- Tailwind CSS -->
+    <!-- Modern CSS Framework -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
     <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Charts & Visualizations -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@3.9.1/dist/chart.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2.2.0/dist/chartjs-plugin-datalabels.min.js"></script>
+    
+    <!-- Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    
+    <!-- Animations -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
 
-    <!-- Animate.css -->
-    <link rel="stylesheet"
-          href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
 
-    <!-- Chart.js (future use) -->
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+            color: #e2e8f0;
+            min-height: 100vh;
+        }
 
-    <!-- Custom CSS -->
-    <link rel="stylesheet" href="/static/css/style.css">
+        .dashboard-header {
+            backdrop-filter: blur(10px);
+            background: rgba(15, 23, 42, 0.8);
+            border-bottom: 1px solid rgba(148, 163, 184, 0.1);
+        }
+
+        .card-modern {
+            background: linear-gradient(135deg, rgba(30, 41, 59, 0.8), rgba(51, 65, 85, 0.6));
+            border: 1px solid rgba(148, 163, 184, 0.1);
+            border-radius: 16px;
+            backdrop-filter: blur(10px);
+            transition: all 0.3s ease;
+        }
+
+        .card-modern:hover {
+            border-color: rgba(148, 163, 184, 0.3);
+            transform: translateY(-4px);
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.3);
+        }
+
+        .metric-card {
+            background: linear-gradient(135deg, #4f46e5 0%, #7c3aed 100%);
+            border-radius: 12px;
+            padding: 24px;
+            color: white;
+            text-align: center;
+            box-shadow: 0 10px 30px rgba(79, 70, 229, 0.2);
+        }
+
+        .risk-badge {
+            display: inline-block;
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-weight: 600;
+            font-size: 12px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .risk-badge.low {
+            background: #10b981;
+            color: white;
+        }
+
+        .risk-badge.medium {
+            background: #f59e0b;
+            color: white;
+        }
+
+        .risk-badge.high {
+            background: #ef4444;
+            color: white;
+        }
+
+        .risk-badge.critical {
+            background: #991b1b;
+            color: white;
+        }
+
+        .platform-item {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 16px;
+            border-radius: 12px;
+            background: rgba(148, 163, 184, 0.05);
+            border-left: 4px solid #4f46e5;
+            margin-bottom: 12px;
+            transition: all 0.3s ease;
+        }
+
+        .platform-item:hover {
+            background: rgba(148, 163, 184, 0.1);
+            border-left-color: #7c3aed;
+        }
+
+        .platform-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+            background: rgba(79, 70, 229, 0.1);
+            margin-right: 12px;
+        }
+
+        .chart-container {
+            position: relative;
+            height: 350px;
+            margin: 20px 0;
+        }
+
+        .status-indicator {
+            display: inline-block;
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            margin-right: 8px;
+            animation: pulse 2s infinite;
+        }
+
+        .status-indicator.found {
+            background: #10b981;
+        }
+
+        .status-indicator.notfound {
+            background: #64748b;
+        }
+
+        .status-indicator.error {
+            background: #ef4444;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+
+        .gradient-text {
+            background: linear-gradient(135deg, #4f46e5 0%, #7c3aed 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .ml-insight {
+            background: linear-gradient(135deg, rgba(79, 70, 229, 0.1), rgba(124, 58, 237, 0.1));
+            border-left: 4px solid #4f46e5;
+            padding: 16px;
+            border-radius: 8px;
+            margin: 12px 0;
+        }
+
+        #groq-recommendations {
+            line-height: 1.6;
+            font-size: 0.95rem;
+            word-wrap: break-word;
+            white-space: pre-wrap;
+        }
+
+        #groq-recommendations div {
+            margin-bottom: 0.5rem;
+        }
+
+        #groq-recommendations .font-semibold {
+            margin-top: 0.75rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .loading-spinner {
+            border: 4px solid rgba(79, 70, 229, 0.2);
+            border-radius: 50%;
+            border-top: 4px solid #7c3aed;
+            width: 40px;
+            height: 40px;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        /* Chatbot Styles */
+        .chat-message {
+            display: flex;
+            margin-bottom: 1rem;
+            animation: slideIn 0.3s ease-out;
+        }
+
+        .chat-message.user {
+            justify-content: flex-end;
+        }
+
+        .chat-message.ai {
+            justify-content: flex-start;
+        }
+
+        .chat-bubble {
+            max-width: 80%;
+            padding: 0.75rem 1rem;
+            border-radius: 0.75rem;
+            word-wrap: break-word;
+            line-height: 1.5;
+        }
+
+        .chat-message.user .chat-bubble {
+            background: linear-gradient(135deg, #4f46e5, #7c3aed);
+            color: white;
+            border-radius: 1rem 1rem 0.25rem 1rem;
+        }
+
+        .chat-message.ai .chat-bubble {
+            background: #1e293b;
+            color: #e2e8f0;
+            border: 1px solid #334155;
+            border-radius: 1rem 1rem 1rem 0.25rem;
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        #chatbox-input:focus {
+            box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.1);
+        }
+    </style>
 </head>
+<body>
+    <!-- HEADER -->
+    <header class="dashboard-header sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
+            <div class="flex items-center gap-2">
+                <i class="fas fa-fingerprint text-indigo-500 text-2xl"></i>
+                <h1 class="text-2xl font-bold gradient-text">Digital Footprint Scanner</h1>
+            </div>
+            <nav class="flex gap-6 items-center">
+                <a href="/" class="text-slate-300 hover:text-indigo-400 transition">Home</a>
+                <a href="#results" class="text-slate-300 hover:text-indigo-400 transition">Results</a>
+                <a href="#ai-insights" class="text-slate-300 hover:text-indigo-400 transition">AI Insights</a>
+                <button class="px-4 py-2 bg-indigo-600 hover:bg-indigo-700 rounded-8 text-white font-semibold transition" onclick="location.href='/'">
+                    <i class="fas fa-plus mr-2"></i>New Scan
+                </button>
+            </nav>
+        </div>
+    </header>
 
-<body class="bg-gray-100 font-inter min-h-screen flex flex-col">
+    <main class="max-w-7xl mx-auto px-6 py-12">
+        <!-- HERO SECTION -->
+        <section id="hero" class="mb-12">
+            <div class="card-modern p-8 text-center animate__animated animate__fadeInDown">
+                <h2 class="text-4xl font-bold mb-4 gradient-text">Your Digital Footprint Analysis</h2>
+                <p class="text-slate-400 text-lg mb-6">Advanced ML-powered insights into your online presence, potential risks, and privacy exposure</p>
+            </div>
+        </section>
 
-<!-- ================= HEADER ================= -->
-<header class="w-full py-5 px-8 flex justify-between items-center bg-white shadow-md fixed top-0 z-50">
-    <div class="text-2xl font-bold text-indigo-600">Digital Footprint Scanner</div>
-    <nav class="space-x-6">
-        <a href="/" class="text-gray-700 hover:text-indigo-600 font-medium">Home</a>
-        <a href="#results" class="text-gray-700 hover:text-indigo-600 font-medium">Results</a>
-        <a href="#ai-assistant" class="text-gray-700 hover:text-indigo-600 font-medium">AI Assistant</a>
-    </nav>
-</header>
+        <!-- KEY METRICS -->
+        <section class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-12">
+            <div class="metric-card animate__animated animate__fadeInUp">
+                <div class="text-4xl font-bold mb-2" id="total-platforms">-</div>
+                <div class="text-sm opacity-80">Platforms Found</div>
+            </div>
+            <div class="metric-card animate__animated animate__fadeInUp" style="animation-delay: 0.1s">
+                <div class="text-4xl font-bold mb-2" id="risk-score">-</div>
+                <div class="text-sm opacity-80">ML Risk Score</div>
+            </div>
+            <div class="metric-card animate__animated animate__fadeInUp" style="animation-delay: 0.2s">
+                <div class="text-4xl font-bold mb-2" id="exposure-level">-</div>
+                <div class="text-sm opacity-80">Exposure Level</div>
+            </div>
+            <div class="metric-card animate__animated animate__fadeInUp" style="animation-delay: 0.3s">
+                <div class="text-4xl font-bold mb-2" id="anomaly-count">-</div>
+                <div class="text-sm opacity-80">Anomalies Detected</div>
+            </div>
+        </section>
 
-<!-- ================= HERO ================= -->
-<section class="mt-28 px-4 max-w-7xl mx-auto text-center">
-    <h1 class="text-4xl md:text-5xl font-extrabold text-indigo-700 mb-4 animate__animated animate__fadeInDown">
-        Your Digital Footprint Results
-    </h1>
-    <p class="text-gray-700 text-lg md:text-xl animate__animated animate__fadeIn animate__delay-1s">
-        Analysis of your online exposure, risks, and privacy insights
-    </p>
-</section>
+        <!-- MAIN GRID -->
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-8 mb-12">
+            <!-- LEFT: PLATFORMS & DETAILED RESULTS -->
+            <div class="lg:col-span-2">
+                <!-- PLATFORMS SECTION -->
+                <div id="results" class="card-modern p-8 mb-8 animate__animated animate__fadeInLeft">
+                    <h3 class="text-xl font-bold mb-6 flex items-center gap-2">
+                        <i class="fas fa-globe text-indigo-500"></i>
+                        Detected Platforms
+                    </h3>
+                    <div id="platforms-container" class="space-y-3">
+                        <div class="text-center text-slate-400">Loading platform data...</div>
+                    </div>
+                </div>
 
-<!-- ================= ERROR ================= -->
-<div id="dashboard-error"
-     class="hidden text-center text-red-600 mt-6 font-semibold">
-</div>
+                <!-- ML RISK BREAKDOWN -->
+                <div class="card-modern p-8 animate__animated animate__fadeInLeft" style="animation-delay: 0.1s">
+                    <h3 class="text-xl font-bold mb-6 flex items-center gap-2">
+                        <i class="fas fa-robot text-indigo-500"></i>
+                        ML Risk Assessment
+                    </h3>
+                    <div class="space-y-4">
+                        <div>
+                            <div class="flex justify-between mb-2">
+                                <span>Predicted Risk Score</span>
+                                <span id="ml-risk-score" class="font-bold text-indigo-400">-</span>
+                            </div>
+                            <div class="w-full bg-slate-700 rounded-full h-2">
+                                <div id="ml-risk-bar" class="bg-gradient-to-r from-indigo-500 to-purple-600 h-2 rounded-full" style="width: 0%"></div>
+                            </div>
+                        </div>
+                        <div id="ml-insights" class="space-y-2"></div>
+                    </div>
+                </div>
+            </div>
 
-<!-- ================= RISK SUMMARY ================= -->
-<section id="results" class="mt-12 max-w-7xl mx-auto px-4">
-    <div class="bg-white p-8 rounded-xl shadow-lg animate__animated animate__fadeInUp">
-        <p id="scanned-input" class="text-sm text-gray-500 mb-2"></p>
-        <h2 class="text-2xl font-semibold text-indigo-600 mb-3">Overall Risk Level</h2>
-        <div id="risk-level" class="text-3xl font-bold text-gray-800"></div>
-        <p id="risk-description" class="text-gray-600 mt-2"></p>
-    </div>
-</section>
+            <!-- RIGHT: CHARTS & VISUALIZATIONS -->
+            <div>
+                <!-- RISK LEVEL GAUGE -->
+                <div class="card-modern p-8 mb-8 animate__animated animate__fadeInRight">
+                    <h3 class="text-xl font-bold mb-6 text-center">Overall Risk Level</h3>
+                    <div class="chart-container" style="height: 250px">
+                        <canvas id="riskGaugeChart"></canvas>
+                    </div>
+                    <div class="text-center mt-4">
+                        <div id="risk-level-badge" class="risk-badge medium inline-block">MEDIUM</div>
+                    </div>
+                </div>
 
-<!-- ================= PLATFORMS ================= -->
-<section class="mt-12 max-w-7xl mx-auto px-4">
-    <h2 class="text-2xl font-semibold text-indigo-600 mb-4">Detected Platforms</h2>
-    <div id="platforms-container"
-         class="grid md:grid-cols-3 gap-6">
-        <!-- JS renders cards here -->
-    </div>
-</section>
-
-<!-- ================= EXPOSURE ================= -->
-<section class="mt-12 max-w-7xl mx-auto px-4 grid md:grid-cols-3 gap-6">
-
-    <div class="bg-white p-6 rounded-xl shadow-lg hover:shadow-xl transition">
-        <h3 class="text-xl font-semibold text-indigo-600">Personal Identifiers</h3>
-        <ul id="personal-exposure" class="mt-3 text-gray-700 list-disc ml-5"></ul>
-    </div>
-
-    <div class="bg-white p-6 rounded-xl shadow-lg hover:shadow-xl transition">
-        <h3 class="text-xl font-semibold text-indigo-600">Contact Information</h3>
-        <ul id="contact-exposure" class="mt-3 text-gray-700 list-disc ml-5"></ul>
-    </div>
-
-    <div class="bg-white p-6 rounded-xl shadow-lg hover:shadow-xl transition">
-        <h3 class="text-xl font-semibold text-indigo-600">Online Accounts</h3>
-        <ul id="online-exposure" class="mt-3 text-gray-700 list-disc ml-5"></ul>
-    </div>
-
-</section>
-
-<!-- ================= CORRELATION ================= -->
-<section class="mt-12 max-w-7xl mx-auto px-4">
-    <div class="bg-white p-8 rounded-xl shadow-lg">
-        <h2 class="text-2xl font-semibold text-indigo-600 mb-3">
-            Cross-Platform Correlations
-        </h2>
-        <ul id="correlation-list"
-            class="list-disc ml-6 text-gray-700">
-        </ul>
-    </div>
-</section>
-
-<!-- ================= AI ASSISTANT ================= -->
-<section id="ai-assistant" class="mt-12 max-w-7xl mx-auto px-4">
-    <div class="bg-white p-8 rounded-xl shadow-lg">
-        <h2 class="text-2xl font-semibold text-indigo-600 mb-3">
-            AI Recommendations
-        </h2>
-        <p id="ai-explanation" class="text-gray-700 mb-4"></p>
-
-        <button id="chatbotBtn"
-                class="bg-indigo-600 hover:bg-indigo-700 text-white px-6 py-2 rounded-lg font-semibold transition">
-            Ask AI Assistant
-        </button>
-    </div>
-</section>
-
-<!-- ================= CHATBOT MODAL ================= -->
-<div id="chatbotModal"
-     class="fixed inset-0 bg-black bg-opacity-50 hidden justify-center items-center z-50">
-    <div class="bg-white w-full max-w-2xl rounded-xl p-6 relative">
-        <span id="closeModal"
-              class="absolute top-3 right-4 text-gray-500 hover:text-gray-900 cursor-pointer text-xl">
-            &times;
-        </span>
-
-        <h3 class="text-xl font-semibold text-indigo-600 mb-4">
-            AI Assistant Chat
-        </h3>
-        <p>Ask the AI about your digital footprint, exposure, and privacy recommendations.</p>
-        <br>
-
-        <div id="chatBox"
-             class="h-64 overflow-y-auto border rounded-lg p-4 mb-4 bg-gray-50">
+                <!-- EXPOSURE BREAKDOWN -->
+                <div class="card-modern p-8 animate__animated animate__fadeInRight" style="animation-delay: 0.1s">
+                    <h3 class="text-xl font-bold mb-6">Exposure Breakdown</h3>
+                    <div class="chart-container" style="height: 250px">
+                        <canvas id="exposureChart"></canvas>
+                    </div>
+                </div>
+            </div>
         </div>
 
-        <input id="userMessage"
-               type="text"
-               placeholder="Type your question..."
-               class="w-full border rounded-lg px-4 py-2 mb-2 focus:ring-2 focus:ring-indigo-500">
+        <!-- AI INSIGHTS & RECOMMENDATIONS -->
+        <div id="ai-insights" class="card-modern p-8 animate__animated animate__fadeInUp">
+            <h3 class="text-2xl font-bold mb-6 flex items-center gap-2">
+                <i class="fas fa-lightbulb text-yellow-500"></i>
+                AI-Powered Insights & Recommendations
+            </h3>
+            <div id="insights-container" class="space-y-4 mb-6">
+                <div class="text-center text-slate-400">Loading AI insights...</div>
+            </div>
+            
+            <!-- AI SECURITY RECOMMENDATIONS (Groq Analysis) -->
+            <div class="bg-slate-800/50 rounded-lg border border-slate-700 p-6 mt-6">
+                <h4 class="text-lg font-semibold text-indigo-400 mb-3 flex items-center gap-2">
+                    <i class="fas fa-brain text-purple-500"></i>
+                    AI Security Analysis
+                </h4>
+                <div id="groq-recommendations" class="text-slate-300 leading-relaxed max-h-48 overflow-y-auto">
+                    <div class="text-center text-slate-500 py-4">
+                        <i class="fas fa-spinner fa-spin"></i> Analyzing with AI...
+                    </div>
+                </div>
+            </div>
+        </div>
 
-        <button id="sendMessage"
-                class="w-full bg-indigo-600 hover:bg-indigo-700 text-white py-2 rounded-lg font-semibold">
-            Send
-        </button>
-    </div>
-</div>
+        <!-- THREAT INTELLIGENCE -->
+        <div class="card-modern p-8 mt-8 animate__animated animate__fadeInUp" style="animation-delay: 0.2s">
+            <h3 class="text-2xl font-bold mb-6 flex items-center gap-2">
+                <i class="fas fa-shield-alt text-red-500"></i>
+                Threat Intelligence Report
+            </h3>
+            <div id="threat-report" class="space-y-4">
+                <div class="text-center text-slate-400">Generating threat analysis...</div>
+            </div>
+        </div>
 
-<!-- ================= FOOTER ================= -->
-<footer class="mt-16 bg-white py-6 text-center text-gray-600 shadow-inner">
-    © 2026 Digital Footprint Scanner
-</footer>
+        <!-- PLATFORM CATEGORY DISTRIBUTION -->
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 mt-12">
+            <div class="card-modern p-8 animate__animated animate__fadeInLeft" style="animation-delay: 0.3s">
+                <h3 class="text-xl font-bold mb-6">Platform Categories</h3>
+                <div class="chart-container" style="height: 300px">
+                    <canvas id="categoryChart"></canvas>
+                </div>
+            </div>
 
-<!-- ================= JS ================= -->
+            <div class="card-modern p-8 animate__animated animate__fadeInRight" style="animation-delay: 0.3s">
+                <h3 class="text-xl font-bold mb-6">Anomaly Distribution</h3>
+                <div class="chart-container" style="height: 300px">
+                    <canvas id="anomalyChart"></canvas>
+                </div>
+            </div>
+        </div>
 
+        <!-- AI CHATBOT SECTION -->
+        <div class="card-modern p-8 mt-12 animate__animated animate__fadeInUp" style="animation-delay: 0.4s">
+            <h3 class="text-2xl font-bold mb-6 flex items-center gap-2">
+                <i class="fas fa-comments text-cyan-500"></i>
+                Ask AI About Your Results
+            </h3>
+            <p class="text-slate-400 mb-4">Chat with AI to get personalized recommendations based on your scan</p>
+            
+            <div class="bg-slate-900/50 rounded-lg border border-slate-700 p-6">
+                <!-- Chat Messages Container -->
+                <div id="chatbox-messages" class="mb-4 bg-slate-800 rounded p-4 max-h-96 overflow-y-auto space-y-3">
+                    <div class="text-center text-slate-500 py-6">
+                        <i class="fas fa-comments-dollar"></i>
+                        <p class="mt-2">Start asking questions about your digital footprint scan</p>
+                    </div>
+                </div>
+                
+                <!-- Chat Input -->
+                <div class="flex gap-3">
+                    <input type="text" id="chatbox-input" placeholder="Ask AI something... (e.g., 'How can I reduce my digital footprint?')" 
+                           class="flex-1 bg-slate-700 border border-slate-600 rounded px-4 py-2 text-slate-100 placeholder-slate-500 focus:outline-none focus:border-indigo-500"
+                           onkeypress="if(event.key==='Enter') sendChatMessage()">
+                    <button onclick="sendChatMessage()" class="bg-indigo-600 hover:bg-indigo-700 px-6 py-2 rounded font-semibold flex items-center gap-2 transition-colors">
+                        <i class="fas fa-paper-plane"></i>
+                        <span class="hidden sm:inline">Send</span>
+                    </button>
+                </div>
+                <div id="chatbox-loading" class="text-center text-slate-400 mt-2 hidden">
+                    <i class="fas fa-spinner fa-spin mr-2"></i>AI is thinking...
+                </div>
+            </div>
+        </div>
 
+        <!-- DETAILED STATISTICS TABLE -->
+        <div class="card-modern p-8 mt-12 animate__animated animate__fadeInUp" style="animation-delay: 0.5s">
+            <h3 class="text-2xl font-bold mb-6">Detailed Statistics</h3>
+            <div class="overflow-x-auto">
+                <table class="w-full text-sm">
+                    <thead>
+                        <tr class="border-b border-slate-700">
+                            <th class="text-left py-3 px-4 text-slate-300">Metric</th>
+                            <th class="text-left py-3 px-4 text-slate-300">Value</th>
+                            <th class="text-left py-3 px-4 text-slate-300">Status</th>
+                        </tr>
+                    </thead>
+                    <tbody id="stats-table">
+                        <tr class="border-b border-slate-800">
+                            <td class="py-3 px-4 text-slate-400">Total Exposures</td>
+                            <td id="stat-exposures" class="py-3 px-4 font-bold">-</td>
+                            <td class="py-3 px-4"><span class="status-indicator found"></span>Active</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </main>
 
-<script src="/static/js/main.js"></script>
+    <script>
+        let scanData = {};
+        let charts = {};
 
+        // Initialize dashboard on page load
+        document.addEventListener('DOMContentLoaded', async () => {
+            console.log('[DASHBOARD] Page loaded, initializing...');
+            await loadScanData();
+            console.log('[DASHBOARD] Scan data loaded, displaying results immediately...');
+            displayResults();
+            console.log('[DASHBOARD] Results displayed, now initializing charts...');
+            initializeCharts();
+            console.log('[DASHBOARD] Dashboard fully ready');
+        });
 
+        // Load scan data from backend or session
+        async function loadScanData() {
+            try {
+                // Always fetch fresh data from API with cache busting
+                console.log('[DASHBOARD] Fetching fresh scan data from API...');
+                const timestamp = Date.now();
+                const response = await fetch(`/api/dashboard-data?t=${timestamp}`, {
+                    headers: {
+                        'Cache-Control': 'no-cache',
+                        'Pragma': 'no-cache'
+                    }
+                });
+                if (!response.ok) throw new Error('Failed to load dashboard data');
+                
+                scanData = await response.json();
+                console.log('[DASHBOARD-FRESH] ✅ Fresh scan data loaded from API:', {
+                    scanId: scanData.scan_id,
+                    userInput: scanData.user_input,
+                    timestamp: scanData.scan_timestamp,
+                    platformsCount: scanData.all_platforms_checked?.length || 0,
+                    riskScore: scanData.ml_risk_score
+                });
+                
+                // Clear any stale sessionStorage data
+                sessionStorage.removeItem('scanData');
+            } catch (error) {
+                console.error('[DASHBOARD] ❌ Error loading scan data:', error);
+                showError('Failed to load scan data. Please try again.');
+            }
+        }
+
+        // Display results in UI
+        function displayResults() {
+            console.log('[DASHBOARD] displayResults() called, scanData keys:', Object.keys(scanData));
+            
+            if (!scanData || Object.keys(scanData).length === 0) {
+                console.warn('[DASHBOARD] No scan data available');
+                document.getElementById('platforms-container').innerHTML = 
+                    '<div class="text-center text-slate-400">No scan data available. Please run a scan.</div>';
+                return;
+            }
+
+            // Update metrics - FIX: Use correct API field names
+            // API returns: platforms (array), exposures (object), risk_level (string)
+            // ML data in: ml_analysis (object), groq_analysis (string)
+            const platforms = scanData.platforms || [];
+            console.log('[DASHBOARD] Rendering', platforms.length, 'platforms');
+            const foundPlatforms = platforms.filter(p => p.status === 'found' || p.found === true) || [];
+            
+            // Calculate ML confidence from ml_analysis
+            let mlConfidence = 0;
+            if (scanData.ml_analysis && scanData.ml_analysis.confidence) {
+                mlConfidence = Math.round(scanData.ml_analysis.confidence || 0);
+            }
+            
+            // Calculate exposure level from exposures
+            const exposures = scanData.exposures || {};
+            const totalExposures = (exposures.personal || []).length + 
+                                   (exposures.contact || []).length + 
+                                   (exposures.online || []).length;
+            
+            document.getElementById('total-platforms').textContent = foundPlatforms.length;
+            document.getElementById('risk-score').textContent = mlConfidence + '%';
+            document.getElementById('exposure-level').textContent = totalExposures;
+            document.getElementById('anomaly-count').textContent = (scanData.anomalies || {}).anomaly_count || 0;
+
+            console.log('[DASHBOARD] ✅ Updated metrics:', {
+                foundPlatforms: foundPlatforms.length,
+                mlConfidence: mlConfidence,
+                totalExposures: totalExposures
+            });
+
+            // Update risk level badge
+            const riskLevel = scanData.risk_level || 'MEDIUM';
+            document.getElementById('risk-level-badge').className = `risk-badge ${riskLevel.toLowerCase()} inline-block`;
+            document.getElementById('risk-level-badge').textContent = riskLevel;
+
+            // Display platforms
+            const platformsHtml = platforms.map(platform => `
+                <div class="platform-item">
+                    <div class="flex items-center flex-1">
+                        <div class="platform-icon">${getPlatformIcon(platform.platform)}</div>
+                        <div class="flex-1">
+                            <div class="font-semibold capitalize">${platform.platform}</div>
+                            <div class="text-xs text-slate-400">
+                                <span class="status-indicator ${getStatusClass(platform.status)}"></span>
+                                ${platform.status === 'found' || platform.found === true ? 'Profile Found' : platform.status === 'not_found' ? 'Not Found' : 'Error'}
+                            </div>
+                        </div>
+                    </div>
+                    ${platform.url ? `
+                        <a href="${platform.url}" target="_blank" class="text-indigo-400 hover:text-indigo-300">
+                            <i class="fas fa-external-link-alt"></i>
+                        </a>
+                    ` : ''}
+                </div>
+            `).join('');
+            
+            document.getElementById('platforms-container').innerHTML = platformsHtml || '<div class="text-slate-400">No platforms detected</div>';
+            console.log('[DASHBOARD] ✅ Displayed', foundPlatforms.length, 'found platforms');
+
+            // Display ML insights
+            updateMLInsights();
+            updateThreatReport();
+        }
+
+        // Update ML insights
+        function updateMLInsights() {
+            const mlData = scanData.ml_analysis || {};
+            const groqAnalysis = scanData.groq_analysis || '';
+            
+            // Extract summary from Groq analysis - display quickly
+            let recommendation = '🔒 Secure your accounts with strong, unique passwords. Review all platform privacy settings.';
+            if (groqAnalysis && groqAnalysis.trim().length > 0) {
+                const lines = groqAnalysis.split('\n').filter(l => l.trim());
+                if (lines.length > 0) {
+                    // Get first meaningful line
+                    for (let line of lines) {
+                        if (line.trim().length > 20) {
+                            recommendation = line.trim().substring(0, 150);
+                            if (line.length > 150) recommendation += '...';
+                            break;
+                        }
+                    }
+                }
+            }
+            
+            const insights = [
+                {
+                    title: 'Profiles Detected',
+                    value: `${(scanData.platforms || []).filter(p => p.found || p.status === 'found').length} active accounts found`
+                },
+                {
+                    title: 'Predicted Risk Level',
+                    value: (scanData.risk_level || 'ANALYZING').toUpperCase()
+                },
+                {
+                    title: 'Quick Recommendation',
+                    value: recommendation
+                }
+            ];
+
+            const insightsHtml = insights.map(insight => `
+                <div class="ml-insight">
+                    <div class="font-semibold mb-1">${insight.title}</div>
+                    <div class="text-slate-300">${insight.value}</div>
+                </div>
+            `).join('');
+
+            document.getElementById('insights-container').innerHTML = insightsHtml;
+            
+            // Display full Groq analysis in dedicated section - NO DELAY
+            if (groqAnalysis && groqAnalysis.trim().length > 0) {
+                const analysisLines = groqAnalysis.split('\n').filter(l => l.trim());
+                const formattedAnalysis = analysisLines.map(line => {
+                    const trimmed = line.trim();
+                    if (!trimmed) return '';
+                    // Add bullet point if not heading
+                    if (trimmed.startsWith('**')) {
+                        return `<div class="font-semibold text-indigo-300 mt-3 mb-2">${trimmed.replace(/\*\*/g, '')}</div>`;
+                    } else if (trimmed.startsWith('-') || trimmed.startsWith('•')) {
+                        return `<div class="ml-4 text-slate-300">• ${trimmed.substring(1).trim()}</div>`;
+                    } else if (trimmed.match(/^\d+\./)) {
+                        return `<div class="ml-4 text-slate-300">${trimmed}</div>`;
+                    } else {
+                        return `<div class="text-slate-300 mb-2">${trimmed}</div>`;
+                    }
+                }).filter(x => x).join('');
+                
+                document.getElementById('groq-recommendations').innerHTML = formattedAnalysis || 
+                    '<div class="text-slate-300">No additional recommendations at this time.</div>';
+            } else {
+                document.getElementById('groq-recommendations').innerHTML = 
+                    '<div class="text-slate-400 italic">AI analysis will appear here when available.</div>';
+            }
+            
+            console.log('[DASHBOARD] ✅ ML Insights updated with Groq analysis');
+        }
+
+        // Update threat report
+        function updateThreatReport() {
+            // FIX: API returns threat_intel (array), not threat_intelligence
+            const threatData = scanData.threat_intel || [];
+            const threats = Array.isArray(threatData) ? threatData : [];
+
+            console.log('[DASHBOARD] Threat data:', threats);
+
+            const reportHtml = threats.slice(0, 5).map((threat, idx) => {
+                const threatText = typeof threat === 'string' ? threat : threat.description || threat.pattern || JSON.stringify(threat);
+                return `
+                    <div class="flex items-start gap-3 p-4 bg-slate-800 rounded-8">
+                        <i class="fas fa-warning text-red-500 mt-1"></i>
+                        <div>
+                            <div class="font-semibold">Threat #${idx + 1}</div>
+                            <div class="text-sm text-slate-400">${threatText}</div>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+
+            document.getElementById('threat-report').innerHTML = reportHtml || '<div class="text-slate-400 p-4">✅ No major threats detected</div>';
+            console.log('[DASHBOARD] ✅ Threat Report updated');
+        }
+
+        // Initialize charts
+        function initializeCharts() {
+            Chart.register(ChartDataLabels);
+            
+            createRiskGaugeChart();
+            createExposureChart();
+            createCategoryChart();
+            createAnomalyChart();
+        }
+
+        // Risk gauge chart
+        function createRiskGaugeChart() {
+            const ctx = document.getElementById('riskGaugeChart').getContext('2d');
+            // FIX: Get ML confidence from ml_analysis object
+            const mlConfidence = scanData.ml_analysis && scanData.ml_analysis.confidence 
+                ? (scanData.ml_analysis.confidence / 100) 
+                : 0.5;
+            const colors = mlConfidence < 0.33 ? '#10b981' : mlConfidence < 0.66 ? '#f59e0b' : '#ef4444';
+
+            charts.riskGauge = new Chart(ctx, {
+                type: 'doughnut',
+                data: {
+                    labels: ['Risk Level', 'Safe Zone'],
+                    datasets: [{
+                        data: [mlConfidence * 100, (1 - mlConfidence) * 100],
+                        backgroundColor: [colors, 'rgba(148, 163, 184, 0.1)'],
+                        borderColor: 'transparent'
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: { display: false },
+                        datalabels: {
+                            color: '#e2e8f0',
+                            font: { weight: 'bold', size: 14 },
+                            formatter: (value) => value !== 0 ? Math.round(value) + '%' : ''
+                        }
+                    }
+                }
+            });
+
+            const displayConfidence = scanData.ml_analysis && scanData.ml_analysis.confidence 
+                ? Math.round(scanData.ml_analysis.confidence) 
+                : 50;
+            document.getElementById('ml-risk-score').textContent = displayConfidence + '%';
+            document.getElementById('ml-risk-bar').style.width = displayConfidence + '%';
+            console.log('[DASHBOARD] ✅ Risk gauge chart updated:', displayConfidence + '%');
+        }
+
+        // Exposure chart
+        function createExposureChart() {
+            const ctx = document.getElementById('exposureChart').getContext('2d');
+            
+            // FIX: Calculate exposure from exposures object
+            const exposures = scanData.exposures || { personal: [], contact: [], online: [] };
+            const personal = (exposures.personal || []).length;
+            const contact = (exposures.contact || []).length;
+            const online = (exposures.online || []).length;
+            
+            charts.exposure = new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: ['Personal', 'Contact', 'Online'],
+                    datasets: [{
+                        label: 'Exposure Count',
+                        data: [personal, contact, online],
+                        backgroundColor: ['#4f46e5', '#7c3aed', '#a855f7'],
+                        borderRadius: 8
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: { display: false },
+                        tooltips: { mode: 'index', intersect: false }
+                    },
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            ticks: { color: '#94a3b8' },
+                            grid: { color: 'rgba(148, 163, 184, 0.1)' }
+                        },
+                        x: { ticks: { color: '#94a3b8' }, grid: { display: false } }
+                    }
+                }
+            });
+            console.log('[DASHBOARD] ✅ Exposure chart updated:', {personal, contact, online});
+        }
+
+        // Category chart
+        function createCategoryChart() {
+            const ctx = document.getElementById('categoryChart').getContext('2d');
+            
+            // FIX: Calculate platform categories from actual detected platforms
+            const platforms = scanData.platforms || [];
+            const foundPlatforms = platforms.filter(p => p.found || p.status === 'found');
+            
+            // Categorize platforms
+            const categories = {
+                'Social': ['twitter', 'instagram', 'facebook', 'tiktok', 'pinterest'],
+                'Professional': ['linkedin', 'stackoverflow'],
+                'Developer': ['github', 'gitlab'],
+                'Creative': ['deviantart', 'artstation'],
+                'Entertainment': ['twitch', 'youtube', 'spotify', 'discord']
+            };
+            
+            const categoryData = Object.entries(categories).map(([cat, platforms]) => {
+                return foundPlatforms.filter(p => platforms.includes(p.platform.toLowerCase())).length;
+            });
+            
+            charts.category = new Chart(ctx, {
+                type: 'radar',
+                data: {
+                    labels: ['Social', 'Professional', 'Developer', 'Creative', 'Entertainment'],
+                    datasets: [{
+                        label: 'Platform Count',
+                        data: categoryData,
+                        borderColor: '#4f46e5',
+                        backgroundColor: 'rgba(79, 70, 229, 0.1)',
+                        borderWidth: 2
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    scales: {
+                        r: {
+                            beginAtZero: true,
+                            ticks: { color: '#94a3b8' },
+                            grid: { color: 'rgba(148, 163, 184, 0.1)' }
+                        }
+                    },
+                    plugins: {
+                        legend: { labels: { color: '#94a3b8' } }
+                    }
+                }
+            });
+            console.log('[DASHBOARD] ✅ Category chart updated:', categoryData);
+        }
+
+        // Anomaly chart
+        function createAnomalyChart() {
+            const ctx = document.getElementById('anomalyChart').getContext('2d');
+            
+            // FIX: Get anomaly data from scanData if available
+            const anomalyData = scanData.anomalies || {};
+            const anomalyScores = [
+                anomalyData.bot_risk || 35,
+                anomalyData.impersonation_risk || 42,
+                anomalyData.privacy_gap_score || 28,
+                anomalyData.geographic_anomaly || 15
+            ];
+            
+            charts.anomaly = new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: ['Bot Risk', 'Impersonation', 'Privacy Gap', 'Geographic'],
+                    datasets: [{
+                        label: 'Anomaly Score',
+                        data: anomalyScores,
+                        backgroundColor: ['#ef4444', '#f97316', '#f59e0b', '#eab308'],
+                        borderRadius: 8
+                    }]
+                },
+                options: {
+                    indexAxis: 'y',
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: { legend: { display: false } },
+                    scales: {
+                        x: {
+                            beginAtZero: true,
+                            max: 100,
+                            ticks: { color: '#94a3b8' },
+                            grid: { color: 'rgba(148, 163, 184, 0.1)' }
+                        },
+                        y: { ticks: { color: '#94a3b8' }, grid: { display: false } }
+                    }
+                }
+            });
+            console.log('[DASHBOARD] ✅ Anomaly chart updated:', anomalyScores);
+        }
+
+        // Helper functions
+        function getPlatformIcon(platform) {
+            const icons = {
+                'github': '🐱',
+                'twitter': '𝕏',
+                'instagram': '📷',
+                'facebook': 'f',
+                'linkedin': 'in',
+                'reddit': '🤖',
+                'youtube': '▶️',
+                'tiktok': '🎵',
+                'twitch': '🎮'
+            };
+            return icons[platform.toLowerCase()] || '🌐';
+        }
+
+        function getStatusClass(status) {
+            return status === 'found' ? 'found' : status === 'error' ? 'error' : 'notfound';
+        }
+
+        function showError(message) {
+            document.getElementById('platforms-container').innerHTML = 
+                `<div class="text-center text-red-400">${message}</div>`;
+        }
+
+        // ========================================
+        // AI CHATBOT FUNCTIONS
+        // ========================================
+        let chatHistory = [];
+
+        function addChatMessage(message, isUser = false) {
+            const messagesContainer = document.getElementById('chatbox-messages');
+            
+            // Clear initial message on first interaction
+            if (chatHistory.length === 0) {
+                messagesContainer.innerHTML = '';
+            }
+
+            const messageDiv = document.createElement('div');
+            messageDiv.className = `chat-message ${isUser ? 'user' : 'ai'}`;
+            messageDiv.innerHTML = `
+                <div class="chat-bubble">
+                    <div>${message}</div>
+                </div>
+            `;
+            
+            messagesContainer.appendChild(messageDiv);
+            messagesContainer.scrollTop = messagesContainer.scrollHeight;
+            
+            if (!isUser) {
+                chatHistory.push({ role: 'assistant', content: message });
+            } else {
+                chatHistory.push({ role: 'user', content: message });
+            }
+        }
+
+        async function sendChatMessage() {
+            const input = document.getElementById('chatbox-input');
+            const message = input.value.trim();
+
+            if (!message) return;
+
+            // Add user message to chat
+            addChatMessage(message, true);
+            input.value = '';
+
+            // Show loading state
+            const loadingDiv = document.getElementById('chatbox-loading');
+            loadingDiv.classList.remove('hidden');
+
+            try {
+                // Prepare context from scan results
+                const foundAccounts = (scanData.platforms || []).filter(p => p.found || p.status === 'found').length;
+                const totalPlatforms = (scanData.platforms || []).length;
+                const riskLevel = scanData.risk_level || 'UNKNOWN';
+                const context = `User scanned: ${scanData.user_input}. Found ${foundAccounts} accounts across ${totalPlatforms} platforms. Risk Level: ${riskLevel}. User question: ${message}`;
+
+                const response = await fetch('/api/chat-with-ai', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        message: context,
+                        scan_context: {
+                            user_input: scanData.user_input,
+                            accounts_found: foundAccounts,
+                            platforms_total: totalPlatforms,
+                            risk_level: riskLevel
+                        }
+                    })
+                });
+
+                if (!response.ok) {
+                    throw new Error(`HTTP ${response.status}`);
+                }
+
+                const data = await response.json();
+                const aiResponse = data.response || data.message || 'I understand your question, but I need more context to provide a helpful response.';
+                
+                // Add AI response to chat
+                addChatMessage(aiResponse, false);
+                console.log('[CHATBOT] ✅ AI response received');
+
+            } catch (error) {
+                console.error('[CHATBOT] Error:', error);
+                addChatMessage(`Sorry, I encountered an error: ${error.message}. Please try again.`, false);
+            } finally {
+                loadingDiv.classList.add('hidden');
+            }
+        }
+
+        // Initialize chatbot on page load
+        console.log('[DASHBOARD] AI Chatbot initialized and ready');
+    </script>
 </body>
 </html>

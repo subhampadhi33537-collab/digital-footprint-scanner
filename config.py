@@ -30,6 +30,7 @@ class Config:
     FLASK_ENV = os.getenv("FLASK_ENV", "production")
     FLASK_DEBUG = os.getenv("FLASK_DEBUG", "False").lower() == "true"
     SECRET_KEY = os.getenv("SECRET_KEY", "default-secret-key")
+    ALLOW_MISSING_CONFIG = os.getenv("ALLOW_MISSING_CONFIG", "False").lower() == "true"
 
     # --------------------------------------------------
     # GROQ AI SETTINGS
@@ -111,9 +112,12 @@ class Config:
 
         errors = []
 
-        # Mandatory keys
+        # Mandatory keys (can be relaxed for hosted deployments)
         if not cls.GROQ_API_KEY:
-            errors.append("[ERROR] GROQ_API_KEY is missing in .env")
+            if cls.ALLOW_MISSING_CONFIG:
+                print("[WARNING] GROQ_API_KEY is missing in .env (allowed by ALLOW_MISSING_CONFIG)")
+            else:
+                errors.append("[ERROR] GROQ_API_KEY is missing in .env")
 
         # Logical validation
         if cls.SCAN_TIMEOUT <= 0:
@@ -127,7 +131,10 @@ class Config:
             print("[WARNING] ABSTRACT_EMAIL_API_KEY / ABSTRACT_API_KEY not set — email API scan will be limited")
 
         if not cls.GOOGLE_CLIENT_SECRETS_FILE.exists():
-            errors.append(f"[ERROR] Google client_secrets file not found at {cls.GOOGLE_CLIENT_SECRETS_FILE}")
+            if cls.ALLOW_MISSING_CONFIG:
+                print(f"[WARNING] Google client_secrets file not found at {cls.GOOGLE_CLIENT_SECRETS_FILE} (allowed by ALLOW_MISSING_CONFIG)")
+            else:
+                errors.append(f"[ERROR] Google client_secrets file not found at {cls.GOOGLE_CLIENT_SECRETS_FILE}")
 
         # Stop app only if fatal errors exist
         if errors:

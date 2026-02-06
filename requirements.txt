@@ -1,9 +1,9 @@
 # =========================
 # Web Framework & Server
 # =========================
-Flask==2.2.5
-Werkzeug==2.2.3
-Flask-Session==0.4.1
+Flask==3.1.2
+Werkzeug==3.1.5
+Flask-Session==0.8.0
 gunicorn==21.2.0
 
 # =========================
@@ -19,9 +19,12 @@ urllib3==2.1.0
 beautifulsoup4==4.12.3
 
 # =========================
-# Data Processing
+# Data Processing & ML
 # =========================
 pandas==2.3.3
+numpy==2.4.2
+scikit-learn==1.8.0
+joblib==1.4.2
 
 # =========================
 # Google OAuth
@@ -29,6 +32,11 @@ pandas==2.3.3
 google-auth-oauthlib==1.1.0
 google-auth-httplib2==0.2.0
 google-api-python-client==2.95.0
+
+# =========================
+# AI & LLM Integration
+# =========================
+groq==0.5.0
 
 # =========================
 # JSON & Utilities
@@ -39,5 +47,4 @@ simplejson==3.19.2
 # Security & Validation
 # =========================
 email-validator==2.1.1
-
 

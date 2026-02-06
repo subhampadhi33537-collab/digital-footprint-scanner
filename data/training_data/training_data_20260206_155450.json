@@ -1,0 +1,2141 @@
+[
+  {
+    "platform_count": 11,
+    "exposure_score": 49,
+    "username_consistency": 0.01,
+    "email_exposure": false,
+    "platform_types": [
+      "developer"
+    ],
+    "anomaly_flags": [
+      "geographic_anomaly",
+      "bot_pattern"
+    ],
+    "expected_risk_level": "HIGH",
+    "risk_score": 58
+  },
+  {
+    "platform_count": 13,
+    "exposure_score": 54,
+    "username_consistency": 0.68,
+    "email_exposure": true,
+    "platform_types": [
+      "professional"
+    ],
+    "anomaly_flags": [],
+    "expected_risk_level": "CRITICAL",
+    "risk_score": 70
+  },
+  {
+    "platform_count": 4,
+    "exposure_score": 95,
+    "username_consistency": 0.17,
+    "email_exposure": true,
+    "platform_types": [
+      "social",
+      "professional"
+    ],
+    "anomaly_flags": [
+      "bot_pattern"
+    ],
+    "expected_risk_level": "MEDIUM",
+    "risk_score": 32
+  },
+  {
+    "platform_count": 2,
+    "exposure_score": 20,
+    "username_consistency": 0.84,
+    "email_exposure": true,
+    "platform_types": [
+      "creative"
+    ],
+    "anomaly_flags": [],
+    "expected_risk_level": "LOW",
+    "risk_score": 11
+  },
+  {
+    "platform_count": 7,
+    "exposure_score": 53,
+    "username_consistency": 0.34,
+    "email_exposure": true,
+    "platform_types": [
+      "social"
+    ],
+    "anomaly_flags": [
+      "bot_pattern"
+    ],
+    "expected_risk_level": "MEDIUM",
+    "risk_score": 50
+  },
+  {
+    "platform_count": 10,
+    "exposure_score": 65,
+    "username_consistency": 0.85,
+    "email_exposure": true,
+    "platform_types": [
+      "social",
+      "professional"
+    ],
+    "anomaly_flags": [
+      "bot_pattern"
+    ],
+    "expected_risk_level": "HIGH",
+    "risk_score": 53
+  },
+  {
+    "platform_count": 5,
+    "exposure_score": 42,
+    "username_consistency": 0.47,
+    "email_exposure": true,
+    "platform_types": [
+      "professional"
+    ],
+    "anomaly_flags": [
+      "impersonation_risk",
+      "privacy_gap"
+    ],
+    "expected_risk_level": "MEDIUM",
+    "risk_score": 30
+  },
+  {
+    "platform_count": 5,
+    "exposure_score": 91,
+    "username_consistency": 0.62,
+    "email_exposure": true,
+    "platform_types": [
+      "professional"
+    ],
+    "anomaly_flags": [],
+    "expected_risk_level": "MEDIUM",
+    "risk_score": 34
+  },
+  {
+    "platform_count": 2,
+    "exposure_score": 81,
+    "username_consistency": 0.22,
+    "email_exposure": true,
+    "platform_types": [
+      "developer"
+    ],
+    "anomaly_flags": [
+      "geographic_anomaly",
+      "bot_pattern"
+    ],
+    "expected_risk_level": "LOW",
+    "risk_score": 10
+  },
+  {
+    "platform_count": 15,
+    "exposure_score": 33,
+    "username_consistency": 0.4,
+    "email_exposure": false,
+    "platform_types": [
+      "professional"
+    ],
+    "anomaly_flags": [
+      "impersonation_risk",
+      "privacy_gap"
+    ],
+    "expected_risk_level": "CRITICAL",
+    "risk_score": 87
+  },
+  {
+    "platform_count": 11,
+    "exposure_score": 27,
+    "username_consistency": 0.74,
+    "email_exposure": false,
+    "platform_types": [
+      "social",
+      "developer",
+      "professional"
+    ],
+    "anomaly_flags": [],
+    "expected_risk_level": "HIGH",
+    "risk_score": 75
+  },
+  {
+    "platform_count": 1,
+    "exposure_score": 88,
+    "username_consistency": 0.03,
+    "email_exposure": true,
+    "platform_types": [
+      "social",
+      "developer",
+      "professional"
+    ],
+    "anomaly_flags": [
+      "geographic_anomaly"
+    ],
+    "expected_risk_level": "LOW",
+    "risk_score": 0
+  },
+  {
+    "platform_count": 11,
+    "exposure_score": 93,
+    "username_consistency": 0.11,
+    "email_exposure": false,
+    "platform_types": [
+      "professional"
+    ],
+    "anomaly_flags": [],
+    "expected_risk_level": "HIGH",
+    "risk_score": 70
+  },
+  {
+    "platform_count": 6,
+    "exposure_score": 68,
+    "username_consistency": 0.07,
+    "email_exposure": true,
+    "platform_types": [
+      "developer"
+    ],
+    "anomaly_flags": [],
+    "expected_risk_level": "MEDIUM",
+    "risk_score": 32
+  },
+  {
+    "platform_count": 4,
+    "exposure_score": 64,
+    "username_consistency": 0.9,
+    "email_exposure": true,
+    "platform_types": [
+      "developer"
+    ],
+    "anomaly_flags": [
+      "privacy_gap"
+    ],
+    "expected_risk_level": "MEDIUM",
+    "risk_score": 24
+  },
+  {
+    "platform_count": 4,
+    "exposure_score": 45,
+    "username_consistency": 0.27,
+    "email_exposure": false,
+    "platform_types": [
+      "social",
+      "professional"
+    ],
+    "anomaly_flags": [],
+    "expected_risk_level": "MEDIUM",
+    "risk_score": 15
+  },
+  {
+    "platform_count": 5,
+    "exposure_score": 88,
+    "username_consistency": 0.96,
+    "email_exposure": true,
+    "platform_types": [
+      "creative"
+    ],
+    "anomaly_flags": [
+      "privacy_gap",
+      "bot_pattern"
+    ],
+    "expected_risk_level": "MEDIUM",
+    "risk_score": 37
+  },
+  {
+    "platform_count": 5,
+    "exposure_score": 46,
+    "username_consistency": 0.96,
+    "email_exposure": false,
+    "platform_types": [
+      "creative"
+    ],
+    "anomaly_flags": [
+      "bot_pattern"
+    ],
+    "expected_risk_level": "MEDIUM",
+    "risk_score": 25
+  },
+  {
+    "platform_count": 8,
+    "exposure_score": 35,
+    "username_consistency": 0.06,
+    "email_exposure": false,
+    "platform_types": [
+      "developer",
+      "creative"
+    ],
+    "anomaly_flags": [
+      "bot_pattern",
+      "geographic_anomaly"
+    ],
+    "expected_risk_level": "HIGH",
+    "risk_score": 44
+  },
+  {
+    "platform_count": 15,
+    "exposure_score": 94,
+    "username_consistency": 0.86,
+    "email_exposure": false,
+    "platform_types": [
+      "creative"
+    ],
+    "anomaly_flags": [],
+    "expected_risk_level": "CRITICAL",
+    "risk_score": 83
+  },
+  {
+    "platform_count": 7,
+    "exposure_score": 85,
+    "username_consistency": 0.36,
+    "email_exposure": false,
+    "platform_types": [
+      "creative"
+    ],
+    "anomaly_flags": [],
+    "expected_risk_level": "MEDIUM",
+    "risk_score": 35
+  },
+  {
+    "platform_count": 3,
+    "exposure_score": 97,
+    "username_consistency": 0.23,
+    "email_exposure": false,
+    "platform_types": [
+      "social"
+    ],
+    "anomaly_flags": [
+      "privacy_gap",
+      "geographic_anomaly"
+    ],
+    "expected_risk_level": "LOW",
+    "risk_score": 16
+  },
+  {
+    "platform_count": 8,
+    "exposure_score": 72,
+    "username_consistency": 0.82,
+    "email_exposure": false,
+    "platform_types": [
+      "professional"
+    ],
+    "anomaly_flags": [],
+    "expected_risk_level": "HIGH",
+    "risk_score": 57
+  },
+  {
+    "platform_count": 1,
+    "exposure_score": 95,
+    "username_consistency": 0.14,
+    "email_exposure": true,
+    "platform_types": [
+      "professional"
+    ],
+    "anomaly_flags": [],
+    "expected_risk_level": "LOW",
+    "risk_score": 7
+  },
+  {
+    "platform_count": 9,
+    "exposure_score": 58,
+    "username_consistency": 0.68,
+    "email_exposure": true,
+    "platform_types": [
+      "developer",
+      "creative"
+    ],
+    "anomaly_flags": [
+      "geographic_anomaly",
+      "privacy_gap"
+    ],
+    "expected_risk_level": "HIGH",
+    "risk_score": 62
+  },
+  {
+    "platform_count": 8,
+    "exposure_score": 59,
+    "username_consistency": 0.78,
+    "email_exposure": true,
+    "platform_types": [
+      "social",
+      "professional"
+    ],
+    "anomaly_flags": [],
+    "expected_risk_level": "HIGH",
+    "risk_score": 39
+  },
+  {
+    "platform_count": 14,
+    "exposure_score": 20,
+    "username_consistency": 0.06,
+    "email_exposure": false,
+    "platform_types": [
+      "social",
+      "professional"
+    ],
+    "anomaly_flags": [
+      "geographic_anomaly",
+      "privacy_gap"
+    ],
+    "expected_risk_level": "CRITICAL",
+    "risk_score": 86
+  },
+  {
+    "platform_count": 4,
+    "exposure_score": 28,
+    "username_consistency": 0.38,
+    "email_exposure": false,
+    "platform_types": [
+      "professional"
+    ],
+    "anomaly_flags": [],
+    "expected_risk_level": "MEDIUM",
+    "risk_score": 24
+  },
+  {
+    "platform_count": 10,
+    "exposure_score": 24,
+    "username_consistency": 0.3,
+    "email_exposure": false,
+    "platform_types": [
+      "social",
+      "developer",
+      "professional"
+    ],
+    "anomaly_flags": [],
+    "expected_risk_level": "HIGH",
+    "risk_score": 58
+  },
+  {
+    "platform_count": 13,
+    "exposure_score": 36,
+    "username_consistency": 0.33,
+    "email_exposure": true,
+    "platform_types": [
+      "social"
+    ],
+    "anomaly_flags": [
+      "privacy_gap",
+      "bot_pattern"
+    ],
+    "expected_risk_level": "CRITICAL",
+    "risk_score": 86
+  },
+  {
+    "platform_count": 2,
+    "exposure_score": 25,
+    "username_consistency": 0.58,
+    "email_exposure": true,
+    "platform_types": [
+      "developer"
+    ],
+    "anomaly_flags": [
+      "bot_pattern"
+    ],
+    "expected_risk_level": "LOW",
+    "risk_score": 15
+  },
+  {
+    "platform_count": 10,
+    "exposure_score": 54,
+    "username_consistency": 0.43,
+    "email_exposure": false,
+    "platform_types": [
+      "developer",
+      "creative"
+    ],
+    "anomaly_flags": [],
+    "expected_risk_level": "HIGH",
+    "risk_score": 51
+  },
+  {
+    "platform_count": 14,
+    "exposure_score": 29,
+    "username_consistency": 0.47,
+    "email_exposure": false,
+    "platform_types": [
+      "social",
+      "developer",
+      "professional"
+    ],
+    "anomaly_flags": [
+      "impersonation_risk",
+      "geographic_anomaly"
+    ],
+    "expected_risk_level": "CRITICAL",
+    "risk_score": 77
+  },
+  {
+    "platform_count": 3,
+    "exposure_score": 63,
+    "username_consistency": 0.8,
+    "email_exposure": true,
+    "platform_types": [
+      "developer"
+    ],
+    "anomaly_flags": [
+      "privacy_gap"
+    ],
+    "expected_risk_level": "LOW",
+    "risk_score": 9
+  },
+  {
+    "platform_count": 5,
+    "exposure_score": 80,
+    "username_consistency": 0.11,
+    "email_exposure": false,
+    "platform_types": [
+      "social"
+    ],
+    "anomaly_flags": [
+      "geographic_anomaly"
+    ],
+    "expected_risk_level": "MEDIUM",
+    "risk_score": 30
+  },
+  {
+    "platform_count": 8,
+    "exposure_score": 93,
+    "username_consistency": 0.17,
+    "email_exposure": true,
+    "platform_types": [
+      "social",
+      "developer",
+      "professional"
+    ],
+    "anomaly_flags": [],
+    "expected_risk_level": "HIGH",
+    "risk_score": 44
+  },
+  {
+    "platform_count": 1,
+    "exposure_score": 64,
+    "username_consistency": 0.88,
+    "email_exposure": true,
+    "platform_types": [
+      "professional"
+    ],
+    "anomaly_flags": [
+      "geographic_anomaly",
+      "bot_pattern"
+    ],
+    "expected_risk_level": "LOW",
+    "risk_score": 5
+  },
+  {
+    "platform_count": 9,
+    "exposure_score": 94,
+    "username_consistency": 0.54,
+    "email_exposure": false,
+    "platform_types": [
+      "social",
+      "professional"
+    ],
+    "anomaly_flags": [
+      "impersonation_risk"
+    ],
+    "expected_risk_level": "HIGH",
+    "risk_score": 48
+  },
+  {
+    "platform_count": 3,
+    "exposure_score": 50,
+    "username_consistency": 0.03,
+    "email_exposure": true,
+    "platform_types": [
+      "social",
+      "professional"
+    ],
+    "anomaly_flags": [],
+    "expected_risk_level": "LOW",
+    "risk_score": 26
+  },
+  {
+    "platform_count": 7,
+    "exposure_score": 76,
+    "username_consistency": 0.59,
+    "email_exposure": true,
+    "platform_types": [
+      "social",
+      "developer",
+      "professional"
+    ],
+    "anomaly_flags": [
+      "bot_pattern",
+      "impersonation_risk"
+    ],
+    "expected_risk_level": "MEDIUM",
+    "risk_score": 35
+  },
+  {
+    "platform_count": 9,
+    "exposure_score": 32,
+    "username_consistency": 0.43,
+    "email_exposure": false,
+    "platform_types": [
+      "social",
+      "developer",
+      "professional"
+    ],
+    "anomaly_flags": [
+      "bot_pattern",
+      "geographic_anomaly"
+    ],
+    "expected_risk_level": "HIGH",
+    "risk_score": 59
+  },
+  {
+    "platform_count": 2,
+    "exposure_score": 94,
+    "username_consistency": 0.86,
+    "email_exposure": false,
+    "platform_types": [
+      "social",
+      "professional"
+    ],
+    "anomaly_flags": [],
+    "expected_risk_level": "LOW",
+    "risk_score": 15
+  },
+  {
+    "platform_count": 4,
+    "exposure_score": 45,
+    "username_consistency": 0.16,
+    "email_exposure": true,
+    "platform_types": [
+      "social"
+    ],
+    "anomaly_flags": [
+      "geographic_anomaly"
+    ],
+    "expected_risk_level": "MEDIUM",
+    "risk_score": 27
+  },
+  {
+    "platform_count": 5,
+    "exposure_score": 86,
+    "username_consistency": 0.54,
+    "email_exposure": true,
+    "platform_types": [
+      "professional"
+    ],
+    "anomaly_flags": [],
+    "expected_risk_level": "MEDIUM",
+    "risk_score": 33
+  },
+  {
+    "platform_count": 5,
+    "exposure_score": 72,
+    "username_consistency": 0.43,
+    "email_exposure": true,
+    "platform_types": [
+      "social",
+      "developer",
+      "professional"
+    ],
+    "anomaly_flags": [],
+    "expected_risk_level": "MEDIUM",
+    "risk_score": 24
+  },
+  {
+    "platform_count": 4,
+    "exposure_score": 35,
+    "username_consistency": 0.37,
+    "email_exposure": true,
+    "platform_types": [
+      "professional"
+    ],
+    "anomaly_flags": [],
+    "expected_risk_level": "MEDIUM",
+    "risk_score": 26
+  },
+  {
+    "platform_count": 4,
+    "exposure_score": 31,
+    "username_consistency": 0.32,
+    "email_exposure": false,
+    "platform_types": [
+      "developer",
+      "creative"
+    ],
+    "anomaly_flags": [],
+    "expected_risk_level": "MEDIUM",
+    "risk_score": 25
+  },
+  {
+    "platform_count": 13,
+    "exposure_score": 84,
+    "username_consistency": 0.52,
+    "email_exposure": true,
+    "platform_types": [
+      "professional"
+    ],
+    "anomaly_flags": [
+      "impersonation_risk"
+    ],
+    "expected_risk_level": "CRITICAL",
+    "risk_score": 86
+  },
+  {
+    "platform_count": 3,
+    "exposure_score": 29,
+    "username_consistency": 0.74,
+    "email_exposure": true,
+    "platform_types": [
+      "social"
+    ],
+    "anomaly_flags": [
+      "geographic_anomaly",
+      "impersonation_risk"
+    ],
+    "expected_risk_level": "LOW",
+    "risk_score": 15
+  },
+  {
+    "platform_count": 1,
+    "exposure_score": 77,
+    "username_consistency": 0.1,
+    "email_exposure": false,
+    "platform_types": [
+      "developer"
+    ],
+    "anomaly_flags": [],
+    "expected_risk_level": "LOW",
+    "risk_score": 0
+  },
+  {
+    "platform_count": 15,
+    "exposure_score": 71,
+    "username_consistency": 0.97,
+    "email_exposure": true,
+    "platform_types": [
+      "developer"
+    ],
+    "anomaly_flags": [
+      "geographic_anomaly"
+    ],
+    "expected_risk_level": "CRITICAL",
+    "risk_score": 98
+  },
+  {
+    "platform_count": 2,
+    "exposure_score": 88,
+    "username_consistency": 0.87,
+    "email_exposure": false,
+    "platform_types": [
+      "social"
+    ],
+    "anomaly_flags": [],
+    "expected_risk_level": "LOW",
+    "risk_score": 14
+  },
+  {
+    "platform_count": 11,
+    "exposure_score": 76,
+    "username_consistency": 0.33,
+    "email_exposure": false,
+    "platform_types": [
+      "developer"
+    ],
+    "anomaly_flags": [
+      "bot_pattern",
+      "impersonation_risk"
+    ],
+    "expected_risk_level": "HIGH",
+    "risk_score": 61
+  },
+  {
+    "platform_count": 11,
+    "exposure_score": 46,
+    "username_consistency": 0.86,
+    "email_exposure": true,
+    "platform_types": [
+      "social",
+      "professional"
+    ],
+    "anomaly_flags": [],
+    "expected_risk_level": "HIGH",
+    "risk_score": 68
+  },
+  {
+    "platform_count": 5,
+    "exposure_score": 87,
+    "username_consistency": 0.1,
+    "email_exposure": true,
+    "platform_types": [
+      "social"
+    ],
+    "anomaly_flags": [
+      "privacy_gap"
+    ],
+    "expected_risk_level": "MEDIUM",
+    "risk_score": 32
+  },
+  {
+    "platform_count": 9,
+    "exposure_score": 49,
+    "username_consistency": 0.27,
+    "email_exposure": false,
+    "platform_types": [
+      "social",
+      "professional"
+    ],
+    "anomaly_flags": [],
+    "expected_risk_level": "HIGH",
+    "risk_score": 55
+  },
+  {
+    "platform_count": 15,
+    "exposure_score": 48,
+    "username_consistency": 0.74,
+    "email_exposure": false,
+    "platform_types": [
+      "social",
+      "professional"
+    ],
+    "anomaly_flags": [
+      "impersonation_risk",
+      "privacy_gap"
+    ],
+    "expected_risk_level": "CRITICAL",
+    "risk_score": 83
+  },
+  {
+    "platform_count": 2,
+    "exposure_score": 80,
+    "username_consistency": 0.73,
+    "email_exposure": true,
+    "platform_types": [
+      "developer",
+      "creative"
+    ],
+    "anomaly_flags": [
+      "impersonation_risk",
+      "privacy_gap"
+    ],
+    "expected_risk_level": "LOW",
+    "risk_score": 8
+  },
+  {
+    "platform_count": 5,
+    "exposure_score": 94,
+    "username_consistency": 0.54,
+    "email_exposure": false,
+    "platform_types": [
+      "creative"
+    ],
+    "anomaly_flags": [
+      "geographic_anomaly",
+      "bot_pattern"
+    ],
+    "expected_risk_level": "MEDIUM",
+    "risk_score": 39
+  },
+  {
+    "platform_count": 9,
+    "exposure_score": 22,
+    "username_consistency": 0.09,
+    "email_exposure": false,
+    "platform_types": [
+      "developer"
+    ],
+    "anomaly_flags": [
+      "bot_pattern",
+      "geographic_anomaly"
+    ],
+    "expected_risk_level": "HIGH",
+    "risk_score": 48
+  },
+  {
+    "platform_count": 9,
+    "exposure_score": 45,
+    "username_consistency": 0.1,
+    "email_exposure": true,
+    "platform_types": [
+      "social",
+      "developer",
+      "professional"
+    ],
+    "anomaly_flags": [
+      "privacy_gap"
+    ],
+    "expected_risk_level": "HIGH",
+    "risk_score": 63
+  },
+  {
+    "platform_count": 7,
+    "exposure_score": 26,
+    "username_consistency": 0.47,
+    "email_exposure": false,
+    "platform_types": [
+      "social",
+      "developer",
+      "professional"
+    ],
+    "anomaly_flags": [
+      "impersonation_risk"
+    ],
+    "expected_risk_level": "MEDIUM",
+    "risk_score": 48
+  },
+  {
+    "platform_count": 8,
+    "exposure_score": 44,
+    "username_consistency": 0.39,
+    "email_exposure": true,
+    "platform_types": [
+      "developer",
+      "creative"
+    ],
+    "anomaly_flags": [
+      "geographic_anomaly"
+    ],
+    "expected_risk_level": "HIGH",
+    "risk_score": 40
+  },
+  {
+    "platform_count": 12,
+    "exposure_score": 20,
+    "username_consistency": 0.91,
+    "email_exposure": true,
+    "platform_types": [
+      "developer",
+      "creative"
+    ],
+    "anomaly_flags": [],
+    "expected_risk_level": "CRITICAL",
+    "risk_score": 69
+  },
+  {
+    "platform_count": 8,
+    "exposure_score": 47,
+    "username_consistency": 0.03,
+    "email_exposure": false,
+    "platform_types": [
+      "professional"
+    ],
+    "anomaly_flags": [],
+    "expected_risk_level": "HIGH",
+    "risk_score": 44
+  },
+  {
+    "platform_count": 11,
+    "exposure_score": 24,
+    "username_consistency": 0.04,
+    "email_exposure": false,
+    "platform_types": [
+      "developer",
+      "creative"
+    ],
+    "anomaly_flags": [
+      "impersonation_risk",
+      "privacy_gap"
+    ],
+    "expected_risk_level": "HIGH",
+    "risk_score": 57
+  },
+  {
+    "platform_count": 8,
+    "exposure_score": 50,
+    "username_consistency": 0.5,
+    "email_exposure": true,
+    "platform_types": [
+      "social",
+      "professional"
+    ],
+    "anomaly_flags": [
+      "impersonation_risk",
+      "bot_pattern"
+    ],
+    "expected_risk_level": "HIGH",
+    "risk_score": 50
+  },
+  {
+    "platform_count": 11,
+    "exposure_score": 78,
+    "username_consistency": 0.73,
+    "email_exposure": false,
+    "platform_types": [
+      "creative"
+    ],
+    "anomaly_flags": [],
+    "expected_risk_level": "HIGH",
+    "risk_score": 69
+  },
+  {
+    "platform_count": 13,
+    "exposure_score": 70,
+    "username_consistency": 0.04,
+    "email_exposure": false,
+    "platform_types": [
+      "professional"
+    ],
+    "anomaly_flags": [
+      "bot_pattern"
+    ],
+    "expected_risk_level": "CRITICAL",
+    "risk_score": 70
+  },
+  {
+    "platform_count": 11,
+    "exposure_score": 97,
+    "username_consistency": 0.76,
+    "email_exposure": false,
+    "platform_types": [
+      "social"
+    ],
+    "anomaly_flags": [
+      "geographic_anomaly"
+    ],
+    "expected_risk_level": "HIGH",
+    "risk_score": 56
+  },
+  {
+    "platform_count": 13,
+    "exposure_score": 58,
+    "username_consistency": 0.98,
+    "email_exposure": true,
+    "platform_types": [
+      "developer"
+    ],
+    "anomaly_flags": [
+      "privacy_gap",
+      "bot_pattern"
+    ],
+    "expected_risk_level": "CRITICAL",
+    "risk_score": 83
+  },
+  {
+    "platform_count": 14,
+    "exposure_score": 95,
+    "username_consistency": 0.24,
+    "email_exposure": false,
+    "platform_types": [
+      "social"
+    ],
+    "anomaly_flags": [
+      "bot_pattern"
+    ],
+    "expected_risk_level": "CRITICAL",
+    "risk_score": 82
+  },
+  {
+    "platform_count": 13,
+    "exposure_score": 63,
+    "username_consistency": 0.28,
+    "email_exposure": false,
+    "platform_types": [
+      "social",
+      "professional"
+    ],
+    "anomaly_flags": [
+      "geographic_anomaly",
+      "privacy_gap"
+    ],
+    "expected_risk_level": "CRITICAL",
+    "risk_score": 77
+  },
+  {
+    "platform_count": 7,
+    "exposure_score": 57,
+    "username_consistency": 0.45,
+    "email_exposure": true,
+    "platform_types": [
+      "social"
+    ],
+    "anomaly_flags": [],
+    "expected_risk_level": "MEDIUM",
+    "risk_score": 50
+  },
+  {
+    "platform_count": 13,
+    "exposure_score": 50,
+    "username_consistency": 0.34,
+    "email_exposure": true,
+    "platform_types": [
+      "social",
+      "developer",
+      "professional"
+    ],
+    "anomaly_flags": [
+      "impersonation_risk"
+    ],
+    "expected_risk_level": "CRITICAL",
+    "risk_score": 76
+  },
+  {
+    "platform_count": 10,
+    "exposure_score": 68,
+    "username_consistency": 0.59,
+    "email_exposure": true,
+    "platform_types": [
+      "creative"
+    ],
+    "anomaly_flags": [
+      "bot_pattern",
+      "impersonation_risk"
+    ],
+    "expected_risk_level": "HIGH",
+    "risk_score": 64
+  },
+  {
+    "platform_count": 8,
+    "exposure_score": 72,
+    "username_consistency": 0.24,
+    "email_exposure": false,
+    "platform_types": [
+      "social",
+      "developer",
+      "professional"
+    ],
+    "anomaly_flags": [],
+    "expected_risk_level": "HIGH",
+    "risk_score": 54
+  },
+  {
+    "platform_count": 9,
+    "exposure_score": 71,
+    "username_consistency": 0.57,
+    "email_exposure": true,
+    "platform_types": [
+      "social",
+      "developer",
+      "professional"
+    ],
+    "anomaly_flags": [
+      "bot_pattern",
+      "geographic_anomaly"
+    ],
+    "expected_risk_level": "HIGH",
+    "risk_score": 56
+  },
+  {
+    "platform_count": 6,
+    "exposure_score": 73,
+    "username_consistency": 0.62,
+    "email_exposure": true,
+    "platform_types": [
+      "developer",
+      "creative"
+    ],
+    "anomaly_flags": [
+      "geographic_anomaly",
+      "privacy_gap"
+    ],
+    "expected_risk_level": "MEDIUM",
+    "risk_score": 34
+  },
+  {
+    "platform_count": 6,
+    "exposure_score": 44,
+    "username_consistency": 0.8,
+    "email_exposure": true,
+    "platform_types": [
+      "social",
+      "professional"
+    ],
+    "anomaly_flags": [],
+    "expected_risk_level": "MEDIUM",
+    "risk_score": 35
+  },
+  {
+    "platform_count": 7,
+    "exposure_score": 22,
+    "username_consistency": 0.22,
+    "email_exposure": false,
+    "platform_types": [
+      "developer"
+    ],
+    "anomaly_flags": [
+      "impersonation_risk"
+    ],
+    "expected_risk_level": "MEDIUM",
+    "risk_score": 47
+  },
+  {
+    "platform_count": 2,
+    "exposure_score": 45,
+    "username_consistency": 0.13,
+    "email_exposure": true,
+    "platform_types": [
+      "social",
+      "developer",
+      "professional"
+    ],
+    "anomaly_flags": [
+      "bot_pattern"
+    ],
+    "expected_risk_level": "LOW",
+    "risk_score": 8
+  },
+  {
+    "platform_count": 3,
+    "exposure_score": 22,
+    "username_consistency": 0.68,
+    "email_exposure": true,
+    "platform_types": [
+      "professional"
+    ],
+    "anomaly_flags": [
+      "bot_pattern"
+    ],
+    "expected_risk_level": "LOW",
+    "risk_score": 13
+  },
+  {
+    "platform_count": 15,
+    "exposure_score": 45,
+    "username_consistency": 0.48,
+    "email_exposure": false,
+    "platform_types": [
+      "social",
+      "developer",
+      "professional"
+    ],
+    "anomaly_flags": [
+      "impersonation_risk",
+      "geographic_anomaly"
+    ],
+    "expected_risk_level": "CRITICAL",
+    "risk_score": 89
+  },
+  {
+    "platform_count": 6,
+    "exposure_score": 73,
+    "username_consistency": 0.13,
+    "email_exposure": true,
+    "platform_types": [
+      "social"
+    ],
+    "anomaly_flags": [],
+    "expected_risk_level": "MEDIUM",
+    "risk_score": 40
+  },
+  {
+    "platform_count": 4,
+    "exposure_score": 86,
+    "username_consistency": 0.09,
+    "email_exposure": false,
+    "platform_types": [
+      "social",
+      "developer",
+      "professional"
+    ],
+    "anomaly_flags": [
+      "bot_pattern",
+      "impersonation_risk"
+    ],
+    "expected_risk_level": "MEDIUM",
+    "risk_score": 29
+  },
+  {
+    "platform_count": 5,
+    "exposure_score": 79,
+    "username_consistency": 0.83,
+    "email_exposure": false,
+    "platform_types": [
+      "creative"
+    ],
+    "anomaly_flags": [
+      "privacy_gap",
+      "geographic_anomaly"
+    ],
+    "expected_risk_level": "MEDIUM",
+    "risk_score": 39
+  },
+  {
+    "platform_count": 4,
+    "exposure_score": 76,
+    "username_consistency": 0.62,
+    "email_exposure": false,
+    "platform_types": [
+      "social",
+      "professional"
+    ],
+    "anomaly_flags": [],
+    "expected_risk_level": "MEDIUM",
+    "risk_score": 24
+  },
+  {
+    "platform_count": 1,
+    "exposure_score": 92,
+    "username_consistency": 0.93,
+    "email_exposure": true,
+    "platform_types": [
+      "social",
+      "developer",
+      "professional"
+    ],
+    "anomaly_flags": [
+      "geographic_anomaly",
+      "bot_pattern"
+    ],
+    "expected_risk_level": "LOW",
+    "risk_score": 0
+  },
+  {
+    "platform_count": 13,
+    "exposure_score": 61,
+    "username_consistency": 0.29,
+    "email_exposure": false,
+    "platform_types": [
+      "professional"
+    ],
+    "anomaly_flags": [
+      "bot_pattern",
+      "geographic_anomaly"
+    ],
+    "expected_risk_level": "CRITICAL",
+    "risk_score": 86
+  },
+  {
+    "platform_count": 3,
+    "exposure_score": 73,
+    "username_consistency": 0.74,
+    "email_exposure": true,
+    "platform_types": [
+      "social",
+      "professional"
+    ],
+    "anomaly_flags": [],
+    "expected_risk_level": "LOW",
+    "risk_score": 15
+  },
+  {
+    "platform_count": 13,
+    "exposure_score": 95,
+    "username_consistency": 0.42,
+    "email_exposure": true,
+    "platform_types": [
+      "creative"
+    ],
+    "anomaly_flags": [
+      "privacy_gap",
+      "bot_pattern"
+    ],
+    "expected_risk_level": "CRITICAL",
+    "risk_score": 73
+  },
+  {
+    "platform_count": 13,
+    "exposure_score": 85,
+    "username_consistency": 0.93,
+    "email_exposure": true,
+    "platform_types": [
+      "developer",
+      "creative"
+    ],
+    "anomaly_flags": [],
+    "expected_risk_level": "CRITICAL",
+    "risk_score": 81
+  },
+  {
+    "platform_count": 14,
+    "exposure_score": 96,
+    "username_consistency": 0.4,
+    "email_exposure": false,
+    "platform_types": [
+      "developer",
+      "creative"
+    ],
+    "anomaly_flags": [
+      "impersonation_risk",
+      "privacy_gap"
+    ],
+    "expected_risk_level": "CRITICAL",
+    "risk_score": 85
+  },
+  {
+    "platform_count": 7,
+    "exposure_score": 20,
+    "username_consistency": 0.53,
+    "email_exposure": true,
+    "platform_types": [
+      "developer",
+      "creative"
+    ],
+    "anomaly_flags": [
+      "bot_pattern",
+      "privacy_gap"
+    ],
+    "expected_risk_level": "MEDIUM",
+    "risk_score": 38
+  },
+  {
+    "platform_count": 6,
+    "exposure_score": 77,
+    "username_consistency": 0.5,
+    "email_exposure": true,
+    "platform_types": [
+      "developer"
+    ],
+    "anomaly_flags": [],
+    "expected_risk_level": "MEDIUM",
+    "risk_score": 42
+  },
+  {
+    "platform_count": 8,
+    "exposure_score": 59,
+    "username_consistency": 0.56,
+    "email_exposure": false,
+    "platform_types": [
+      "social",
+      "developer",
+      "professional"
+    ],
+    "anomaly_flags": [
+      "bot_pattern",
+      "geographic_anomaly"
+    ],
+    "expected_risk_level": "HIGH",
+    "risk_score": 47
+  },
+  {
+    "platform_count": 14,
+    "exposure_score": 68,
+    "username_consistency": 0.3,
+    "email_exposure": false,
+    "platform_types": [
+      "social"
+    ],
+    "anomaly_flags": [],
+    "expected_risk_level": "CRITICAL",
+    "risk_score": 93
+  },
+  {
+    "platform_count": 12,
+    "exposure_score": 89,
+    "username_consistency": 0.09,
+    "email_exposure": false,
+    "platform_types": [
+      "developer"
+    ],
+    "anomaly_flags": [
+      "privacy_gap",
+      "geographic_anomaly"
+    ],
+    "expected_risk_level": "CRITICAL",
+    "risk_score": 76
+  },
+  {
+    "platform_count": 13,
+    "exposure_score": 48,
+    "username_consistency": 0.59,
+    "email_exposure": false,
+    "platform_types": [
+      "social"
+    ],
+    "anomaly_flags": [],
+    "expected_risk_level": "CRITICAL",
+    "risk_score": 81
+  },
+  {
+    "platform_count": 11,
+    "exposure_score": 40,
+    "username_consistency": 0.74,
+    "email_exposure": true,
+    "platform_types": [
+      "social"
+    ],
+    "anomaly_flags": [],
+    "expected_risk_level": "HIGH",
+    "risk_score": 75
+  },
+  {
+    "platform_count": 3,
+    "exposure_score": 76,
+    "username_consistency": 0.04,
+    "email_exposure": false,
+    "platform_types": [
+      "social",
+      "professional"
+    ],
+    "anomaly_flags": [
+      "geographic_anomaly",
+      "impersonation_risk"
+    ],
+    "expected_risk_level": "LOW",
+    "risk_score": 22
+  },
+  {
+    "platform_count": 9,
+    "exposure_score": 58,
+    "username_consistency": 0.22,
+    "email_exposure": false,
+    "platform_types": [
+      "social",
+      "developer",
+      "professional"
+    ],
+    "anomaly_flags": [
+      "privacy_gap"
+    ],
+    "expected_risk_level": "HIGH",
+    "risk_score": 57
+  },
+  {
+    "platform_count": 12,
+    "exposure_score": 34,
+    "username_consistency": 0.06,
+    "email_exposure": true,
+    "platform_types": [
+      "social",
+      "developer",
+      "professional"
+    ],
+    "anomaly_flags": [],
+    "expected_risk_level": "CRITICAL",
+    "risk_score": 74
+  },
+  {
+    "platform_count": 14,
+    "exposure_score": 41,
+    "username_consistency": 0.26,
+    "email_exposure": false,
+    "platform_types": [
+      "developer",
+      "creative"
+    ],
+    "anomaly_flags": [
+      "bot_pattern",
+      "geographic_anomaly"
+    ],
+    "expected_risk_level": "CRITICAL",
+    "risk_score": 80
+  },
+  {
+    "platform_count": 6,
+    "exposure_score": 73,
+    "username_consistency": 0.63,
+    "email_exposure": true,
+    "platform_types": [
+      "developer",
+      "creative"
+    ],
+    "anomaly_flags": [],
+    "expected_risk_level": "MEDIUM",
+    "risk_score": 26
+  },
+  {
+    "platform_count": 4,
+    "exposure_score": 35,
+    "username_consistency": 0.28,
+    "email_exposure": false,
+    "platform_types": [
+      "developer",
+      "creative"
+    ],
+    "anomaly_flags": [
+      "privacy_gap"
+    ],
+    "expected_risk_level": "MEDIUM",
+    "risk_score": 19
+  },
+  {
+    "platform_count": 4,
+    "exposure_score": 71,
+    "username_consistency": 0.5,
+    "email_exposure": false,
+    "platform_types": [
+      "developer",
+      "creative"
+    ],
+    "anomaly_flags": [
+      "bot_pattern",
+      "geographic_anomaly"
+    ],
+    "expected_risk_level": "MEDIUM",
+    "risk_score": 33
+  },
+  {
+    "platform_count": 5,
+    "exposure_score": 93,
+    "username_consistency": 0.44,
+    "email_exposure": true,
+    "platform_types": [
+      "creative"
+    ],
+    "anomaly_flags": [
+      "impersonation_risk",
+      "privacy_gap"
+    ],
+    "expected_risk_level": "MEDIUM",
+    "risk_score": 31
+  },
+  {
+    "platform_count": 4,
+    "exposure_score": 39,
+    "username_consistency": 0.7,
+    "email_exposure": false,
+    "platform_types": [
+      "social",
+      "developer",
+      "professional"
+    ],
+    "anomaly_flags": [
+      "impersonation_risk",
+      "privacy_gap"
+    ],
+    "expected_risk_level": "MEDIUM",
+    "risk_score": 15
+  },
+  {
+    "platform_count": 6,
+    "exposure_score": 62,
+    "username_consistency": 0.23,
+    "email_exposure": true,
+    "platform_types": [
+      "social",
+      "professional"
+    ],
+    "anomaly_flags": [],
+    "expected_risk_level": "MEDIUM",
+    "risk_score": 37
+  },
+  {
+    "platform_count": 10,
+    "exposure_score": 97,
+    "username_consistency": 0.23,
+    "email_exposure": true,
+    "platform_types": [
+      "developer"
+    ],
+    "anomaly_flags": [
+      "geographic_anomaly"
+    ],
+    "expected_risk_level": "HIGH",
+    "risk_score": 52
+  },
+  {
+    "platform_count": 5,
+    "exposure_score": 48,
+    "username_consistency": 0.93,
+    "email_exposure": false,
+    "platform_types": [
+      "social",
+      "professional"
+    ],
+    "anomaly_flags": [
+      "bot_pattern"
+    ],
+    "expected_risk_level": "MEDIUM",
+    "risk_score": 23
+  },
+  {
+    "platform_count": 9,
+    "exposure_score": 71,
+    "username_consistency": 0.72,
+    "email_exposure": true,
+    "platform_types": [
+      "professional"
+    ],
+    "anomaly_flags": [
+      "geographic_anomaly"
+    ],
+    "expected_risk_level": "HIGH",
+    "risk_score": 46
+  },
+  {
+    "platform_count": 6,
+    "exposure_score": 33,
+    "username_consistency": 0.5,
+    "email_exposure": false,
+    "platform_types": [
+      "professional"
+    ],
+    "anomaly_flags": [],
+    "expected_risk_level": "MEDIUM",
+    "risk_score": 31
+  },
+  {
+    "platform_count": 3,
+    "exposure_score": 74,
+    "username_consistency": 0.88,
+    "email_exposure": true,
+    "platform_types": [
+      "social",
+      "developer",
+      "professional"
+    ],
+    "anomaly_flags": [],
+    "expected_risk_level": "LOW",
+    "risk_score": 12
+  },
+  {
+    "platform_count": 6,
+    "exposure_score": 50,
+    "username_consistency": 0.89,
+    "email_exposure": false,
+    "platform_types": [
+      "social",
+      "developer",
+      "professional"
+    ],
+    "anomaly_flags": [],
+    "expected_risk_level": "MEDIUM",
+    "risk_score": 38
+  },
+  {
+    "platform_count": 4,
+    "exposure_score": 95,
+    "username_consistency": 0.43,
+    "email_exposure": true,
+    "platform_types": [
+      "social"
+    ],
+    "anomaly_flags": [
+      "bot_pattern"
+    ],
+    "expected_risk_level": "MEDIUM",
+    "risk_score": 18
+  },
+  {
+    "platform_count": 15,
+    "exposure_score": 79,
+    "username_consistency": 0.31,
+    "email_exposure": false,
+    "platform_types": [
+      "professional"
+    ],
+    "anomaly_flags": [
+      "impersonation_risk",
+      "privacy_gap"
+    ],
+    "expected_risk_level": "CRITICAL",
+    "risk_score": 83
+  },
+  {
+    "platform_count": 2,
+    "exposure_score": 21,
+    "username_consistency": 0.88,
+    "email_exposure": true,
+    "platform_types": [
+      "professional"
+    ],
+    "anomaly_flags": [
+      "impersonation_risk",
+      "geographic_anomaly"
+    ],
+    "expected_risk_level": "LOW",
+    "risk_score": 20
+  },
+  {
+    "platform_count": 5,
+    "exposure_score": 23,
+    "username_consistency": 0.5,
+    "email_exposure": false,
+    "platform_types": [
+      "developer",
+      "creative"
+    ],
+    "anomaly_flags": [
+      "geographic_anomaly",
+      "privacy_gap"
+    ],
+    "expected_risk_level": "MEDIUM",
+    "risk_score": 24
+  },
+  {
+    "platform_count": 5,
+    "exposure_score": 33,
+    "username_consistency": 0.73,
+    "email_exposure": false,
+    "platform_types": [
+      "social",
+      "professional"
+    ],
+    "anomaly_flags": [
+      "geographic_anomaly"
+    ],
+    "expected_risk_level": "MEDIUM",
+    "risk_score": 21
+  },
+  {
+    "platform_count": 15,
+    "exposure_score": 97,
+    "username_consistency": 0.04,
+    "email_exposure": false,
+    "platform_types": [
+      "social",
+      "developer",
+      "professional"
+    ],
+    "anomaly_flags": [
+      "impersonation_risk",
+      "privacy_gap"
+    ],
+    "expected_risk_level": "CRITICAL",
+    "risk_score": 95
+  },
+  {
+    "platform_count": 13,
+    "exposure_score": 21,
+    "username_consistency": 0.76,
+    "email_exposure": true,
+    "platform_types": [
+      "developer"
+    ],
+    "anomaly_flags": [
+      "geographic_anomaly"
+    ],
+    "expected_risk_level": "CRITICAL",
+    "risk_score": 85
+  },
+  {
+    "platform_count": 1,
+    "exposure_score": 87,
+    "username_consistency": 0.89,
+    "email_exposure": true,
+    "platform_types": [
+      "creative"
+    ],
+    "anomaly_flags": [
+      "privacy_gap",
+      "bot_pattern"
+    ],
+    "expected_risk_level": "LOW",
+    "risk_score": 4
+  },
+  {
+    "platform_count": 2,
+    "exposure_score": 63,
+    "username_consistency": 0.08,
+    "email_exposure": false,
+    "platform_types": [
+      "social",
+      "professional"
+    ],
+    "anomaly_flags": [],
+    "expected_risk_level": "LOW",
+    "risk_score": 9
+  },
+  {
+    "platform_count": 4,
+    "exposure_score": 94,
+    "username_consistency": 0.07,
+    "email_exposure": true,
+    "platform_types": [
+      "developer",
+      "creative"
+    ],
+    "anomaly_flags": [
+      "impersonation_risk"
+    ],
+    "expected_risk_level": "MEDIUM",
+    "risk_score": 18
+  },
+  {
+    "platform_count": 9,
+    "exposure_score": 90,
+    "username_consistency": 0.66,
+    "email_exposure": true,
+    "platform_types": [
+      "social",
+      "professional"
+    ],
+    "anomaly_flags": [
+      "privacy_gap",
+      "impersonation_risk"
+    ],
+    "expected_risk_level": "HIGH",
+    "risk_score": 58
+  },
+  {
+    "platform_count": 15,
+    "exposure_score": 21,
+    "username_consistency": 0.22,
+    "email_exposure": false,
+    "platform_types": [
+      "social"
+    ],
+    "anomaly_flags": [
+      "privacy_gap"
+    ],
+    "expected_risk_level": "CRITICAL",
+    "risk_score": 82
+  },
+  {
+    "platform_count": 2,
+    "exposure_score": 47,
+    "username_consistency": 0.7,
+    "email_exposure": true,
+    "platform_types": [
+      "professional"
+    ],
+    "anomaly_flags": [
+      "bot_pattern",
+      "geographic_anomaly"
+    ],
+    "expected_risk_level": "LOW",
+    "risk_score": 10
+  },
+  {
+    "platform_count": 10,
+    "exposure_score": 67,
+    "username_consistency": 0.19,
+    "email_exposure": true,
+    "platform_types": [
+      "developer"
+    ],
+    "anomaly_flags": [
+      "impersonation_risk"
+    ],
+    "expected_risk_level": "HIGH",
+    "risk_score": 66
+  },
+  {
+    "platform_count": 4,
+    "exposure_score": 41,
+    "username_consistency": 0.36,
+    "email_exposure": true,
+    "platform_types": [
+      "social",
+      "developer",
+      "professional"
+    ],
+    "anomaly_flags": [
+      "impersonation_risk"
+    ],
+    "expected_risk_level": "MEDIUM",
+    "risk_score": 16
+  },
+  {
+    "platform_count": 13,
+    "exposure_score": 35,
+    "username_consistency": 0.64,
+    "email_exposure": false,
+    "platform_types": [
+      "social"
+    ],
+    "anomaly_flags": [
+      "geographic_anomaly",
+      "impersonation_risk"
+    ],
+    "expected_risk_level": "CRITICAL",
+    "risk_score": 83
+  },
+  {
+    "platform_count": 1,
+    "exposure_score": 52,
+    "username_consistency": 0.62,
+    "email_exposure": false,
+    "platform_types": [
+      "professional"
+    ],
+    "anomaly_flags": [
+      "impersonation_risk",
+      "privacy_gap"
+    ],
+    "expected_risk_level": "LOW",
+    "risk_score": 0
+  },
+  {
+    "platform_count": 11,
+    "exposure_score": 48,
+    "username_consistency": 0.25,
+    "email_exposure": true,
+    "platform_types": [
+      "social",
+      "professional"
+    ],
+    "anomaly_flags": [
+      "impersonation_risk",
+      "privacy_gap"
+    ],
+    "expected_risk_level": "HIGH",
+    "risk_score": 59
+  },
+  {
+    "platform_count": 3,
+    "exposure_score": 89,
+    "username_consistency": 0.46,
+    "email_exposure": true,
+    "platform_types": [
+      "creative"
+    ],
+    "anomaly_flags": [],
+    "expected_risk_level": "LOW",
+    "risk_score": 27
+  },
+  {
+    "platform_count": 1,
+    "exposure_score": 78,
+    "username_consistency": 0.92,
+    "email_exposure": false,
+    "platform_types": [
+      "creative"
+    ],
+    "anomaly_flags": [
+      "geographic_anomaly"
+    ],
+    "expected_risk_level": "LOW",
+    "risk_score": 0
+  },
+  {
+    "platform_count": 2,
+    "exposure_score": 93,
+    "username_consistency": 0.3,
+    "email_exposure": false,
+    "platform_types": [
+      "social"
+    ],
+    "anomaly_flags": [],
+    "expected_risk_level": "LOW",
+    "risk_score": 6
+  },
+  {
+    "platform_count": 1,
+    "exposure_score": 61,
+    "username_consistency": 0.99,
+    "email_exposure": true,
+    "platform_types": [
+      "social",
+      "professional"
+    ],
+    "anomaly_flags": [
+      "impersonation_risk"
+    ],
+    "expected_risk_level": "LOW",
+    "risk_score": 8
+  },
+  {
+    "platform_count": 5,
+    "exposure_score": 96,
+    "username_consistency": 0.97,
+    "email_exposure": true,
+    "platform_types": [
+      "developer"
+    ],
+    "anomaly_flags": [
+      "impersonation_risk"
+    ],
+    "expected_risk_level": "MEDIUM",
+    "risk_score": 21
+  },
+  {
+    "platform_count": 14,
+    "exposure_score": 91,
+    "username_consistency": 0.29,
+    "email_exposure": true,
+    "platform_types": [
+      "creative"
+    ],
+    "anomaly_flags": [],
+    "expected_risk_level": "CRITICAL",
+    "risk_score": 81
+  },
+  {
+    "platform_count": 11,
+    "exposure_score": 63,
+    "username_consistency": 0.54,
+    "email_exposure": true,
+    "platform_types": [
+      "developer"
+    ],
+    "anomaly_flags": [
+      "bot_pattern"
+    ],
+    "expected_risk_level": "HIGH",
+    "risk_score": 66
+  },
+  {
+    "platform_count": 1,
+    "exposure_score": 51,
+    "username_consistency": 0.49,
+    "email_exposure": true,
+    "platform_types": [
+      "social",
+      "professional"
+    ],
+    "anomaly_flags": [],
+    "expected_risk_level": "LOW",
+    "risk_score": 14
+  },
+  {
+    "platform_count": 1,
+    "exposure_score": 97,
+    "username_consistency": 0.06,
+    "email_exposure": false,
+    "platform_types": [
+      "professional"
+    ],
+    "anomaly_flags": [
+      "geographic_anomaly"
+    ],
+    "expected_risk_level": "LOW",
+    "risk_score": 4
+  },
+  {
+    "platform_count": 1,
+    "exposure_score": 76,
+    "username_consistency": 0.37,
+    "email_exposure": false,
+    "platform_types": [
+      "creative"
+    ],
+    "anomaly_flags": [],
+    "expected_risk_level": "LOW",
+    "risk_score": 12
+  },
+  {
+    "platform_count": 11,
+    "exposure_score": 98,
+    "username_consistency": 0.17,
+    "email_exposure": true,
+    "platform_types": [
+      "developer"
+    ],
+    "anomaly_flags": [
+      "bot_pattern",
+      "impersonation_risk"
+    ],
+    "expected_risk_level": "HIGH",
+    "risk_score": 61
+  },
+  {
+    "platform_count": 9,
+    "exposure_score": 55,
+    "username_consistency": 0.13,
+    "email_exposure": false,
+    "platform_types": [
+      "social",
+      "professional"
+    ],
+    "anomaly_flags": [],
+    "expected_risk_level": "HIGH",
+    "risk_score": 45
+  },
+  {
+    "platform_count": 7,
+    "exposure_score": 39,
+    "username_consistency": 0.95,
+    "email_exposure": false,
+    "platform_types": [
+      "developer"
+    ],
+    "anomaly_flags": [],
+    "expected_risk_level": "MEDIUM",
+    "risk_score": 44
+  },
+  {
+    "platform_count": 7,
+    "exposure_score": 94,
+    "username_consistency": 0.28,
+    "email_exposure": true,
+    "platform_types": [
+      "professional"
+    ],
+    "anomaly_flags": [],
+    "expected_risk_level": "MEDIUM",
+    "risk_score": 37
+  },
+  {
+    "platform_count": 9,
+    "exposure_score": 40,
+    "username_consistency": 0.61,
+    "email_exposure": true,
+    "platform_types": [
+      "social",
+      "developer",
+      "professional"
+    ],
+    "anomaly_flags": [
+      "bot_pattern"
+    ],
+    "expected_risk_level": "HIGH",
+    "risk_score": 56
+  }
+]

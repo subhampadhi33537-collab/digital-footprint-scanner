@@ -9,12 +9,14 @@ Responsibilities:
 - Avoid false positives caused by HTTP 200 responses
 - Use ethical OSINT techniques (timeouts, delays)
 - Return structured results for normalization, dashboard, and AI
+- Display real-time progress during scanning
 """
 
 import requests # type: ignore
 import time
 import logging
 from scanner.platform_checker import SUPPORTED_PLATFORMS, generate_profile_url
+from scanner.progress_tracker import log_platform_result, start_scan_logging
 
 # -------------------------------
 # Logging Setup
@@ -23,10 +25,7 @@ logging.basicConfig(
     level=logging.INFO,
     format="%(asctime)s [USERNAME SCANNER] %(levelname)s: %(message)s"
 )
-
-# -------------------------------
-# HTTP Headers
-# -------------------------------
+logger = logging.getLogger(__name__)
 HEADERS = {
     "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36",
     "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8",
@@ -68,9 +67,9 @@ NOT_FOUND_PATTERNS = {
 # -------------------------------
 # Default scanning settings
 # -------------------------------
-DEFAULT_TIMEOUT = 5         # seconds (optimized for speed - reduced from 8)
+DEFAULT_TIMEOUT = 3         # seconds (optimized for speed - faster timeouts)
 DEFAULT_MAX_PLATFORMS = len(SUPPORTED_PLATFORMS)
-DEFAULT_REQUEST_DELAY = 0.1 # seconds (reduced from 0.3 for much faster scanning)
+DEFAULT_REQUEST_DELAY = 0.02 # seconds (minimal delay for speed)
 
 
 # -------------------------------
@@ -104,7 +103,12 @@ def scan_username(
     results = []
     scanned_count = 0
 
-    logging.info(f"Starting real username scan for '{username}'")
+    logger.info(f"[USERNAME SCAN] Scanning username: '{username}' across {len(platforms)} platforms")
+    logger.info(f"[CONFIG] Timeout: {timeout}s, Delay: {request_delay}s")
+    logger.info("="*60)
+    import sys
+    sys.stdout.flush()
+    sys.stderr.flush()
 
     for platform in platforms:
         if scanned_count >= max_platforms:
@@ -117,6 +121,7 @@ def scan_username(
                 "url": "",
                 "status": "invalid_platform"
             })
+            log_platform_result(platform, "invalid_platform", False)
             continue
 
         try:
@@ -128,13 +133,19 @@ def scan_username(
             if platform.lower() in STATUS_ONLY_PLATFORMS:
                 if status_code == 200:
                     status = "found"
-                    logging.info(f"[{platform}] Username '{username}' FOUND (200)")
+                    logger.info(f"[OK] [{scanned_count+1}] {platform.upper()}: FOUND")
+                    log_platform_result(platform, "found", True)
+                    import sys; sys.stdout.flush()
                 elif status_code == 404:
                     status = "not_found"
-                    logging.info(f"[{platform}] Username '{username}' NOT FOUND (404)")
+                    logger.info(f"[NO] [{scanned_count+1}] {platform.upper()}: NOT FOUND")
+                    log_platform_result(platform, "not_found", False)
+                    import sys; sys.stdout.flush()
                 else:
                     status = f"unknown_status_{status_code}"
-                    logging.warning(f"[{platform}] Status {status_code} for '{username}'")
+                    logger.warning(f"[ER] [{scanned_count+1}] {platform.upper()}: STATUS {status_code}")
+                    log_platform_result(platform, status, False)
+                    import sys; sys.stdout.flush()
             else:
                 # Use HTML fingerprinting only for platforms that return distinct pages
                 html = response.text.lower()
@@ -142,23 +153,35 @@ def scan_username(
 
                 if status_code == 404:
                     status = "not_found"
-                    logging.info(f"[{platform}] Username '{username}' NOT FOUND (404)")
+                    logger.info(f"[NO] [{scanned_count+1}] {platform.upper()}: NOT FOUND")
+                    log_platform_result(platform, "not_found", False)
+                    import sys; sys.stdout.flush()
                 elif not_found_signals and any(s in html for s in not_found_signals):
                     status = "not_found"
-                    logging.info(f"[{platform}] Username '{username}' NOT FOUND (fingerprint)")
+                    logger.info(f"[NO] [{scanned_count+1}] {platform.upper()}: NOT FOUND")
+                    log_platform_result(platform, "not_found", False)
+                    import sys; sys.stdout.flush()
                 elif status_code == 200:
                     status = "found"
-                    logging.info(f"[{platform}] Username '{username}' FOUND")
+                    logger.info(f"[OK] [{scanned_count+1}] {platform.upper()}: FOUND")
+                    log_platform_result(platform, "found", True)
+                    import sys; sys.stdout.flush()
                 else:
                     status = f"unknown_status_{status_code}"
-                    logging.warning(f"[{platform}] Status {status_code} for '{username}'")
+                    logger.warning(f"[ER] [{scanned_count+1}] {platform.upper()}: STATUS {status_code}")
+                    log_platform_result(platform, status, False)
+                    import sys; sys.stdout.flush()
 
         except requests.exceptions.Timeout:
             status = "timeout"
-            logging.error(f"[{platform}] Timeout for username '{username}'")
+            logger.warning(f"[TO] [{scanned_count+1}] {platform.upper()}: TIMEOUT")
+            log_platform_result(platform, "timeout", False)
+            import sys; sys.stdout.flush()
         except requests.exceptions.RequestException as e:
             status = "error"
-            logging.error(f"[{platform}] Request exception: {e}")
+            logger.error(f"[ER] [{scanned_count+1}] {platform.upper()}: ERROR")
+            log_platform_result(platform, "error", False)
+            import sys; sys.stdout.flush()
 
         results.append({
             "platform": platform,

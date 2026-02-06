@@ -12,6 +12,7 @@ Uses machine learning and data science techniques to:
 import json
 import logging
 import math
+import os
 from typing import Dict, List, Tuple
 from datetime import datetime
 
@@ -72,7 +73,7 @@ class MLRiskAnalyzer:
 
     def calculate_ml_risk_score(self, scan_results: Dict) -> Dict:
         """
-        Calculate risk using ML-based scoring
+        Calculate risk using trained ML models (Enterprise Mode)
 
         Args:
             scan_results: Full scan results from OSINT scanner
@@ -87,36 +88,77 @@ class MLRiskAnalyzer:
                 'recommendations': [...]
             }
         """
-        logger.info("⚙️ Calculating ML-based risk score...")
+        logger.info("⚙️ Calculating ML-based risk score using trained models...")
 
         platforms_found = scan_results.get("all_platforms_checked", [])
-        found_count = sum(1 for p in platforms_found if p.get("status") == "found")
         
         # Feature extraction for ML model
-        features = self._extract_features(scan_results)
+        features_dict = self._extract_features(scan_results)
         
-        # ML scoring
-        base_score = self._calculate_base_score(features)
-        platform_risk_score = self._calculate_platform_risk(platforms_found)
-        exposure_score = self._calculate_exposure_score(features)
-        correlation_score = self._calculate_correlation_score(scan_results)
+        # Try to use trained ML model first
+        ml_risk_score = None
+        risk_level = None
+        confidence = 0.5
         
-        # Weighted ensemble (ML model combination)
-        ml_risk_score = (
-            base_score * 0.25 +
-            platform_risk_score * 0.35 +
-            exposure_score * 0.25 +
-            correlation_score * 0.15
-        )
+        try:
+            # Use enterprise trained models
+            from analysis.ml_trainer_enterprise import EnterpriseMLTrainer
+            
+            trainer = EnterpriseMLTrainer()
+            
+            # Extract exposures properly
+            emails_found = scan_results.get("emails_found", [])
+            exposures = len(emails_found) if emails_found else 0
+            
+            # Count found platforms
+            found_platforms = [p for p in platforms_found if p.get("status") == "found"]
+            
+            # Prepare features array for ML model (must match training features order)
+            features_array = [
+                len(found_platforms),  # platforms_found
+                exposures,  # exposures (emails found)
+                0,  # breaches (would need breach databases)
+                len(scan_results.get("names_found", [])),  # username_variations
+                0,  # location_leaks
+                0,  # phone_leaks
+                1 if scan_results.get("suspicious_pattern") else 0,  # suspicious_accounts
+            ]
+            
+            # Get ML prediction
+            ml_prediction = trainer.predict_risk(features_array)
+            
+            if ml_prediction.get("status") == "success":
+                ml_risk_score = ml_prediction.get("risk_score", 50)
+                risk_level = ml_prediction.get("risk_level", "MEDIUM")
+                confidence = min(100, ml_prediction.get("confidence", 0.5) * 100)
+                logger.info(f"✅ Using trained ML model: {ml_risk_score:.1f}/100 ({risk_level})")
+            else:
+                logger.warning("ML model prediction failed, using fallback scoring")
+                ml_risk_score = None
+                
+        except Exception as e:
+            logger.warning(f"Trained ML model not available: {e}. Using fallback scoring.")
+            ml_risk_score = None
         
-        # Confidence based on data quality
-        confidence = self._calculate_confidence(features)
-        
-        # Risk level classification
-        risk_level = self._classify_risk_level(ml_risk_score)
+        # Fallback to legacy scoring if ML model fails
+        if ml_risk_score is None:
+            logger.info("Using legacy ML scoring as fallback...")
+            platform_risk_score = self._calculate_platform_risk(platforms_found)
+            exposure_score = self._calculate_exposure_score(features_dict)
+            correlation_score = self._calculate_correlation_score(scan_results)
+            
+            # Weighted ensemble (legacy)
+            ml_risk_score = (
+                platform_risk_score * 0.40 +
+                exposure_score * 0.35 +
+                correlation_score * 0.25
+            )
+            
+            if risk_level is None:
+                risk_level = self._classify_risk_level(ml_risk_score)
         
         # Detect anomalies
-        anomalies = self._detect_anomalies(scan_results, features)
+        anomalies = self._detect_anomalies(scan_results, features_dict)
         
         # Generate recommendations
         recommendations = self._generate_recommendations(
@@ -131,10 +173,11 @@ class MLRiskAnalyzer:
             "anomalies": anomalies,
             "recommendations": recommendations,
             "analysis_timestamp": self.analysis_timestamp,
-            "features": features  # For debugging
+            "features": features_dict,  # For debugging
+            "model_type": "enterprise_trained" if confidence > 0.6 else "legacy_fallback"
         }
         
-        logger.info(f"✅ ML Risk Score: {ml_risk_score:.1f}/100 ({risk_level})")
+        logger.info(f"✅ ML Risk Score: {ml_risk_score:.1f}/100 ({risk_level}, confidence: {confidence:.1f}%)")
         return result
 
     def _extract_features(self, scan_results: Dict) -> Dict:

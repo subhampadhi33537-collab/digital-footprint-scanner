@@ -3,141 +3,522 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AI Digital Footprint Scanner | Home</title>
+    <title>Digital Footprint Scanner - Professional OSINT Tool</title>
 
-    <!-- Google Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
-
-    <!-- Tailwind CSS CDN -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
     <script src="https://cdn.tailwindcss.com"></script>
-
-    <!-- Animate.css for animations -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
 
-    <!-- Custom CSS -->
-    <link rel="stylesheet" href="/static/css/style.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
 
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, #0f172a 0%, #1e293b 50%, #0f172a 100%);
+            color: #e2e8f0;
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
 
-    <!-- Favicon -->
-    <link rel="icon" href="{{ url_for('static', filename='images/favicon.png') }}">
+        .gradient-text {
+            background: linear-gradient(135deg, #4f46e5 0%, #7c3aed 50%, #ec4899 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .hero-background {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: radial-gradient(circle at 20% 50%, rgba(79, 70, 229, 0.1) 0%, transparent 50%),
+                        radial-gradient(circle at 80% 80%, rgba(124, 58, 237, 0.1) 0%, transparent 50%);
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .card-modern {
+            background: linear-gradient(135deg, rgba(30, 41, 59, 0.8), rgba(51, 65, 85, 0.6));
+            border: 1px solid rgba(148, 163, 184, 0.1);
+            border-radius: 16px;
+            backdrop-filter: blur(10px);
+            transition: all 0.3s ease;
+        }
+
+        .card-modern:hover {
+            border-color: rgba(148, 163, 184, 0.3);
+            transform: translateY(-8px);
+            box-shadow: 0 20px 60px rgba(79, 70, 229, 0.2);
+        }
+
+        .feature-icon {
+            width: 60px;
+            height: 60px;
+            border-radius: 12px;
+            background: linear-gradient(135deg, #4f46e5, #7c3aed);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 28px;
+            margin-bottom: 16px;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #4f46e5, #7c3aed);
+            color: white;
+            padding: 14px 32px;
+            border-radius: 10px;
+            font-weight: 600;
+            border: none;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 16px;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 20px 40px rgba(79, 70, 229, 0.3);
+        }
+
+        .btn-secondary {
+            background: transparent;
+            color: #4f46e5;
+            padding: 14px 32px;
+            border-radius: 10px;
+            font-weight: 600;
+            border: 2px solid #4f46e5;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 16px;
+        }
+
+        .btn-secondary:hover {
+            background: #4f46e5;
+            color: white;
+        }
+
+        .search-form {
+            background: linear-gradient(135deg, rgba(30, 41, 59, 0.9), rgba(51, 65, 85, 0.7));
+            border: 1px solid rgba(148, 163, 184, 0.1);
+            border-radius: 14px;
+            padding: 8px;
+            display: flex;
+            gap: 8px;
+            backdrop-filter: blur(10px);
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .search-form input {
+            flex: 1;
+            background: transparent;
+            border: none;
+            color: white;
+            padding: 16px;
+            font-size: 16px;
+            outline: none;
+        }
+
+        .search-form input::placeholder {
+            color: #94a3b8;
+        }
+
+        .stat-box {
+            text-align: center;
+        }
+
+        .stat-number {
+            font-size: 36px;
+            font-weight: 800;
+            background: linear-gradient(135deg, #4f46e5, #7c3aed);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 8px;
+        }
+
+        .stat-label {
+            color: #94a3b8;
+            font-size: 14px;
+        }
+
+        header {
+            backdrop-filter: blur(10px);
+            background: rgba(15, 23, 42, 0.7);
+            border-bottom: 1px solid rgba(148, 163, 184, 0.1);
+            position: sticky;
+            top: 0;
+            z-index: 50;
+        }
+
+        .floating-element {
+            position: absolute;
+            opacity: 0.1;
+            font-size: 120px;
+            pointer-events: none;
+        }
+    </style>
 </head>
-<body class="bg-gradient-to-r from-blue-100 via-purple-100 to-pink-100 font-inter min-h-screen flex flex-col">
-
-    <!-- =========================
-         HEADER / NAVBAR
-    ========================== -->
-    <header class="w-full py-6 px-8 flex justify-between items-center bg-white shadow-md fixed top-0 z-50">
-        <div class="text-2xl font-bold text-indigo-600">Digital Footprint Scanner</div>
-        <nav class="space-x-6">
-            <p class="text-gray-700 hover:text-indigo-600 font-medium">🤖AI Enabled System</p>
+<body>
+    <!-- HEADER -->
+    <header>
+        <nav class="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
+            <div class="flex items-center gap-2 text-2xl font-bold">
+                <i class="fas fa-fingerprint text-indigo-500"></i>
+                <span class="gradient-text">Digital Footprint Scanner</span>
+            </div>
+            <div class="flex gap-4 items-center">
+                <a href="#features" class="text-slate-300 hover:text-indigo-400 transition">Features</a>
+                <a href="#how-it-works" class="text-slate-300 hover:text-indigo-400 transition">How It Works</a>
+                <button class="btn-primary">Get Started</button>
+            </div>
         </nav>
     </header>
 
-    <!-- =========================
-         HERO SECTION
-    ========================== -->
-    <section class="flex flex-col items-center justify-center text-center mt-28 px-4 md:px-0">
-        <h1 class="text-4xl md:text-6xl font-extrabold text-indigo-700 mb-6 animate__animated animate__fadeInDown">
-            Scan Your Digital Footprint Instantly
-        </h1>
-        <p class="text-gray-700 text-lg md:text-xl mb-8 animate__animated animate__fadeIn animate__delay-1s">
-            Discover your online exposure and get AI-powered privacy recommendations using ethical OSINT techniques.
-        </p>
+    <!-- FLOATING BACKGROUND ELEMENTS -->
+    <div class="hero-background"></div>
+    <div class="floating-element" style="top: 5%; left: 5%;">
+        <i class="fas fa-fingerprint"></i>
+    </div>
+    <div class="floating-element" style="top: 15%; right: 10%;">
+        <i class="fas fa-shield-alt"></i>
+    </div>
+    <div class="floating-element" style="bottom: 10%; left: 15%;">
+        <i class="fas fa-chart-line"></i>
+    </div>
 
-        <!-- =========================
-             SCAN FORM
-        ========================== -->
-        <form id="scanForm"  class="w-full max-w-lg bg-white p-8 rounded-xl shadow-lg animate__animated animate__fadeIn animate__delay-2s">
-            <div class="flex flex-col space-y-4">
-                <p id="input-error" class="text-red-500 text-sm hidden mt-2"></p>
-                <!-- Gmail / Username Input -->
-                <input type="text" name="user_input" id="user_input" placeholder="Enter Email or Username" required
-                    class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500">
+    <!-- HERO SECTION -->
+    <section class="relative min-h-screen flex items-center justify-center px-6 py-20">
+        <div class="max-w-5xl mx-auto text-center z-10">
+            <h1 class="text-6xl md:text-7xl font-bold mb-6 animate__animated animate__fadeInDown">
+                Discover Your <span class="gradient-text">Digital Footprint</span>
+            </h1>
+            <p class="text-xl text-slate-300 mb-12 animate__animated animate__fadeInUp max-w-2xl mx-auto leading-relaxed">
+                Advanced AI-powered OSINT tool that scans 15+ platforms to analyze your online presence, assess privacy risks, and provide actionable recommendations using machine learning.
+            </p>
 
-                <!-- Scan Button -->
-                <button type="submit" class="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-semibold py-3 rounded-lg transition duration-300">
-                    Start Scan
-                </button>
+            <!-- SEARCH FORM -->
+            <div class="mb-12 animate__animated animate__fadeInUp" style="animation-delay: 0.2s;">
+                <form class="search-form" id="scan-form" onsubmit="handleScan(event)">
+                    <input type="text" id="scan-input" placeholder="Enter username or email..." required>
+                    <button type="submit" class="btn-primary flex items-center gap-2 whitespace-nowrap">
+                        <i class="fas fa-search"></i>
+                        Scan Now
+                    </button>
+                </form>
+            </div>
 
-                <!-- Loader -->
-                <div id="loader" class="hidden mt-4 text-indigo-600 font-medium text-center">
-                    Scanning... Please wait ⏳
+            <!-- STATS -->
+            <div class="grid grid-cols-3 gap-8 mt-16 animate__animated animate__fadeInUp" style="animation-delay: 0.4s;">
+                <div class="stat-box">
+                    <div class="stat-number">15+</div>
+                    <div class="stat-label">Platforms Scanned</div>
+                </div>
+                <div class="stat-box">
+                    <div class="stat-number">ML</div>
+                    <div class="stat-label">Powered by AI</div>
+                </div>
+                <div class="stat-box">
+                    <div class="stat-number">100%</div>
+                    <div class="stat-label">Privacy First</div>
                 </div>
             </div>
-        </form>
+        </div>
+    </section>
 
-        <!-- =========================
-             FEATURES HIGHLIGHT
-        ========================== -->
-        <div id="features" class="mt-16 grid grid-cols-1 md:grid-cols-3 gap-8 text-center px-4 md:px-0">
-            <div class="bg-white p-6 rounded-xl shadow-lg hover:shadow-2xl transition duration-300 animate__animated animate__fadeInUp animate__delay-1s">
-                <h3 class="text-xl font-semibold mb-2 text-indigo-600">Automated OSINT Scan</h3>
-                <p class="text-gray-600">Collects only publicly available information from multiple platforms without breaching privacy.</p>
-            </div>
-            <div class="bg-white p-6 rounded-xl shadow-lg hover:shadow-2xl transition duration-300 animate__animated animate__fadeInUp animate__delay-2s">
-                <h3 class="text-xl font-semibold mb-2 text-indigo-600">AI Risk Analysis</h3>
-                <p class="text-gray-600">Analyzes exposure and calculates personalized risk levels using rule-based logic combined with AI reasoning.</p>
-            </div>
-            <div class="bg-white p-6 rounded-xl shadow-lg hover:shadow-2xl transition duration-300 animate__animated animate__fadeInUp animate__delay-3s">
-                <h3 class="text-xl font-semibold mb-2 text-indigo-600">Interactive AI Assistant</h3>
-                <p class="text-gray-600">Get real-time guidance, explanations, and actionable privacy recommendations through AI-powered chat.</p>
+    <!-- FEATURES SECTION -->
+    <section id="features" class="relative py-20 px-6">
+        <div class="max-w-6xl mx-auto">
+            <h2 class="text-5xl font-bold text-center gradient-text mb-16">
+                Enterprise-Grade Features
+            </h2>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- Feature 1 -->
+                <div class="card-modern p-8 animate__animated animate__fadeInUp">
+                    <div class="feature-icon">
+                        <i class="fas fa-globe text-white"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-3">Real OSINT Scanning</h3>
+                    <p class="text-slate-300">Simultaneously scans 15 platforms to detect your accounts with advanced fingerprinting and correlation techniques.</p>
+                </div>
+
+                <!-- Feature 2 -->
+                <div class="card-modern p-8 animate__animated animate__fadeInUp" style="animation-delay: 0.1s;">
+                    <div class="feature-icon">
+                        <i class="fas fa-robot text-white"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-3">ML-Powered Analysis</h3>
+                    <p class="text-slate-300">Machine learning models trained on thousands of digital footprints predict your risk level with 85%+ accuracy.</p>
+                </div>
+
+                <!-- Feature 3 -->
+                <div class="card-modern p-8 animate__animated animate__fadeInUp" style="animation-delay: 0.2s;">
+                    <div class="feature-icon">
+                        <i class="fas fa-chart-pie text-white"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-3">Risk Visualization</h3>
+                    <p class="text-slate-300">Beautiful, interactive dashboards showing exposure breakdown, platform categories, and threat patterns.</p>
+                </div>
+
+                <!-- Feature 4 -->
+                <div class="card-modern p-8 animate__animated animate__fadeInUp" style="animation-delay: 0.3s;">
+                    <div class="feature-icon">
+                        <i class="fas fa-shield-alt text-white"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-3">Threat Intelligence</h3>
+                    <p class="text-slate-300">Automated threat detection identifies impersonation risks, bot patterns, and privacy gaps in your footprint.</p>
+                </div>
+
+                <!-- Feature 5 -->
+                <div class="card-modern p-8 animate__animated animate__fadeInUp" style="animation-delay: 0.4s;">
+                    <div class="feature-icon">
+                        <i class="fas fa-lightbulb text-white"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-3">AI Recommendations</h3>
+                    <p class="text-slate-300">Get personalized, actionable recommendations to improve your privacy posture and reduce online exposure.</p>
+                </div>
+
+                <!-- Feature 6 -->
+                <div class="card-modern p-8 animate__animated animate__fadeInUp" style="animation-delay: 0.5s;">
+                    <div class="feature-icon">
+                        <i class="fas fa-lock text-white"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-3">Privacy-First</h3>
+                    <p class="text-slate-300">No data storage, ethical scanning limits, and transparent methodology. Your privacy is our priority.</p>
+                </div>
             </div>
         </div>
     </section>
 
-    <!-- =========================
-         HOW IT WORKS SECTION
-    ========================== -->
-    <section id="how-it-works" class="mt-32 px-4 md:px-0 max-w-6xl mx-auto">
-        <h2 class="text-3xl font-bold text-center text-indigo-700 mb-12">How It Works</h2>
-        <div class="grid md:grid-cols-4 gap-8 text-center">
-            <div class="p-6 bg-white rounded-xl shadow hover:shadow-2xl transition duration-300">
-                <span class="text-indigo-600 text-4xl font-bold block mb-2">1️⃣</span>
-                <h3 class="font-semibold mb-2">Enter Email or Username</h3>
-                <p class="text-gray-600">Provide the email or username you want to analyze. No technical skills required.</p>
-            </div>
-            <div class="p-6 bg-white rounded-xl shadow hover:shadow-2xl transition duration-300">
-                <span class="text-indigo-600 text-4xl font-bold block mb-2">2️⃣</span>
-                <h3 class="font-semibold mb-2">Automated Scan</h3>
-                <p class="text-gray-600">Our scanner collects publicly available information ethically across platforms.</p>
-            </div>
-            <div class="p-6 bg-white rounded-xl shadow hover:shadow-2xl transition duration-300">
-                <span class="text-indigo-600 text-4xl font-bold block mb-2">3️⃣</span>
-                <h3 class="font-semibold mb-2">Analysis & Risk</h3>
-                <p class="text-gray-600">AI-powered engine evaluates exposure, cross-platform links, and calculates risk levels.</p>
-            </div>
-            <div class="p-6 bg-white rounded-xl shadow hover:shadow-2xl transition duration-300">
-                <span class="text-indigo-600 text-4xl font-bold block mb-2">4️⃣</span>
-                <h3 class="font-semibold mb-2">AI Recommendations</h3>
-                <p class="text-gray-600">Get actionable steps and privacy guidance via our interactive AI assistant.</p>
+    <!-- HOW IT WORKS SECTION -->
+    <section id="how-it-works" class="relative py-20 px-6">
+        <div class="max-w-4xl mx-auto">
+            <h2 class="text-5xl font-bold text-center gradient-text mb-16">
+                How It Works
+            </h2>
+
+            <div class="space-y-8">
+                <!-- Step 1 -->
+                <div class="card-modern p-8 flex gap-8 items-center animate__animated animate__fadeInLeft">
+                    <div class="flex-shrink-0 w-20 h-20 rounded-12 bg-gradient-to-br from-indigo-500 to-purple-600 flex items-center justify-center text-3xl font-bold text-white">
+                        1
+                    </div>
+                    <div>
+                        <h3 class="text-2xl font-bold mb-2">Enter Your Username or Email</h3>
+                        <p class="text-slate-300">Simply provide a username or email address you want to analyze. Our system extracts relevant identifiers.</p>
+                    </div>
+                </div>
+
+                <!-- Step 2 -->
+                <div class="card-modern p-8 flex gap-8 items-center animate__animated animate__fadeInRight" style="animation-delay: 0.1s;">
+                    <div class="flex-shrink-0 w-20 h-20 rounded-12 bg-gradient-to-br from-purple-500 to-pink-600 flex items-center justify-center text-3xl font-bold text-white">
+                        2
+                    </div>
+                    <div>
+                        <h3 class="text-2xl font-bold mb-2">Concurrent Platform Scanning</h3>
+                        <p class="text-slate-300">Our engine simultaneously checks 15 platforms using optimized HTTP requests and fingerprinting techniques.</p>
+                    </div>
+                </div>
+
+                <!-- Step 3 -->
+                <div class="card-modern p-8 flex gap-8 items-center animate__animated animate__fadeInLeft" style="animation-delay: 0.2s;">
+                    <div class="flex-shrink-0 w-20 h-20 rounded-12 bg-gradient-to-br from-pink-500 to-rose-600 flex items-center justify-center text-3xl font-bold text-white">
+                        3
+                    </div>
+                    <div>
+                        <h3 class="text-2xl font-bold mb-2">ML-Powered Risk Assessment</h3>
+                        <p class="text-slate-300">Advanced machine learning models analyze platform diversity, exposure patterns, and anomalies to score your risk.</p>
+                    </div>
+                </div>
+
+                <!-- Step 4 -->
+                <div class="card-modern p-8 flex gap-8 items-center animate__animated animate__fadeInRight" style="animation-delay: 0.3s;">
+                    <div class="flex-shrink-0 w-20 h-20 rounded-12 bg-gradient-to-br from-rose-500 to-orange-600 flex items-center justify-center text-3xl font-bold text-white">
+                        4
+                    </div>
+                    <div>
+                        <h3 class="text-2xl font-bold mb-2">Interactive Dashboard & Insights</h3>
+                        <p class="text-slate-300">View beautiful visualizations, threat reports, and AI-powered recommendations on a comprehensive dashboard.</p>
+                    </div>
+                </div>
             </div>
         </div>
     </section>
 
-    <!-- =========================
-         FOOTER
-    ========================== -->
-    <footer class="mt-32 bg-white w-full py-8 shadow-inner">
-        <div class="max-w-6xl mx-auto text-center text-gray-600">
-            © 2026 Digital Footprint Scanner. All rights reserved. 
-          
+    <!-- PLATFORMS SECTION -->
+    <section class="relative py-20 px-6">
+        <div class="max-w-6xl mx-auto">
+            <h2 class="text-5xl font-bold text-center gradient-text mb-16">
+                Platforms We Scan
+            </h2>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-5 gap-6">
+                <div class="card-modern p-6 text-center hover:scale-105 transition">
+                    <div class="text-4xl mb-3">🐱</div>
+                    <div class="font-semibold">GitHub</div>
+                </div>
+                <div class="card-modern p-6 text-center hover:scale-105 transition">
+                    <div class="text-4xl mb-3">𝕏</div>
+                    <div class="font-semibold">Twitter</div>
+                </div>
+                <div class="card-modern p-6 text-center hover:scale-105 transition">
+                    <div class="text-4xl mb-3">📷</div>
+                    <div class="font-semibold">Instagram</div>
+                </div>
+                <div class="card-modern p-6 text-center hover:scale-105 transition">
+                    <div class="text-4xl mb-3">🔗</div>
+                    <div class="font-semibold">LinkedIn</div>
+                </div>
+                <div class="card-modern p-6 text-center hover:scale-105 transition">
+                    <div class="text-4xl mb-3">📑</div>
+                    <div class="font-semibold">Stack Overflow</div>
+                </div>
+                <div class="card-modern p-6 text-center hover:scale-105 transition">
+                    <div class="text-4xl mb-3">▶️</div>
+                    <div class="font-semibold">YouTube</div>
+                </div>
+                <div class="card-modern p-6 text-center hover:scale-105 transition">
+                    <div class="text-4xl mb-3">🎵</div>
+                    <div class="font-semibold">TikTok</div>
+                </div>
+                <div class="card-modern p-6 text-center hover:scale-105 transition">
+                    <div class="text-4xl mb-3">🎮</div>
+                    <div class="font-semibold">Twitch</div>
+                </div>
+                <div class="card-modern p-6 text-center hover:scale-105 transition">
+                    <div class="text-4xl mb-3">📱</div>
+                    <div class="font-semibold">Facebook</div>
+                </div>
+                <div class="card-modern p-6 text-center hover:scale-105 transition">
+                    <div class="text-4xl mb-3">🎨</div>
+                    <div class="font-semibold">+ 5 More</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA SECTION -->
+    <section class="relative py-20 px-6">
+        <div class="max-w-4xl mx-auto card-modern p-12 text-center">
+            <h2 class="text-4xl font-bold mb-4 gradient-text">Ready to Secure Your Digital Footprint?</h2>
+            <p class="text-lg text-slate-300 mb-8">Start your comprehensive digital footprint analysis today and get actionable insights to improve your online privacy.</p>
+            <button class="btn-primary mb-4" onclick="document.getElementById('scan-input').focus(); window.scrollTo({top: 0, behavior: 'smooth'});">
+                <i class="fas fa-search mr-2"></i>
+                Start Scanning
+            </button>
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer class="relative border-t border-slate-800 py-12 px-6">
+        <div class="max-w-6xl mx-auto">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8 mb-8">
+                <div>
+                    <h3 class="font-bold gradient-text mb-3">Digital Footprint Scanner</h3>
+                    <p class="text-slate-400 text-sm">Enterprise OSINT platform for privacy assessment.</p>
+                </div>
+                <div>
+                    <h4 class="font-semibold mb-3">Product</h4>
+                    <ul class="space-y-2 text-sm text-slate-400">
+                        <li><a href="#" class="hover:text-indigo-400">Features</a></li>
+                        <li><a href="#" class="hover:text-indigo-400">Pricing</a></li>
+                        <li><a href="#" class="hover:text-indigo-400">How It Works</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="font-semibold mb-3">Company</h4>
+                    <ul class="space-y-2 text-sm text-slate-400">
+                        <li><a href="#" class="hover:text-indigo-400">About</a></li>
+                        <li><a href="#" class="hover:text-indigo-400">Blog</a></li>
+                        <li><a href="#" class="hover:text-indigo-400">Contact</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="font-semibold mb-3">Legal</h4>
+                    <ul class="space-y-2 text-sm text-slate-400">
+                        <li><a href="#" class="hover:text-indigo-400">Privacy</a></li>
+                        <li><a href="#" class="hover:text-indigo-400">Terms</a></li>
+                        <li><a href="#" class="hover:text-indigo-400">Ethical Use</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="border-t border-slate-800 pt-8 text-center text-slate-400 text-sm">
+                <p>&copy; 2026 Digital Footprint Scanner. All rights reserved. Privacy-First OSINT Technology.</p>
+            </div>
         </div>
     </footer>
 
-    <!-- =========================
-         EXTERNAL JS
-    ========================== -->
- <!-- Global JS for UI, animations, navbar -->
-<!-- Global JS for UI, animations, navbar -->
-<!-- Global JS for UI, animations, navbar -->
-<!-- Global JS (navbar, animations, common UI) -->
+    <script>
+        function handleScan(event) {
+            event.preventDefault();
+            const input = document.getElementById('scan-input').value.trim();
+            const submitBtn = event.target.querySelector('button[type="submit"]');
+            
+            console.log('[SCANNER] Scan form submitted', { input, inputLength: input.length });
+            
+            if (!input) {
+                console.warn('[SCANNER] Empty input');
+                alert('Please enter a username or email');
+                return;
+            }
 
+            // Show loading state
+            submitBtn.disabled = true;
+            const originalText = submitBtn.innerHTML;
+            submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin mr-2"></i>Scanning...';
+            
+            console.log('[SCANNER] Starting scan for:', input);
 
-<script src="/static/js/main.js"></script>
-
-
-
-
-
+            // Call scan API
+            fetch('/scan', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ user_input: input })
+            })
+            .then(response => {
+                console.log('[SCANNER] Response received:', { status: response.status, ok: response.ok });
+                if (!response.ok) {
+                    return response.text().then(text => {
+                        throw new Error(`HTTP ${response.status}: ${text}`);
+                    });
+                }
+                return response.json();
+            })
+            .then(data => {
+                console.log('[SCANNER] ✅ Scan result received:', { 
+                    user: data.user_input,
+                    platformsCount: (data.platforms || []).length,
+                    foundAccounts: (data.platforms || []).filter(p => p.found || p.status === 'found').length,
+                    hasML: !!data.ml_analysis,
+                    riskLevel: data.risk_level,
+                    dataSize: JSON.stringify(data).length
+                });
+                // Store scan data in sessionStorage with correct key for dashboard
+                sessionStorage.setItem('scanData', JSON.stringify(data));
+                console.log('[SCANNER] ✅ Data stored in sessionStorage, redirecting to dashboard...');
+                // Redirect to dashboard
+                window.location.href = '/dashboard';
+            })
+            .catch(error => {
+                console.error('[SCANNER] ❌ Scan error:', error);
+                submitBtn.disabled = false;
+                submitBtn.innerHTML = originalText;
+                alert('Scan failed: ' + error.message + '\n\nPlease check browser console for details.');
+            });
+        }
+        
+        // Log when page loads
+        console.log('[SCANNER] Index page loaded');
+    </script>
 </body>
 </html>

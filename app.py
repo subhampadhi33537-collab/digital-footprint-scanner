@@ -63,11 +63,41 @@ except Exception as e:
 print("[OK] Environment & configuration validated")
 
 # ==================================================
-# REGISTER ROUTES
+# INITIALIZE & TRAIN ML MODELS (ENTERPRISE MODE)
+# ==================================================
+print("[INFO] Initializing ML models with real training data from Groq API...")
+try:
+    from analysis.ml_trainer_enterprise import EnterpriseMLTrainer
+    import os
+    
+    # Check if models already trained
+    models_dir = "models"
+    has_trained_models = (
+        os.path.exists(os.path.join(models_dir, "risk_model.pkl")) and
+        os.path.exists(os.path.join(models_dir, "level_model.pkl")) and
+        os.path.exists(os.path.join(models_dir, "scaler.pkl"))
+    )
+    
+    if has_trained_models:
+        print("[OK] ✅ Trained models found - Loading existing models")
+    else:
+        print("[INFO] 🤖 Training new ML models from Groq API data...")
+        trainer = EnterpriseMLTrainer()
+        trainer.train_all_models()
+        print("[OK] ✅ ML models trained successfully")
+        
+except Exception as e:
+    print(f"[WARNING] ML training initialization issue: {e}")
+    print("[WARNING] Models will be trained on first request")
+
+# ==================================================
+# REGISTER ROUTES & API BLUEPRINTS
 # ==================================================
 from routes import register_routes  # noqa: E402
+from api.ml_endpoints import ml_api  # noqa: E402
 
 register_routes(app)
+app.register_blueprint(ml_api)
 
 # ==================================================
 # ERROR HANDLERS
@@ -80,19 +110,6 @@ def not_found(e):
 @app.errorhandler(500)
 def internal_error(e):
     return {"error": "Internal server error"}, 500
-
-
-# ==================================================
-# HEALTH CHECK (FOR RENDER / PROD)
-# ==================================================
-@app.route("/health", methods=["GET"])
-def health_check():
-    return {
-        "status": "ok",
-        "environment": config.FLASK_ENV,
-        "scanner_ready": True
-    }, 200
-
 
 # ==================================================
 # MAIN ENTRY POINT

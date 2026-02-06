@@ -7,6 +7,7 @@ Responsibilities:
 - Uses public data only (no private account access)
 - Normalizes results for dashboard and AI analysis
 - OAuth is used ONLY for user authentication (not data access)
+- Provides real-time progress tracking
 """
 
 import time
@@ -18,6 +19,7 @@ from scanner.email_scanner import scan_email
 from scanner.username_scanner import check_username_presence
 from scanner.platform_checker import SUPPORTED_PLATFORMS
 from scanner.data_normalizer import normalize_scan_data
+from scanner.progress_tracker import start_scan_logging, finish_scan_logging
 
 # ---------------------------
 # Logging Setup
@@ -46,7 +48,15 @@ def run_full_scan(user_input: str, max_platforms: int = None, timeout: int = Non
     max_platforms = max_platforms or config.MAX_PLATFORMS
     timeout = timeout or config.SCAN_TIMEOUT
 
-    logging.info(f"Starting OSINT scan for: {user_input}")
+    logging.info(f"[SCAN START] Starting OSINT scan for: {user_input}")
+    
+    # Flush immediately
+    import sys
+    sys.stdout.flush()
+    sys.stderr.flush()
+    
+    # Initialize progress tracking
+    start_scan_logging(user_input, len(SUPPORTED_PLATFORMS))
 
     scan_data = {
         "user_input": user_input,
@@ -60,19 +70,19 @@ def run_full_scan(user_input: str, max_platforms: int = None, timeout: int = Non
     # EMAIL SCAN (PUBLIC OSINT)
     # ---------------------------
     if "@" in user_input:
-        logging.info(f"Detected email input. Running email OSINT checks.")
+        logging.info(f"[EMAIL] Email detected. Running email OSINT checks...")
         try:
             # scan_email internally uses API keys from config
             scan_data["email_exposure"] = scan_email(user_input)
         except Exception as e:
-            logging.error(f"Email scan failed: {e}")
+            logging.error(f"[EMAIL ERROR] Email scan failed: {e}")
             scan_data["email_exposure"] = []
 
     # ---------------------------
     # USERNAME SCAN
     # ---------------------------
     username = user_input.split("@")[0] if "@" in user_input else user_input
-    logging.info(f"Scanning username across platforms: {username}")
+    logging.info(f"[USERNAME SCAN] Scanning username: '{username}' across {len(SUPPORTED_PLATFORMS)} platforms")
 
     try:
         username_results = check_username_presence(
@@ -82,7 +92,7 @@ def run_full_scan(user_input: str, max_platforms: int = None, timeout: int = Non
             timeout=timeout
         )
     except Exception as e:
-        logging.error(f"Username scan failed: {e}")
+        logging.error(f"❌ Username scan failed: {e}")
         username_results = []
 
     scan_data["username_exposure"] = username_results
@@ -97,12 +107,14 @@ def run_full_scan(user_input: str, max_platforms: int = None, timeout: int = Non
     # ---------------------------
     # Normalize Data
     # ---------------------------
-    logging.info("Normalizing scan data for dashboard and AI")
+    logging.info("[NORMALIZE] Normalizing scan data for dashboard and AI")
     try:
         normalized_data = normalize_scan_data(scan_data)
     except Exception as e:
-        logging.error(f"Data normalization failed: {e}")
+        logging.error(f"[NORMALIZE ERROR] Data normalization failed: {e}")
         normalized_data = scan_data
 
-    logging.info("OSINT scan completed successfully")
+    # Finalize progress tracking
+    finish_scan_logging()
+    logging.info("[SCAN COMPLETE] OSINT scan completed successfully")
     return normalized_data
