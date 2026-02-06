@@ -4,7 +4,7 @@ services:
     env: python
     plan: free
     buildCommand: pip install -r requirements.txt
-    startCommand: gunicorn app:app --bind 0.0.0.0:$PORT --workers 2 --threads 4 --timeout 120
+    startCommand: streamlit run streamlit_app.py --server.port=$PORT --server.address=0.0.0.0
     envVars:
       - key: ALLOW_MISSING_CONFIG
         value: "true"
@@ -12,9 +12,3 @@ services:
         value: 3.11.6
       - key: FLASK_ENV
         value: production
-      - key: FLASK_DEBUG
-        value: "False"
-      - key: SESSION_TYPE
-        value: filesystem
-      - key: SESSION_FILE_DIR
-        value: /tmp/flask_session
