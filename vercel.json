@@ -19,10 +19,5 @@
   "env": {
     "FLASK_ENV": "production",
     "ALLOW_MISSING_CONFIG": "true"
-  },
-  "functions": {
-    "api/index.py": {
-      "maxDuration": 30
-    }
   }
 }
