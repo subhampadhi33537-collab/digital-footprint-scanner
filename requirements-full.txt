@@ -1,8 +1,5 @@
-# Minimal requirements for Vercel deployment
-# Optimized to stay under 250MB limit
-
 # =========================
-# Web Framework (Essential)
+# Web Framework & Server
 # =========================
 Flask==3.1.2
 Werkzeug==3.1.5
@@ -15,21 +12,29 @@ Flask-Cors==4.0.0
 python-dotenv==1.0.1
 
 # =========================
-# HTTP Requests & OSINT (Essential)
+# HTTP Requests & OSINT
 # =========================
 requests==2.31.0
 urllib3==2.1.0
 beautifulsoup4==4.12.3
 
 # =========================
-# Google OAuth (Optional - commented out to reduce size)
+# Data Processing & ML
 # =========================
-# google-auth-oauthlib==1.1.0
-# google-auth-httplib2==0.2.0
-# google-api-python-client==2.95.0
+pandas>=1.5.0,<2.4.0
+numpy>=1.21.0,<2.5.0
+scikit-learn>=1.0.0,<1.6.0
+joblib>=1.0.0,<1.5.0
 
 # =========================
-# AI & LLM Integration (Essential)
+# Google OAuth
+# =========================
+google-auth-oauthlib==1.1.0
+google-auth-httplib2==0.2.0
+google-api-python-client==2.95.0
+
+# =========================
+# AI & LLM Integration
 # =========================
 groq==0.5.0
 
@@ -43,8 +48,3 @@ simplejson==3.19.2
 # =========================
 email-validator==2.1.1
 
-# =========================
-# NOTE: ML packages removed to reduce deployment size
-# If you need ML features, use a dedicated ML service
-# or deploy ML endpoints separately
-# =========================
