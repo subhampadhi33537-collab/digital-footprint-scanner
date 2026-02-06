@@ -2,6 +2,7 @@
 .venv/
 venv/
 env/
+ENV/
 
 # Python cache
 __pycache__/
@@ -9,20 +10,21 @@ __pycache__/
 *.pyo
 *.pyd
 .Python
+*.egg-info/
+dist/
+build/
 
 # Environment variables
 .env
 .env.local
+.env*.local
 
 # IDE
 .vscode/
 .idea/
 *.swp
 *.swo
-
-# OS
 .DS_Store
-Thumbs.db
 
 # Logs
 *.log
@@ -31,28 +33,41 @@ Thumbs.db
 instance/
 .flask_session/
 
-# Streamlit (not used)
-.streamlit/
-streamlit_app.py
+# Data and models (too large)
+data/scans/
+data/models/
+data/temp/
+models/
+__pycache__/
 
-# Render (not used)
-render.yaml
+# ML training files
+*.pkl
+training_data/
 
-# Data files
-data/scans/*.json
-data/temp/*
+# Large generated files
 static/data/results.json
+logs/
 
-# ML Models (will retrain)
-models/*.pkl
-
-# Secrets
-client_secret.json
+# Git
+.git
+.gitignore
+.github/
 
 # Testing
 .pytest_cache/
 .coverage
 htmlcov/
+test_*.py
 
-# Vercel
-.vercel
+# Dependencies cache
+pip-log.txt
+pip-delete-this-directory.txt
+
+# OS
+Thumbs.db
+
+# Documentation
+*.md
+!README.md
+DOCS_INDEX.md
+CHANGELOG.md
