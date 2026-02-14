@@ -5,9 +5,6 @@
 .streamlit/
 streamlit_app.py
 
-# Render config (deprecated)
-render.yaml
-
 # Environment variables
 .env
 
@@ -23,7 +20,4 @@ client_secret.json
 
 # Runtime / generated data
 static/data/results.json
-
-# Vercel
-.vercel
 

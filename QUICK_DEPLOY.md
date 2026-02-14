@@ -1,9 +1,8 @@
-# 🚀 VERCEL DEPLOYMENT QUICK START
+# 🚀 RENDER DEPLOYMENT QUICK START
 
 ## Prerequisites
 - GitHub account with your code pushed
-- Vercel account (free at vercel.com)
-- Google OAuth credentials
+- Render account (free at render.com)
 - Groq API key
 
 ---
@@ -14,31 +13,90 @@
 ```bash
 # Make sure everything is committed
 git add .
-git commit -m "Ready for Vercel deployment"
+git commit -m "Ready for Render deployment"
 git push origin main
 ```
 
-### Step 2: Import Project to Vercel
-1. Go to https://vercel.com/dashboard
-2. Click **"Add New..."** → **"Project"**
-3. Select **"Import Git Repository"**
-4. Paste your repo URL or select from list
-5. Click **"Import"**
+### Step 2: Deploy to Render
+1. Go to https://dashboard.render.com
+2. Click **"New +"** → **"Web Service"**
+3. Connect your GitHub repository
+4. Render will auto-detect `render.yaml`:
+   - **Build Command:** `pip install -r requirements.txt`
+   - **Start Command:** `gunicorn -w 2 -b 0.0.0.0:$PORT app:app`
+5. Click **"Create Web Service"**
 
-### Step 3: Configure Build Settings
-When Vercel shows the configuration screen:
-- **Framework:** Python
-- **Root Directory:** `.` (default)
-- Click **"Environment Variables"** and skip for now
-
-### Step 4: Add Environment Variables
-Click the **"Environment Variables"** section and add:
+### Step 3: Add Environment Variables
+In Render Dashboard → Settings → Environment Variables:
 
 ```
-GROQ_API_KEY = sk-proj-xxxxxxxxxxxxxxxxxxxxx
-SECRET_KEY = generate-a-random-32-char-string
-GOOGLE_CLIENT_ID = your-google-client-id.apps.googleusercontent.com
+GROQ_API_KEY = your-groq-api-key-here
+SECRET_KEY = generate-a-random-32-char-secret-key
+FLASK_ENV = production
+FLASK_DEBUG = False
+SESSION_TYPE = filesystem
+```
+
+Optional:
+```
+ABSTRACT_API_KEY = your-abstract-api-key
+GOOGLE_CLIENT_ID = your-google-client-id
 GOOGLE_CLIENT_SECRET = your-google-client-secret
+```
+
+### Step 4: Monitor Deployment
+Render will:
+- Build your app (~3-5 minutes)
+- Install dependencies
+- Start the server
+- Show you the live URL
+
+Your app will be at: `https://your-app-name.onrender.com`
+
+---
+
+## ✅ Verify Deployment
+
+Test your live app:
+
+```bash
+# Test health
+curl https://your-app-name.onrender.com/
+
+# Test API
+curl -X POST https://your-app-name.onrender.com/api/chat-with-ai \
+  -H "Content-Type: application/json" \
+  -d '{"message":"How can I protect my privacy?","scan_context":{}}'
+```
+
+---
+
+## 📊 Expected Performance
+
+| Metric | Value |
+|--------|-------|
+| First Deploy | 3-5 minutes |
+| Startup Time | 1-2 seconds |
+| Cold Start | 30-60 sec (free tier) |
+| Memory | 512MB (free) |
+| CPU | 0.5 vCPU (free) |
+
+---
+
+## 💡 Tips
+
+1. **Free tier is perfect for testing** - No credit card needed
+2. **Upgrade to Starter ($7/mo)** - For production (no cold starts)
+3. **Sessions are ephemeral** - Restarted on deploy, this is normal
+4. **Check logs anytime** - Dashboard → Logs tab for debugging
+
+---
+
+## 🔗 Resources
+
+- **Render Dashboard:** https://dashboard.render.com
+- **Render Docs:** https://render.com/docs
+- **Your App URL:** `https://your-app-name.onrender.com`
 GOOGLE_REDIRECT_URI = https://your-project-name.vercel.app/callback
 FLASK_ENV = production
 SESSION_TYPE = filesystem

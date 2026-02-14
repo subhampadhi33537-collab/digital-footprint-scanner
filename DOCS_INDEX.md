@@ -9,11 +9,17 @@
 ## 📚 Documentation Files
 
 ### 🚀 Deployment
-- **[QUICK_DEPLOY.md](QUICK_DEPLOY.md)** - Deploy to Vercel in 5 minutes
+- **[QUICK_DEPLOY.md](QUICK_DEPLOY.md)** - Deploy to Render in 5 minutes
   - Step-by-step deployment instructions
   - Environment variable setup
-  - Google OAuth configuration
+  - Groq API configuration
   - Troubleshooting guide
+
+- **[RENDER_DEPLOYMENT.md](RENDER_DEPLOYMENT.md)** - Complete Render deployment guide
+  - Detailed setup instructions
+  - Configuration details
+  - Performance expectations
+  - Verification steps
 
 ### ✅ Verification & Status
 - **[FINAL_STATUS.md](FINAL_STATUS.md)** - Complete project status (START HERE)
@@ -52,10 +58,10 @@
 2. Run: `python app.py`
 3. Visit: http://127.0.0.1:5000
 
-### "I want to deploy to Vercel"
+### "I want to deploy to Render"
 1. Read: [QUICK_DEPLOY.md](QUICK_DEPLOY.md) - Full guide
-2. Follow: 5-step deployment process
-3. Result: Your app at https://your-domain.vercel.app
+2. Follow: 4-step deployment process
+3. Result: Your app at https://your-app-name.onrender.com
 
 ### "I want to understand the system"
 1. Read: [SYSTEM_VERIFICATION.md](SYSTEM_VERIFICATION.md)
@@ -91,9 +97,9 @@
 - **Status:** ✅ All systems operational
 
 ### Deployment
-- **Platform:** Vercel (free tier available)
+- **Platform:** Render (free tier available)
 - **Time to Deploy:** ~5 minutes
-- **Cost:** Free (Vercel + Groq)
+- **Cost:** Free (Render + Groq)
 - **Custom Domain:** Supported
 
 ---

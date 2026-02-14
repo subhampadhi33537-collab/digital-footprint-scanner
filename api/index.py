@@ -1,5 +1,5 @@
 """
-Vercel Serverless Entry Point
+Render Deployment Entry Point
 AI-Powered Digital Footprint Scanner
 """
 

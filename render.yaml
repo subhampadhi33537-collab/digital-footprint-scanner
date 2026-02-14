@@ -3,12 +3,29 @@ services:
     name: digital-footprint-scanner
     env: python
     plan: free
-    buildCommand: pip install -r requirements.txt
-    startCommand: streamlit run streamlit_app.py --server.port=$PORT --server.address=0.0.0.0
+    buildCommand: |
+      pip install --upgrade pip
+      pip install -r requirements.txt
+      python startup.py
+    startCommand: gunicorn -w 2 --timeout 120 -b 0.0.0.0:$PORT app:app
     envVars:
       - key: ALLOW_MISSING_CONFIG
-        value: "true"
+        value: "True"
       - key: PYTHON_VERSION
         value: 3.11.6
       - key: FLASK_ENV
         value: production
+      - key: FLASK_DEBUG
+        value: "False"
+      - key: SESSION_TYPE
+        value: filesystem
+      - key: SCAN_TIMEOUT
+        value: "10"
+      - key: MAX_PLATFORMS
+        value: "150"
+      - key: GROQ_MODEL
+        value: llama-3.1-8b-instant
+      - key: GROQ_MAX_TOKENS
+        value: "512"
+      - key: GROQ_TEMPERATURE
+        value: "0.3"

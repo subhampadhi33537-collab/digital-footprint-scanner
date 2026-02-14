@@ -27,6 +27,16 @@ from config import config
 load_dotenv()
 
 # ==================================================
+# ENSURE REQUIRED DIRECTORIES EXIST
+# ==================================================
+import os
+required_dirs = ["models", "data", "data/scans", "data/temp", "data/models", 
+                 "data/training_data", "static/data", ".flask_session", "logs"]
+for directory in required_dirs:
+    os.makedirs(directory, exist_ok=True)
+print("[OK] Required directories ensured")
+
+# ==================================================
 # CREATE FLASK APP
 # ==================================================
 app = Flask(__name__)

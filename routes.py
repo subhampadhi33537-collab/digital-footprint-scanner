@@ -309,71 +309,82 @@ def register_routes(app: Flask):
     # ------------------------------
     @app.route("/scan", methods=["POST"])
     def scan():
-        data = request.get_json() if request.is_json else request.form
-        user_input = (data.get("user_input") or "").strip()
-
-        if not user_input:
-            return jsonify({"error": "User input is required"}), 400
-
-        # Clear session to force fresh scan (prevent cached results)
-        session.pop("scan_results", None)
-        session.pop("risk_results", None)
-        session.modified = True
-        
-        logger.info(f"[SCAN] Starting FRESH scan for: {user_input}")
-        logger.info(f"[SCAN] Cleared cached session data")
-        
-        # Flush output immediately
-        import sys
-        sys.stdout.flush()
-        sys.stderr.flush()
-        
+        """Main scan endpoint with comprehensive error handling"""
         try:
+            # Parse request data
+            data = request.get_json() if request.is_json else request.form
+            user_input = (data.get("user_input") or "").strip()
+
+            if not user_input:
+                logger.warning("[SCAN] Empty user input received")
+                return jsonify({"error": "User input is required. Please enter a username or email."}), 400
+
+            # Clear session to force fresh scan (prevent cached results)
+            session.pop("scan_results", None)
+            session.pop("risk_results", None)
+            session.modified = True
+            
+            logger.info(f"[SCAN] ================================================")
+            logger.info(f"[SCAN] Starting FRESH scan for: {user_input}")
+            logger.info(f"[SCAN] Cleared cached session data")
+            logger.info(f"[SCAN] ================================================")
+            
+            # Flush output immediately
+            import sys
+            sys.stdout.flush()
+            sys.stderr.flush()
+            
             # Step 1: Run full scan
-            logger.info("[SCAN] Step 1: Running full scan...")
-            import sys; sys.stdout.flush()
+            logger.info("[SCAN] Step 1/7: Running full scan...")
             scan_results = run_full_scan(
                 user_input=user_input,
                 max_platforms=config.MAX_PLATFORMS,
                 timeout=config.SCAN_TIMEOUT
             )
-            logger.info(f"[SCAN] Full scan completed. Found {len(scan_results.get('all_platforms_checked', []))} platforms")
+            
+            if not scan_results:
+                raise ValueError("Scan returned empty results")
+                
+            platforms_checked = len(scan_results.get('all_platforms_checked', []))
+            logger.info(f"[SCAN] ✅ Step 1 complete: {platforms_checked} platforms checked")
 
             # Step 2: Calculate risk
-            logger.info("[SCAN] Step 2: Calculating risk...")
+            logger.info("[SCAN] Step 2/7: Calculating risk...")
             risk_results = calculate_risk(scan_results)
-            logger.info(f"[SCAN] Risk calculated")
+            if not risk_results:
+                raise ValueError("Risk calculation failed")
+            logger.info(f"[SCAN] ✅ Step 2 complete: Risk level {risk_results.get('risk_level', 'UNKNOWN')}")
             
             # Step 3: ML analysis
-            logger.info("[SCAN] Step 3: Running ML analysis...")
+            logger.info("[SCAN] Step 3/7: Running ML analysis...")
             try:
                 groq_client = GroqClient()
                 ml_analysis = get_ml_risk_analysis(scan_results, groq_client)
-                logger.info(f"[SCAN] ML analysis completed")
+                logger.info(f"[SCAN] ✅ Step 3 complete: ML analysis done")
             except Exception as ml_error:
-                logger.warning(f"[SCAN] ML analysis failed: {ml_error}. Using defaults.")
-                ml_analysis = {"ml_analysis": {}, "groq_analysis": ""}
+                logger.warning(f"[SCAN] ⚠️  Step 3 partial: ML analysis failed ({ml_error}). Using defaults.")
+                ml_analysis = {"ml_analysis": {}, "groq_analysis": "ML analysis temporarily unavailable"}
             
             # Step 4: Anomaly detection
-            logger.info("[SCAN] Step 4: Running anomaly detection...")
+            logger.info("[SCAN] Step 4/7: Running anomaly detection...")
             try:
                 anomalies = get_comprehensive_anomaly_analysis(scan_results)
-                logger.info(f"[SCAN] Anomaly detection completed")
+                logger.info(f"[SCAN] ✅ Step 4 complete: Anomaly detection done")
             except Exception as anom_error:
-                logger.warning(f"[SCAN] Anomaly detection failed: {anom_error}. Using defaults.")
+                logger.warning(f"[SCAN] ⚠️  Step 4 partial: Anomaly detection failed ({anom_error}). Using defaults.")
                 anomalies = {}
             
             # Step 5: Threat intelligence
-            logger.info("[SCAN] Step 5: Running threat intelligence...")
+            logger.info("[SCAN] Step 5/7: Running threat intelligence...")
             try:
                 threat_intel = get_complete_threat_intelligence(scan_results, ml_analysis.get("ml_analysis", {}), anomalies, groq_client)
-                logger.info(f"[SCAN] Threat intelligence completed")
+                logger.info(f"[SCAN] ✅ Step 5 complete: Threat intel done")
             except Exception as threat_error:
-                logger.warning(f"[SCAN] Threat intelligence failed: {threat_error}. Using defaults.")
+                logger.warning(f"[SCAN] ⚠️  Step 5 partial: Threat intelligence failed ({threat_error}). Using defaults.")
                 threat_intel = {}
             
             # Step 6: Transform for JS
-            logger.info("[SCAN] Step 6: Transforming results for dashboard...")
+            logger.info("[SCAN] Step 6/7: Transforming results for dashboard...")
             dashboard_payload = transform_scan_for_js(
                 scan_results=scan_results,
                 risk_results=risk_results,
@@ -389,10 +400,15 @@ def register_routes(app: Flask):
             # ✅ Add unique timestamp to results (prevents caching)
             dashboard_payload["scan_timestamp"] = datetime.now().isoformat()
             dashboard_payload["scan_id"] = f"{user_input}_{int(datetime.now().timestamp()*1000)}"
+            logger.info(f"[SCAN] ✅ Step 6 complete: Dashboard payload ready")
             
             # ✅ Save to disk for persistence
-            logger.info("[SCAN] Step 7: Saving results to disk...")
-            save_results(dashboard_payload)
+            logger.info("[SCAN] Step 7/7: Saving results to disk...")
+            try:
+                save_results(dashboard_payload)
+                logger.info(f"[SCAN] ✅ Step 7 complete: Results saved")
+            except Exception as save_error:
+                logger.warning(f"[SCAN] ⚠️  Step 7 partial: Save failed ({save_error}), but scan continues")
 
             # ✅ Save complete payload to session (for dashboard)
             session["user_input"] = user_input
@@ -401,10 +417,14 @@ def register_routes(app: Flask):
             session["last_scan_timestamp"] = datetime.now().isoformat()
             session.modified = True
 
-            logger.info(f"[OK] Scan completed successfully for: {user_input}")
-            logger.info(f"[SCAN ID] {dashboard_payload['scan_id']}")
-            logger.info(f"[RESULTS] Platforms checked: {len(dashboard_payload.get('all_platforms_checked', []))}")
-            logger.info(f"[RESULTS] Risk level: {dashboard_payload.get('risk_level', 'UNKNOWN')}")
+            logger.info(f"[SCAN] ================================================")
+            logger.info(f"[SCAN] ✅✅✅ SCAN COMPLETED SUCCESSFULLY")
+            logger.info(f"[SCAN] User: {user_input}")
+            logger.info(f"[SCAN] Scan ID: {dashboard_payload['scan_id']}")
+            logger.info(f"[SCAN] Platforms checked: {len(dashboard_payload.get('platforms', []))}")
+            logger.info(f"[SCAN] Accounts found: {len([p for p in dashboard_payload.get('platforms', []) if p.get('found')])}")
+            logger.info(f"[SCAN] Risk level: {dashboard_payload.get('risk_level', 'UNKNOWN')}")
+            logger.info(f"[SCAN] ================================================")
             
             # Add no-cache headers to response
             response = jsonify(dashboard_payload)
@@ -413,12 +433,36 @@ def register_routes(app: Flask):
             response.headers['Expires'] = '0'
             return response, 200
 
-        except Exception as e:
-            import traceback
-            logger.error(f"[ERROR] Scan error: {type(e).__name__}: {e}")
-            logger.error(f"[ERROR] Traceback: {traceback.format_exc()}")
+        except ValueError as ve:
+            # Validation or data errors
+            logger.error(f"[SCAN] ❌ Validation Error: {ve}")
             return jsonify({
-                "error": f"Scan failed: {type(e).__name__}: {str(e)[:100]}"
+                "error": f"Invalid input: {str(ve)}",
+                "type": "validation_error"
+            }), 400
+            
+        except ConnectionError as ce:
+            # Network/API errors
+            logger.error(f"[SCAN] ❌ Connection Error: {ce}")
+            return jsonify({
+                "error": "Unable to connect to scanning services. Please check your internet connection and try again.",
+                "type": "connection_error"
+            }), 503
+            
+        except Exception as e:
+            # Unexpected errors
+            import traceback
+            error_trace = traceback.format_exc()
+            logger.error(f"[SCAN] ❌❌❌ UNEXPECTED ERROR")
+            logger.error(f"[SCAN] Error Type: {type(e).__name__}")
+            logger.error(f"[SCAN] Error Message: {str(e)}")
+            logger.error(f"[SCAN] Traceback:\n{error_trace}")
+            
+            return jsonify({
+                "error": f"Scan failed due to an unexpected error: {type(e).__name__}",
+                "message": str(e)[:200],
+                "type": "system_error",
+                "details": "Please check the server logs for more information."
             }), 500
 
     # ==============================
