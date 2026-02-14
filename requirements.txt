@@ -35,6 +35,14 @@ google-api-python-client==2.95.0
 reportlab==4.0.9
 
 # =========================
+# Data Processing & ML (Essential)
+# =========================
+numpy>=1.21.0,<2.5.0
+pandas>=1.5.0,<2.4.0
+scikit-learn>=1.0.0,<1.6.0
+joblib>=1.0.0,<1.5.0
+
+# =========================
 # AI & LLM Integration (Essential)
 # =========================
 groq==0.5.0
